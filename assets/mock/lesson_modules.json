@@ -1,0 +1,66 @@
+[
+  {
+    "id": "9f8b1c2a-4d7e-4a31-9c58-1b6e2f0a7d34",
+    "title": "Sapaan & Aisatsu Dasar",
+    "subtitle": "Biasakan lidahmu dengan salam harian dari pagi hingga malam.",
+    "duration_minutes": 5,
+    "is_premium": false,
+    "background_char": "お"
+  },
+  {
+    "id": "1c4d9e77-8a52-4f6b-b0d1-3e9c5a2f8b61",
+    "title": "Frasa Perkenalan Diri",
+    "subtitle": "Rangkai nama, asal, dan pekerjaan dalam satu tarikan napas.",
+    "duration_minutes": 8,
+    "is_premium": false,
+    "background_char": "私"
+  },
+  {
+    "id": "5a2f7b13-6c9d-4e08-8f74-2d1b9e3c6a57",
+    "title": "Angka & Jam",
+    "subtitle": "Latih pola membaca angka, menit, dan janji temu tanpa berpikir lama.",
+    "duration_minutes": 10,
+    "is_premium": true,
+    "background_char": "時"
+  },
+  {
+    "id": "b7e3c018-2f45-4d9a-91c6-8a0d5e7b3f24",
+    "title": "Arah & Lokasi",
+    "subtitle": "Tanyakan dan jelaskan jalan dengan partikel posisi yang tepat.",
+    "duration_minutes": 10,
+    "is_premium": true,
+    "background_char": "道"
+  },
+  {
+    "id": "3d6a9f52-7b18-4c2e-a5f0-9e4b1d8c7a06",
+    "title": "Berbelanja & Harga",
+    "subtitle": "Kuasai pola menawar, bertanya harga, dan menyebut jumlah barang.",
+    "duration_minutes": 12,
+    "is_premium": true,
+    "background_char": "円"
+  },
+  {
+    "id": "8e1b4c96-5d27-4a03-bf68-7c2a9e5d1b40",
+    "title": "Transportasi & Stasiun",
+    "subtitle": "Frasa penting untuk membeli tiket dan berpindah antar jalur kereta.",
+    "duration_minutes": 12,
+    "is_premium": true,
+    "background_char": "駅"
+  },
+  {
+    "id": "2f9d7a35-1e64-4b8c-9d02-6a5c3b8e7f19",
+    "title": "Permintaan Sopan (Keigo Ringan)",
+    "subtitle": "Ubah kalimat biasa menjadi permintaan halus dengan bentuk kudasai.",
+    "duration_minutes": 15,
+    "is_premium": true,
+    "background_char": "願"
+  },
+  {
+    "id": "6c0e8b41-9a73-4f52-8e1d-4b7f2a9c5d38",
+    "title": "Bercerita dalam Bentuk Lampau",
+    "subtitle": "Susun pengalaman kemarin memakai pola ta-form secara berulang.",
+    "duration_minutes": 15,
+    "is_premium": true,
+    "background_char": "昨"
+  }
+]

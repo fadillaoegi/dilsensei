@@ -1,0 +1,150 @@
+:root {
+  --background: #fcfcfc;
+  --primary: #2d6a4f;
+  --secondary: #d8f3dc;
+  --text: #1a1a1a;
+  --muted: #666666;
+  --border: rgba(45, 106, 79, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0 24px 96px;
+  background: var(--background);
+  color: var(--text);
+  font-family:
+    "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+header {
+  padding: 48px 0 32px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 20px;
+}
+
+.leaf {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary);
+  font-size: 15px;
+}
+
+h1 {
+  font-size: clamp(32px, 6vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin: 24px 0 8px;
+  color: var(--primary);
+}
+
+h2 {
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  margin: 40px 0 8px;
+}
+
+.updated {
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0 0 8px;
+}
+
+p,
+li {
+  color: var(--text);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+ul {
+  padding-left: 22px;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+a {
+  color: var(--primary);
+}
+
+.callout {
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px 24px;
+  margin: 32px 0;
+}
+
+.callout p {
+  margin: 0;
+}
+
+footer {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 15px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.card {
+  display: block;
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  text-decoration: none;
+  color: var(--text);
+  background: #ffffff;
+  transition: border-color 160ms ease;
+}
+
+.card:hover {
+  border-color: var(--primary);
+}
+
+.card strong {
+  display: block;
+  color: var(--primary);
+  margin-bottom: 2px;
+}
