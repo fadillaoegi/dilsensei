@@ -9,6 +9,7 @@ void main() {
   testWidgets('pengguna gratis melihat kunci dan diarahkan ke paywall', (
     tester,
   ) async {
+    usePhoneViewport(tester);
     await tester.pumpWidget(
       buildTestApp(subscriptionService: FakeSubscriptionService()),
     );
@@ -16,7 +17,7 @@ void main() {
 
     expect(find.byIcon(Icons.lock_rounded), findsOneWidget);
 
-    await tester.tap(find.text('Angka & Jam'));
+    await tapModule(tester, 'Angka & Jam');
     await tester.pumpAndSettle();
 
     expect(find.byType(PaywallScreen), findsOneWidget);
@@ -26,6 +27,7 @@ void main() {
   testWidgets('pengguna premium membuka modul premium tanpa paywall', (
     tester,
   ) async {
+    usePhoneViewport(tester);
     await tester.pumpWidget(
       buildTestApp(
         subscriptionService: FakeSubscriptionService(isPremium: true),
@@ -41,7 +43,7 @@ void main() {
     );
     expect(find.text('10 mnt'), findsOneWidget);
 
-    await tester.tap(find.text('Angka & Jam'));
+    await tapModule(tester, 'Angka & Jam');
     await tester.pumpAndSettle();
 
     expect(find.byType(PaywallScreen), findsNothing);

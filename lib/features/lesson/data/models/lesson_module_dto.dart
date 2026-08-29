@@ -9,6 +9,8 @@ abstract final class LessonModuleDto {
       id: json['id'] as String,
       title: json['title'] as String,
       subtitle: json['subtitle'] as String,
+      titleEn: json['title_en'] as String?,
+      subtitleEn: json['subtitle_en'] as String?,
       durationMinutes: (json['duration_minutes'] as num).toInt(),
       isPremium: json['is_premium'] as bool,
       backgroundChar: json['background_char'] as String,

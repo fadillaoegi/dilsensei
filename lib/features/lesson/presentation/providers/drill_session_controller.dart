@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/drill_item.dart';
 import '../../domain/services/drill_session_engine.dart';
 import 'lesson_providers.dart';
+import 'progress_controller.dart';
 
 /// Umpan balik terakhir yang perlu ditampilkan UI.
 enum DrillFeedback { none, correct, incorrectWillRepeat, incorrectMovedOn }
@@ -195,8 +196,13 @@ final drillSessionControllerProvider = StateNotifierProvider.autoDispose
       ref,
       moduleId,
     ) {
-      final items =
+      final available =
           ref.read(drillItemsProvider(moduleId)).value ?? const <DrillItem>[];
+
+      // Panjang sesi mengikuti target harian pengguna, dibatasi jumlah butir
+      // yang benar-benar tersedia pada modul ini.
+      final count = ref.read(sessionItemCountProvider);
+      final items = available.take(count).toList(growable: false);
 
       return DrillSessionController(items);
     });

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// Potongan kata yang bisa diketuk, dipakai di bank kata maupun area jawaban.
 class TokenChip extends StatelessWidget {
@@ -21,8 +22,12 @@ class TokenChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final background = isPlaced ? AppColors.primary : AppColors.white;
-    final foreground = isPlaced ? AppColors.white : AppColors.textPrimary;
+    final background = isPlaced
+        ? context.palette.primary
+        : context.palette.surfaceCard;
+    final foreground = isPlaced
+        ? context.palette.onPrimary
+        : context.palette.textPrimary;
 
     return Opacity(
       opacity: isDisabled ? 0.35 : 1,
@@ -39,7 +44,7 @@ class TokenChip extends StatelessWidget {
               border: Border.all(
                 color: isPlaced
                     ? Colors.transparent
-                    : AppColors.primary.withValues(alpha: 0.16),
+                    : context.palette.primary.withValues(alpha: 0.16),
               ),
             ),
             child: Text(
@@ -76,13 +81,15 @@ class AnswerCanvas extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 76),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.secondary.withValues(alpha: 0.45),
+        color: context.palette.surfaceAccent.withValues(alpha: 0.45),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.12)),
+        border: Border.all(
+          color: context.palette.primary.withValues(alpha: 0.12),
+        ),
       ),
       child: tokens.isEmpty
           ? Text(
-              'Ketuk potongan kata untuk menyusun jawaban',
+              AppL10n.of(context).sessionCanvasHint,
               style: Theme.of(context).textTheme.bodyMedium,
             )
           : Wrap(

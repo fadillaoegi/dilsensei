@@ -43,7 +43,7 @@ class _ShimmerBoxState extends State<ShimmerBox>
         height: widget.height,
         width: widget.width,
         decoration: BoxDecoration(
-          color: AppColors.secondary.withValues(alpha: 0.7),
+          color: context.palette.surfaceAccent.withValues(alpha: 0.7),
           borderRadius: BorderRadius.circular(widget.borderRadius),
         ),
       ),

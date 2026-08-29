@@ -129,7 +129,7 @@ void main() {
       expect(summary.medianResponseTime, const Duration(seconds: 3));
       expect(summary.weakPatterns.first.patternId, 'particle_place');
       expect(summary.weakPatterns.length, 2);
-      expect(GrammarPatterns.labelOf('particle_place'), 'Partikel tempat');
+      expect(GrammarPatterns.all, contains('particle_place'));
     });
 
     test('sesi sempurna dan cepat mendekati skor refleks maksimal', () {

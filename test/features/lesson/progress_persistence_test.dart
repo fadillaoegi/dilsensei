@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../support/lesson_test_fixtures.dart';
 
-final _now = DateTime(2026, 9, 1, 9, 0);
+final _now = DateTime(2026, 9, 1, 12, 0);
 
 void main() {
   setUp(() {

@@ -1,0 +1,396 @@
+{
+  "@@locale": "en",
+  "appTitle": "DilSensei",
+  "languageEnglish": "English",
+  "languageIndonesian": "Bahasa Indonesia",
+  "commonNext": "Continue",
+  "commonBack": "Back",
+  "commonDone": "Done",
+  "commonClear": "Clear",
+  "commonClose": "Close",
+  "commonRetry": "Try again",
+  "commonReload": "Reload",
+  "commonSeePro": "See Pro plans",
+  "onboardingNameTitle": "Let's start with\nyour name",
+  "onboardingNameSubtitle": "We use it to greet you every time you open a session.",
+  "onboardingNameHint": "Nickname",
+  "onboardingGoalTitle": "Why are you\nlearning Japanese?",
+  "onboardingGoalSubtitle": "This decides which phrases you drill first.",
+  "onboardingTargetTitle": "How many minutes\na day?",
+  "onboardingTargetSubtitle": "Reflexes grow from short routines you don't skip.",
+  "onboardingStart": "Start practising",
+  "goalWorkLabel": "For work",
+  "goalWorkDescription": "Office phrases, reporting, and team talk",
+  "goalTravelLabel": "For travel",
+  "goalTravelDescription": "Asking directions, ordering, and shopping",
+  "goalCultureLabel": "For anime & culture",
+  "goalCultureDescription": "Everyday conversation that sounds natural",
+  "goalExamLabel": "For exams",
+  "goalExamDescription": "Grammar patterns that show up in the JLPT",
+  "targetLightLabel": "Light",
+  "targetLightDescription": "Enough to keep your streak",
+  "targetSteadyLabel": "Steady",
+  "targetSteadyDescription": "Most people pick this",
+  "targetIntenseLabel": "Serious",
+  "targetIntenseDescription": "For anyone on a deadline",
+  "targetMinutes": "{minutes} minutes · {label}",
+  "@targetMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreeting": "Konnichiwa, {name}!",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreetingFallbackName": "Sensei",
+  "homeSubtitle": "Time to train your muscle memory",
+  "homeStreakSemantics": "{days} day streak",
+  "@homeStreakSemantics": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "homeTodayLabel": "TODAY'S MODULE",
+  "homeStartSession": "Start session ({minutes} min)",
+  "@homeStartSession": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homeRoadmapTitle": "Your roadmap",
+  "homeLoading": "Preparing your session...",
+  "homeErrorTitle": "Couldn't load the lessons",
+  "homeErrorBody": "Check your connection, then try again.",
+  "homeMinutesShort": "{minutes} min",
+  "@homeMinutesShort": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homePremiumSemantics": "Premium module, subscription required",
+  "homeInsightsTooltip": "Weak spots",
+  "homeSettingsTooltip": "Settings",
+  "dailyLimitTitle": "That's today's session",
+  "dailyLimitBody": "The free plan gives you one session a day. Reflexes come from repetition, and Pro unlocks as many sessions as you want — including sessions built from your weak spots.",
+  "dailyLimitLater": "Tomorrow then",
+  "sessionAssembleLabel": "BUILD IT IN JAPANESE",
+  "sessionParticleLabel": "COMPLETE THE PARTICLE",
+  "sessionTransformLabel": "CHANGE THE FORM",
+  "sessionCanvasHint": "Tap the word chips to build your answer",
+  "sessionCheck": "Check",
+  "sessionContinue": "Continue",
+  "sessionSeeResult": "See result",
+  "sessionExitTooltip": "Leave session",
+  "sessionLoading": "Preparing your drills...",
+  "sessionEmpty": "This module has no drills yet.",
+  "sessionErrorTitle": "Couldn't load the drills",
+  "feedbackCorrect": "Nailed it.",
+  "feedbackWrongRepeat": "Not quite — this one comes back later.",
+  "feedbackWrongMovedOn": "Not quite. Saved for tomorrow's session.",
+  "feedbackPatternToPractise": "Pattern to practise: {patterns}",
+  "@feedbackPatternToPractise": {
+    "placeholders": {
+      "patterns": {
+        "type": "String"
+      }
+    }
+  },
+  "summaryTitle": "Session complete",
+  "summaryReflexScore": "reflex score",
+  "summaryFirstTry": "Right first try",
+  "summaryResponseTime": "Response time",
+  "summarySeconds": "{seconds} s",
+  "@summarySeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "summaryNoData": "—",
+  "summaryWeakTitle": "Patterns that aren't reflex yet",
+  "summaryClean": "All clean.",
+  "summaryCleanBody": "No pattern went wrong this session. The next module raises the tempo.",
+  "summaryDrillWeak": "Drill your weak spots now",
+  "insightsTitle": "Weak spots",
+  "insightsTotalSessions": "Total sessions",
+  "insightsBestScore": "Best score",
+  "insightsPatternsTitle": "Patterns you miss most",
+  "insightsPatternsSubtitle": "Recent mistakes count more than old ones, and answers that are right but slow still count.",
+  "insightsReasonAccuracy": "{count} wrong",
+  "@insightsReasonAccuracy": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsReasonSlow": "{count} slow",
+  "@insightsReasonSlow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsReasonSolid": "Solid",
+  "insightsMastery": "{percent}% mastered",
+  "@insightsMastery": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsStrongTitle": "Already reflex",
+  "insightsNoPatterns": "No pattern has gone wrong yet. Finish a few more sessions to see the map.",
+  "insightsProgressTitle": "Reflex score over time",
+  "insightsHistoryLocked": "Progress history unlocks with Pro.",
+  "insightsHistoryEmpty": "History appears after your first session.",
+  "insightsHiddenPatterns": "{count} more patterns are hidden on the free plan.",
+  "@insightsHiddenPatterns": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsEmptyTitle": "Nothing to map yet",
+  "insightsEmptyBody": "Finish one session, then come back to see which patterns aren't reflex yet.",
+  "insightsAccuracy": "{percent}% right",
+  "@insightsAccuracy": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsMissCount": "{count}x",
+  "@insightsMissCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsTitle": "Settings",
+  "settingsFreePlan": "Free plan",
+  "settingsProActive": "Pro access active",
+  "settingsDailyTarget": "Daily target: {minutes} minutes",
+  "@settingsDailyTarget": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsSessionsToday": "Sessions today: {count}",
+  "@settingsSessionsToday": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsSectionLanguage": "Language",
+  "settingsSectionAppearance": "Appearance",
+  "themeSystem": "Match device",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "settingsThemeSubtitle": "Currently active",
+  "settingsSectionSubscription": "Subscription",
+  "settingsSectionLegal": "Legal",
+  "settingsSectionDevelopment": "Development",
+  "settingsLanguageSubtitle": "Interface and lesson prompts",
+  "settingsRestore": "Restore purchases",
+  "settingsRestoreSubtitle": "Recover your subscription after switching devices",
+  "settingsManage": "Manage subscription",
+  "settingsManageSubtitle": "Change or cancel through Google Play",
+  "settingsPrivacy": "Privacy Policy",
+  "settingsTerms": "Terms of Use",
+  "settingsDevToggle": "DEV: Force Pro access",
+  "settingsDevToggleBody": "Unlocks every module and unlimited sessions without a purchase, for testing only. Never shown in release builds.",
+  "settingsRestoreSuccess": "Subscription restored.",
+  "settingsRestoreEmpty": "No subscription to restore.",
+  "settingsCannotOpen": "Couldn't open {url}",
+  "@settingsCannotOpen": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "paywallHeadline": "Unlock\nyour full\npotential",
+  "paywallBody": "Don't let your muscle memory fade. Drill the patterns that still make you hesitate, until Japanese comes out without thinking.",
+  "paywallBenefitModules": "Every module and unlimited daily sessions",
+  "paywallBenefitMap": "The full weak-spot map, not a summary",
+  "paywallBenefitAuto": "Sessions built automatically from your weak patterns",
+  "paywallBenefitHistory": "Reflex score history and weekly progress",
+  "paywallCta": "Start subscription",
+  "paywallRestore": "Restore purchases",
+  "paywallDisclosure": "Subscriptions renew automatically until cancelled. Cancel any time in your store account settings.",
+  "paywallPricesLoading": "Fetching prices from the store...",
+  "paywallPricesErrorTitle": "Prices unavailable",
+  "paywallPricesErrorBody": "Check your connection, then reload the plans.",
+  "paywallPurchaseSuccess": "Subscription active. Happy drilling!",
+  "paywallPurchaseFailed": "Purchase failed.",
+  "paywallTestStore": "TEST STORE MODE — purchases are not charged",
+  "paywallRecommended": "SAVE",
+  "planPeriodWeekly": "/ week",
+  "planPeriodMonthly": "/ month",
+  "planPeriodAnnual": "/ year",
+  "planPeriodLifetime": "one-time",
+  "planTitleWeekly": "Weekly plan",
+  "planTitleMonthly": "Monthly plan",
+  "planTitleAnnual": "Annual plan",
+  "planTitleLifetime": "Lifetime access",
+  "planTrialFree": "{count} {unit} free",
+  "@planTrialFree": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "planUnitDay": "day",
+  "planUnitWeek": "week",
+  "planUnitMonth": "month",
+  "planUnitYear": "year",
+  "patternParticlePlace": "Place particle",
+  "patternParticleObject": "Object particle",
+  "patternParticleTopic": "Topic particle",
+  "patternWordOrderTime": "Time expression order",
+  "patternPoliteForm": "Polite form",
+  "patternPastForm": "Past form",
+  "patternNegativeForm": "Negative form",
+  "patternCounterWord": "Counter word",
+  "kanaSectionTitle": "Refresh the letters first",
+  "kanaSectionSubtitle": "Free reference, no session needed",
+  "kanaFreeBadge": "FREE",
+  "kanaHiragana": "Hiragana",
+  "kanaKatakana": "Katakana",
+  "kanaLetterCount": "{count} letters",
+  "@kanaLetterCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "kanaSectionBase": "Gojūon · 46 base letters",
+  "kanaSectionVoiced": "Dakuten · voiced letters",
+  "kanaSectionCombined": "Yōon · combinations",
+  "kanaUsageTitle": "When do you use it?",
+  "kanaHiraganaUsage": "Hiragana is the base script. Use it for native Japanese words, for particles like は and を, and for the verb endings that keep changing shape. When you don't know the kanji for a word, hiragana is the safe fallback that everyone still reads.",
+  "kanaKatakanaUsage": "Katakana marks words that arrived from outside Japanese — コーヒー for coffee, パソコン for a computer, and foreign names including yours. You will also meet it on menus, packaging, and signage, and it is used for emphasis the way italics work in English.",
+  "kanaTipTitle": "Reading it faster",
+  "kanaTipBody": "Read across the rows, not down the columns: the consonant stays and only the vowel changes. Once a row feels automatic, move to the next one instead of trying to memorise the whole chart at once.",
+  "homeGreetingMorning": "Ohayou, {name}!",
+  "@homeGreetingMorning": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreetingMidday": "Konnichiwa, {name}!",
+  "@homeGreetingMidday": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreetingAfternoon": "Konnichiwa, {name}!",
+  "@homeGreetingAfternoon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreetingEvening": "Konbanwa, {name}!",
+  "@homeGreetingEvening": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeSubtitleMorning": "A short session now sets the tone for the day",
+  "homeSubtitleMidday": "Ten minutes between tasks is enough",
+  "homeSubtitleAfternoon": "Beat the afternoon slump with one quick drill",
+  "homeSubtitleEvening": "Close the day by locking in what you practised",
+  "settingsSectionReminder": "Daily reminder",
+  "settingsReminderToggle": "Remind me to practise",
+  "settingsReminderToggleBody": "One notification a day, skipped automatically when you have already practised.",
+  "settingsReminderTime": "Reminder time",
+  "settingsReminderTimeValue": "Every day at {time}",
+  "@settingsReminderTimeValue": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsReminderPermissionDenied": "Notifications are turned off for DilSensei. Enable them in your system settings.",
+  "reminderTitleWeakAccuracy": "{pattern} is still slipping",
+  "@reminderTitleWeakAccuracy": {
+    "placeholders": {
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderBodyWeakAccuracy": "Three minutes is enough to turn it around. Want to drill just that pattern?",
+  "reminderTitleWeakSpeed": "{pattern} is right but slow",
+  "@reminderTitleWeakSpeed": {
+    "placeholders": {
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderBodyWeakSpeed": "Correct is not the same as reflex. One quick session tightens it up.",
+  "reminderTitleStreak": "Your streak is waiting",
+  "reminderBodyStreak": "One session keeps it alive. It takes less time than scrolling.",
+  "reminderTitleFirst": "Ready for your first drill?",
+  "reminderBodyFirst": "Five minutes, one module, and you will already feel the rhythm.",
+  "recordUnlockedCta": "See your Training Record",
+  "recordEntryTitle": "Training Record",
+  "recordEntrySubtitle": "Proof that you finished every module",
+  "recordEntryLocked": "{completed} of {total} modules done",
+  "@recordEntryLocked": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "purchaseErrorPlanNotFound": "That plan is not available right now.",
+  "purchaseErrorNotActive": "The subscription is not active yet.",
+  "purchaseErrorStore": "The store could not complete the purchase.",
+  "purchaseErrorNotConfigured": "Purchases are not available in this build."
+}

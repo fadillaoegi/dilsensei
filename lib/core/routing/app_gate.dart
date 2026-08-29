@@ -27,18 +27,26 @@ class AppGate extends ConsumerWidget {
   }
 }
 
+/// Lanjutan visual dari splash native.
+///
+/// Logo, ukuran, dan warna latarnya sengaja sama dengan splash native supaya
+/// peralihan dari splash sistem ke Flutter tidak terlihat berkedip.
 class _SplashView extends StatelessWidget {
   const _SplashView();
+
+  static const logoAsset = 'assets/icon/splash_logo.png';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.palette.surface,
       body: Center(
-        child: Text(
-          'DilSensei',
-          style: Theme.of(
-            context,
-          ).textTheme.headlineSmall?.copyWith(color: AppColors.primary),
+        child: Image(
+          image: AssetImage(logoAsset),
+          width: 192,
+          height: 192,
+          // Splash tidak perlu dibacakan pembaca layar.
+          excludeFromSemantics: true,
         ),
       ),
     );

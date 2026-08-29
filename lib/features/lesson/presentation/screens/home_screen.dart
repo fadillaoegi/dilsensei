@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/localization/language_controller.dart';
 import '../../../../core/monetization/monetization_providers.dart';
 import '../../../../core/routing/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
-import '../../domain/entities/lesson_module.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../kana/domain/kana_chart.dart';
+import '../../../kana/presentation/widgets/kana_shortcut_row.dart';
 import '../../../onboarding/presentation/providers/onboarding_controller.dart';
+import '../../domain/entities/lesson_module.dart';
 import '../providers/lesson_providers.dart';
 import '../providers/progress_controller.dart';
 import '../widgets/home_header.dart';
@@ -23,6 +27,9 @@ class HomeScreen extends ConsumerWidget {
     final streakDays = ref.watch(displayStreakProvider);
     final isPremium = ref.watch(isPremiumProvider);
     final userName = ref.watch(userNameProvider);
+    final canStartSession = ref.watch(canStartSessionProvider);
+    final languageCode = ref.watch(languageControllerProvider).code;
+    final dayPart = ref.watch(dayPartProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -31,7 +38,15 @@ class HomeScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              HomeHeader(userName: userName, streakDays: streakDays),
+              _HomeActions(
+                onOpenInsights: () => context.push(AppRoutes.insights),
+                onOpenSettings: () => context.push(AppRoutes.settings),
+              ),
+              HomeHeader(
+                userName: userName,
+                streakDays: streakDays,
+                dayPart: dayPart,
+              ),
               const SizedBox(height: 28),
               board.when(
                 loading: () => const _HomeLoadingView(),
@@ -41,8 +56,15 @@ class HomeScreen extends ConsumerWidget {
                 data: (data) => _HomeContentView(
                   board: data,
                   isPremium: isPremium,
-                  onModuleTap: (module) =>
-                      _openModule(context, module, isPremium: isPremium),
+                  languageCode: languageCode,
+                  onOpenKana: (script) =>
+                      context.push(AppRoutes.kanaFor(script)),
+                  onModuleTap: (module) => _openModule(
+                    context,
+                    module,
+                    isPremium: isPremium,
+                    canStartSession: canStartSession,
+                  ),
                 ),
               ),
               const SizedBox(height: 24),
@@ -57,6 +79,7 @@ class HomeScreen extends ConsumerWidget {
     BuildContext context,
     LessonModule module, {
     required bool isPremium,
+    required bool canStartSession,
   }) {
     // Modul premium hanya terbuka bila entitlement RevenueCat aktif.
     if (module.isPremium && !isPremium) {
@@ -64,7 +87,120 @@ class HomeScreen extends ConsumerWidget {
       return;
     }
 
+    // Pengguna gratis dibatasi satu sesi per hari; ini yang dijanjikan paywall
+    // sebagai "sesi tanpa batas harian" untuk premium.
+    if (!canStartSession) {
+      _showDailyLimitReached(context);
+      return;
+    }
+
     context.push(AppRoutes.sessionFor(module.id));
+  }
+
+  void _showDailyLimitReached(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: context.palette.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      builder: (sheetContext) => _DailyLimitSheet(
+        onUpgrade: () {
+          Navigator.of(sheetContext).pop();
+          context.push(AppRoutes.paywall);
+        },
+        onClose: () => Navigator.of(sheetContext).pop(),
+      ),
+    );
+  }
+}
+
+/// Tombol akses ke peta kelemahan dan pengaturan.
+class _HomeActions extends StatelessWidget {
+  const _HomeActions({
+    required this.onOpenInsights,
+    required this.onOpenSettings,
+  });
+
+  final VoidCallback onOpenInsights;
+  final VoidCallback onOpenSettings;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppL10n.of(context);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        IconButton(
+          onPressed: onOpenInsights,
+          icon: const Icon(Icons.insights_rounded),
+          color: context.palette.primary,
+          tooltip: l10n.homeInsightsTooltip,
+        ),
+        IconButton(
+          onPressed: onOpenSettings,
+          icon: const Icon(Icons.settings_outlined),
+          color: context.palette.textSecondary,
+          tooltip: l10n.homeSettingsTooltip,
+        ),
+      ],
+    );
+  }
+}
+
+/// Penjelasan saat kuota sesi harian versi gratis habis.
+class _DailyLimitSheet extends StatelessWidget {
+  const _DailyLimitSheet({required this.onUpgrade, required this.onClose});
+
+  final VoidCallback onUpgrade;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppL10n.of(context);
+    final textTheme = Theme.of(context).textTheme;
+
+    // Dibuat scrollable agar tidak meluber pada layar pendek atau mode lanskap.
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.dailyLimitTitle,
+              style: textTheme.headlineSmall?.copyWith(
+                color: context.palette.primary,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              l10n.dailyLimitBody,
+              style: textTheme.bodyMedium?.copyWith(height: 1.6),
+            ),
+            const SizedBox(height: 22),
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: ElevatedButton(
+                onPressed: onUpgrade,
+                child: Text(l10n.commonSeePro),
+              ),
+            ),
+            const SizedBox(height: 6),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                onPressed: onClose,
+                child: Text(l10n.dailyLimitLater),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -72,15 +208,20 @@ class _HomeContentView extends StatelessWidget {
   const _HomeContentView({
     required this.board,
     required this.isPremium,
+    required this.languageCode,
     required this.onModuleTap,
+    required this.onOpenKana,
   });
 
   final LessonBoard board;
   final bool isPremium;
+  final String languageCode;
   final ValueChanged<LessonModule> onModuleTap;
+  final ValueChanged<KanaScript> onOpenKana;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppL10n.of(context);
     final todayModule = board.todayModule;
 
     return Column(
@@ -89,11 +230,15 @@ class _HomeContentView extends StatelessWidget {
         if (todayModule != null)
           TodayModuleCard(
             module: todayModule,
+            title: todayModule.titleFor(languageCode),
+            subtitle: todayModule.subtitleFor(languageCode),
             onStart: () => onModuleTap(todayModule),
           ),
+        const SizedBox(height: 32),
+        KanaShortcutRow(onOpen: onOpenKana),
         if (board.otherModules.isNotEmpty) ...[
           const SizedBox(height: 32),
-          const _SectionTitle(title: 'Peta Belajarmu'),
+          _SectionTitle(title: l10n.homeRoadmapTitle),
           const SizedBox(height: 16),
           ListView.separated(
             shrinkWrap: true,
@@ -106,6 +251,8 @@ class _HomeContentView extends StatelessWidget {
 
               return LessonListItem(
                 module: module,
+                title: module.titleFor(languageCode),
+                subtitle: module.subtitleFor(languageCode),
                 isUnlocked: isPremium,
                 onTap: () => onModuleTap(module),
               );
@@ -128,7 +275,7 @@ class _SectionTitle extends StatelessWidget {
       title,
       style: Theme.of(
         context,
-      ).textTheme.titleLarge?.copyWith(color: AppColors.primary),
+      ).textTheme.titleLarge?.copyWith(color: context.palette.primary),
     );
   }
 }
@@ -144,7 +291,7 @@ class _HomeLoadingView extends StatelessWidget {
         const HeroCardSkeleton(),
         const SizedBox(height: 32),
         Text(
-          'Menyiapkan sesi latihanmu...',
+          AppL10n.of(context).homeLoading,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         const SizedBox(height: 16),
@@ -161,6 +308,7 @@ class _HomeErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppL10n.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     return Container(
@@ -168,22 +316,21 @@ class _HomeErrorView extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.12)),
+        border: Border.all(
+          color: context.palette.primary.withValues(alpha: 0.12),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Materi belum bisa dimuat',
+            l10n.homeErrorTitle,
             style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 8),
-          Text(
-            'Periksa koneksimu, lalu coba lagi sebentar.',
-            style: textTheme.bodyMedium,
-          ),
+          Text(l10n.homeErrorBody, style: textTheme.bodyMedium),
           const SizedBox(height: 16),
-          OutlinedButton(onPressed: onRetry, child: const Text('Coba Lagi')),
+          OutlinedButton(onPressed: onRetry, child: Text(l10n.commonRetry)),
         ],
       ),
     );

@@ -1,0 +1,396 @@
+{
+  "@@locale": "id",
+  "appTitle": "DilSensei",
+  "languageEnglish": "English",
+  "languageIndonesian": "Bahasa Indonesia",
+  "commonNext": "Lanjut",
+  "commonBack": "Kembali",
+  "commonDone": "Selesai",
+  "commonClear": "Hapus",
+  "commonClose": "Tutup",
+  "commonRetry": "Coba Lagi",
+  "commonReload": "Muat Ulang",
+  "commonSeePro": "Lihat paket Pro",
+  "onboardingNameTitle": "Kita mulai dari\nnamamu",
+  "onboardingNameSubtitle": "Dipakai untuk menyapamu setiap kali membuka latihan.",
+  "onboardingNameHint": "Nama panggilan",
+  "onboardingGoalTitle": "Kenapa belajar\nbahasa Jepang?",
+  "onboardingGoalSubtitle": "Ini menentukan frasa mana yang kamu latih lebih dulu.",
+  "onboardingTargetTitle": "Berapa menit\nsehari?",
+  "onboardingTargetSubtitle": "Refleks tumbuh dari rutinitas pendek yang tidak bolong.",
+  "onboardingStart": "Mulai Berlatih",
+  "goalWorkLabel": "Untuk kerja",
+  "goalWorkDescription": "Frasa kantor, laporan, dan komunikasi tim",
+  "goalTravelLabel": "Untuk jalan-jalan",
+  "goalTravelDescription": "Bertanya arah, memesan, dan berbelanja",
+  "goalCultureLabel": "Untuk anime & budaya",
+  "goalCultureDescription": "Percakapan sehari-hari yang terasa alami",
+  "goalExamLabel": "Untuk ujian",
+  "goalExamDescription": "Pola tata bahasa yang sering keluar di JLPT",
+  "targetLightLabel": "Ringan",
+  "targetLightDescription": "Cukup untuk menjaga streak",
+  "targetSteadyLabel": "Mantap",
+  "targetSteadyDescription": "Paling banyak dipilih",
+  "targetIntenseLabel": "Serius",
+  "targetIntenseDescription": "Untuk yang sedang dikejar tenggat",
+  "targetMinutes": "{minutes} menit · {label}",
+  "@targetMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreeting": "Konnichiwa, {name}!",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreetingFallbackName": "Sensei",
+  "homeSubtitle": "Waktunya melatih memori ototmu",
+  "homeStreakSemantics": "Streak {days} hari",
+  "@homeStreakSemantics": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "homeTodayLabel": "MODUL HARI INI",
+  "homeStartSession": "Mulai Sesi ({minutes} Menit)",
+  "@homeStartSession": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homeRoadmapTitle": "Peta Belajarmu",
+  "homeLoading": "Menyiapkan sesi latihanmu...",
+  "homeErrorTitle": "Materi belum bisa dimuat",
+  "homeErrorBody": "Periksa koneksimu, lalu coba lagi sebentar.",
+  "homeMinutesShort": "{minutes} mnt",
+  "@homeMinutesShort": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "homePremiumSemantics": "Modul premium, perlu langganan",
+  "homeInsightsTooltip": "Peta Kelemahan",
+  "homeSettingsTooltip": "Pengaturan",
+  "dailyLimitTitle": "Sesi hari ini sudah selesai",
+  "dailyLimitBody": "Versi gratis memberi satu sesi setiap hari. Refleks tumbuh dari pengulangan, dan Pro membuka sesi sebanyak yang kamu mau — termasuk sesi yang disusun dari pola kelemahanmu.",
+  "dailyLimitLater": "Besok lagi",
+  "sessionAssembleLabel": "SUSUN DALAM BAHASA JEPANG",
+  "sessionParticleLabel": "LENGKAPI PARTIKELNYA",
+  "sessionTransformLabel": "UBAH BENTUKNYA",
+  "sessionCanvasHint": "Ketuk potongan kata untuk menyusun jawaban",
+  "sessionCheck": "Periksa",
+  "sessionContinue": "Lanjut",
+  "sessionSeeResult": "Lihat Hasil",
+  "sessionExitTooltip": "Keluar sesi",
+  "sessionLoading": "Menyiapkan butir latihan...",
+  "sessionEmpty": "Butir latihan untuk modul ini belum tersedia.",
+  "sessionErrorTitle": "Latihan belum bisa dimuat",
+  "feedbackCorrect": "Tepat.",
+  "feedbackWrongRepeat": "Belum tepat — butir ini muncul lagi nanti.",
+  "feedbackWrongMovedOn": "Belum tepat. Simpan untuk sesi besok.",
+  "feedbackPatternToPractise": "Pola yang perlu dilatih: {patterns}",
+  "@feedbackPatternToPractise": {
+    "placeholders": {
+      "patterns": {
+        "type": "String"
+      }
+    }
+  },
+  "summaryTitle": "Sesi selesai",
+  "summaryReflexScore": "skor refleks",
+  "summaryFirstTry": "Benar sekali coba",
+  "summaryResponseTime": "Waktu respons",
+  "summarySeconds": "{seconds} dtk",
+  "@summarySeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "summaryNoData": "—",
+  "summaryWeakTitle": "Pola yang belum jadi refleks",
+  "summaryClean": "Bersih.",
+  "summaryCleanBody": "Tidak ada pola yang salah di sesi ini. Modul berikutnya akan menaikkan tempo.",
+  "summaryDrillWeak": "Latih pola lemah sekarang",
+  "insightsTitle": "Peta Kelemahan",
+  "insightsTotalSessions": "Total sesi",
+  "insightsBestScore": "Skor terbaik",
+  "insightsPatternsTitle": "Pola yang paling sering meleset",
+  "insightsPatternsSubtitle": "Kesalahan terbaru berbobot lebih besar daripada yang lama, dan jawaban benar tapi lambat tetap dihitung.",
+  "insightsReasonAccuracy": "{count} kali salah",
+  "@insightsReasonAccuracy": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsReasonSlow": "{count} kali lambat",
+  "@insightsReasonSlow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsReasonSolid": "Sudah mantap",
+  "insightsMastery": "{percent}% dikuasai",
+  "@insightsMastery": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsStrongTitle": "Sudah jadi refleks",
+  "insightsNoPatterns": "Belum ada pola yang salah. Selesaikan beberapa sesi lagi untuk melihat petanya.",
+  "insightsProgressTitle": "Perkembangan skor refleks",
+  "insightsHistoryLocked": "Riwayat perkembangan terbuka di Pro.",
+  "insightsHistoryEmpty": "Riwayat akan muncul setelah sesi pertamamu.",
+  "insightsHiddenPatterns": "{count} pola lain masih tersembunyi di versi gratis.",
+  "@insightsHiddenPatterns": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsEmptyTitle": "Belum ada yang bisa dipetakan",
+  "insightsEmptyBody": "Selesaikan satu sesi latihan, lalu kembali ke sini untuk melihat pola mana yang belum jadi refleks.",
+  "insightsAccuracy": "{percent}% tepat",
+  "@insightsAccuracy": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsMissCount": "{count}x",
+  "@insightsMissCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsTitle": "Pengaturan",
+  "settingsFreePlan": "Versi gratis",
+  "settingsProActive": "Akses Pro aktif",
+  "settingsDailyTarget": "Target harian: {minutes} menit",
+  "@settingsDailyTarget": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsSessionsToday": "Sesi hari ini: {count}",
+  "@settingsSessionsToday": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsSectionLanguage": "Bahasa",
+  "settingsSectionAppearance": "Tampilan",
+  "themeSystem": "Ikuti perangkat",
+  "themeLight": "Terang",
+  "themeDark": "Gelap",
+  "settingsThemeSubtitle": "Sedang aktif",
+  "settingsSectionSubscription": "Langganan",
+  "settingsSectionLegal": "Legal",
+  "settingsSectionDevelopment": "Pengembangan",
+  "settingsLanguageSubtitle": "Antarmuka dan perintah latihan",
+  "settingsRestore": "Restore Purchases",
+  "settingsRestoreSubtitle": "Pulihkan langganan setelah ganti perangkat",
+  "settingsManage": "Kelola langganan",
+  "settingsManageSubtitle": "Ubah atau batalkan lewat Google Play",
+  "settingsPrivacy": "Privacy Policy",
+  "settingsTerms": "Terms of Use",
+  "settingsDevToggle": "DEV: Paksa akses Pro",
+  "settingsDevToggleBody": "Membuka semua modul dan sesi tanpa pembelian, hanya untuk pengujian. Tidak pernah tampil di build release.",
+  "settingsRestoreSuccess": "Langganan berhasil dipulihkan.",
+  "settingsRestoreEmpty": "Tidak ada langganan untuk dipulihkan.",
+  "settingsCannotOpen": "Tidak bisa membuka {url}",
+  "@settingsCannotOpen": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "paywallHeadline": "Buka\nPotensi\nPenuhmu",
+  "paywallBody": "Jangan biarkan memori ototmu terputus. Latih pola yang masih membuatmu ragu, sampai bahasa Jepang keluar tanpa kamu pikirkan.",
+  "paywallBenefitModules": "Seluruh modul dan sesi tanpa batas harian",
+  "paywallBenefitMap": "Peta pola kelemahan lengkap, bukan ringkasan",
+  "paywallBenefitAuto": "Sesi otomatis dari pola yang belum jadi refleks",
+  "paywallBenefitHistory": "Riwayat skor refleks dan perkembangan mingguan",
+  "paywallCta": "Mulai Langganan",
+  "paywallRestore": "Restore Purchases",
+  "paywallDisclosure": "Langganan diperpanjang otomatis sampai dibatalkan. Pembatalan dilakukan lewat pengaturan akun store.",
+  "paywallPricesLoading": "Mengambil harga dari store...",
+  "paywallPricesErrorTitle": "Harga belum bisa ditampilkan",
+  "paywallPricesErrorBody": "Periksa koneksimu, lalu muat ulang daftar paket.",
+  "paywallPurchaseSuccess": "Langganan aktif. Selamat berlatih!",
+  "paywallPurchaseFailed": "Pembelian gagal.",
+  "paywallTestStore": "MODE TEST STORE — pembelian tidak menagih uang",
+  "paywallRecommended": "HEMAT",
+  "planPeriodWeekly": "/ minggu",
+  "planPeriodMonthly": "/ bulan",
+  "planPeriodAnnual": "/ tahun",
+  "planPeriodLifetime": "sekali bayar",
+  "planTitleWeekly": "Paket Mingguan",
+  "planTitleMonthly": "Paket Bulanan",
+  "planTitleAnnual": "Paket Tahunan",
+  "planTitleLifetime": "Akses Selamanya",
+  "planTrialFree": "{count} {unit} gratis",
+  "@planTrialFree": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "planUnitDay": "hari",
+  "planUnitWeek": "minggu",
+  "planUnitMonth": "bulan",
+  "planUnitYear": "tahun",
+  "patternParticlePlace": "Partikel tempat",
+  "patternParticleObject": "Partikel objek",
+  "patternParticleTopic": "Partikel topik",
+  "patternWordOrderTime": "Urutan keterangan waktu",
+  "patternPoliteForm": "Bentuk sopan",
+  "patternPastForm": "Bentuk lampau",
+  "patternNegativeForm": "Bentuk negatif",
+  "patternCounterWord": "Kata bantu bilangan",
+  "kanaSectionTitle": "Segarkan hurufnya dulu",
+  "kanaSectionSubtitle": "Rujukan gratis, tanpa perlu sesi",
+  "kanaFreeBadge": "GRATIS",
+  "kanaHiragana": "Hiragana",
+  "kanaKatakana": "Katakana",
+  "kanaLetterCount": "{count} huruf",
+  "@kanaLetterCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "kanaSectionBase": "Gojūon · 46 huruf dasar",
+  "kanaSectionVoiced": "Dakuten · huruf bersuara",
+  "kanaSectionCombined": "Yōon · huruf gabungan",
+  "kanaUsageTitle": "Dipakai kapan?",
+  "kanaHiraganaUsage": "Hiragana adalah aksara dasar. Dipakai untuk kata asli Jepang, untuk partikel seperti は dan を, serta untuk akhiran kata kerja yang bentuknya terus berubah. Kalau kamu belum tahu kanji sebuah kata, hiragana adalah pilihan aman yang tetap dipahami semua orang.",
+  "kanaKatakanaUsage": "Katakana menandai kata yang datang dari luar bahasa Jepang — コーヒー untuk kopi, パソコン untuk komputer, dan nama asing termasuk namamu. Kamu juga akan menemuinya di menu, kemasan, dan papan petunjuk, serta dipakai untuk penekanan seperti fungsi huruf miring dalam Bahasa Indonesia.",
+  "kanaTipTitle": "Cara membacanya lebih cepat",
+  "kanaTipBody": "Baca mendatar per baris, jangan menurun: konsonannya tetap, yang berganti hanya vokalnya. Begitu satu baris terasa otomatis, lanjut ke baris berikutnya alih-alih menghafal seluruh bagan sekaligus.",
+  "homeGreetingMorning": "Ohayou, {name}!",
+  "@homeGreetingMorning": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreetingMidday": "Konnichiwa, {name}!",
+  "@homeGreetingMidday": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreetingAfternoon": "Konnichiwa, {name}!",
+  "@homeGreetingAfternoon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreetingEvening": "Konbanwa, {name}!",
+  "@homeGreetingEvening": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeSubtitleMorning": "Sesi singkat sekarang menentukan ritme harimu",
+  "homeSubtitleMidday": "Sepuluh menit di antara pekerjaan sudah cukup",
+  "homeSubtitleAfternoon": "Kalahkan kantuk sore dengan satu drill cepat",
+  "homeSubtitleEvening": "Tutup hari dengan mengunci apa yang sudah dilatih",
+  "settingsSectionReminder": "Pengingat harian",
+  "settingsReminderToggle": "Ingatkan saya berlatih",
+  "settingsReminderToggleBody": "Satu notifikasi sehari, otomatis dilewati kalau kamu sudah berlatih.",
+  "settingsReminderTime": "Jam pengingat",
+  "settingsReminderTimeValue": "Setiap hari pukul {time}",
+  "@settingsReminderTimeValue": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsReminderPermissionDenied": "Notifikasi DilSensei sedang dimatikan. Aktifkan dulu di pengaturan sistem.",
+  "reminderTitleWeakAccuracy": "{pattern} masih sering meleset",
+  "@reminderTitleWeakAccuracy": {
+    "placeholders": {
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderBodyWeakAccuracy": "Tiga menit cukup untuk memperbaikinya. Mau latih pola itu saja?",
+  "reminderTitleWeakSpeed": "{pattern} benar tapi lambat",
+  "@reminderTitleWeakSpeed": {
+    "placeholders": {
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderBodyWeakSpeed": "Benar belum berarti refleks. Satu sesi singkat akan mempercepatnya.",
+  "reminderTitleStreak": "Streak-mu sedang menunggu",
+  "reminderBodyStreak": "Satu sesi cukup untuk menjaganya. Lebih cepat daripada scrolling.",
+  "reminderTitleFirst": "Siap untuk latihan pertamamu?",
+  "reminderBodyFirst": "Lima menit, satu modul, dan ritmenya sudah mulai terasa.",
+  "recordUnlockedCta": "Lihat Training Record-mu",
+  "recordEntryTitle": "Training Record",
+  "recordEntrySubtitle": "Bukti bahwa kamu menuntaskan semua modul",
+  "recordEntryLocked": "{completed} dari {total} modul selesai",
+  "@recordEntryLocked": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "purchaseErrorPlanNotFound": "Paket itu sedang tidak tersedia.",
+  "purchaseErrorNotActive": "Langganan belum aktif.",
+  "purchaseErrorStore": "Store tidak bisa menyelesaikan pembelian.",
+  "purchaseErrorNotConfigured": "Pembelian belum tersedia di build ini."
+}

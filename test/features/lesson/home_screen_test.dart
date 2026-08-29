@@ -27,6 +27,7 @@ void main() {
 
   testWidgets('hero card memakai modul gratis pertama dan tidak diulang '
       'di daftar', (tester) async {
+    usePhoneViewport(tester);
     await tester.pumpWidget(buildTestApp());
     await pumpUntilLoaded(tester);
 
@@ -44,10 +45,11 @@ void main() {
   });
 
   testWidgets('tap modul gratis membuka layar sesi latihan', (tester) async {
+    usePhoneViewport(tester);
     await tester.pumpWidget(buildTestApp());
     await pumpUntilLoaded(tester);
 
-    await tester.tap(find.text('Frasa Perkenalan Diri'));
+    await tapModule(tester, 'Frasa Perkenalan Diri');
     await tester.pumpAndSettle();
 
     expect(find.byType(DrillSessionScreen), findsOneWidget);
@@ -63,6 +65,7 @@ void main() {
   testWidgets('state error menampilkan pesan dan tombol coba lagi', (
     tester,
   ) async {
+    usePhoneViewport(tester);
     await tester.pumpWidget(
       buildTestApp(repository: FakeLessonRepository(shouldFail: true)),
     );

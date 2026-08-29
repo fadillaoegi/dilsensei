@@ -1,29 +1,50 @@
+import '../../../l10n/app_localizations.dart';
+
 /// Tujuan belajar yang dipilih saat onboarding.
 ///
 /// Dipakai untuk menentukan urutan modul dan nada pesan pengingat.
 enum LearningGoal {
-  work('Untuk kerja', 'Frasa kantor, laporan, dan komunikasi tim'),
-  travel('Untuk jalan-jalan', 'Bertanya arah, memesan, dan berbelanja'),
-  culture('Untuk anime & budaya', 'Percakapan sehari-hari yang terasa alami'),
-  exam('Untuk ujian', 'Pola tata bahasa yang sering keluar di JLPT');
+  work,
+  travel,
+  culture,
+  exam;
 
-  const LearningGoal(this.label, this.description);
+  String labelFor(AppL10n l10n) => switch (this) {
+    LearningGoal.work => l10n.goalWorkLabel,
+    LearningGoal.travel => l10n.goalTravelLabel,
+    LearningGoal.culture => l10n.goalCultureLabel,
+    LearningGoal.exam => l10n.goalExamLabel,
+  };
 
-  final String label;
-  final String description;
+  String descriptionFor(AppL10n l10n) => switch (this) {
+    LearningGoal.work => l10n.goalWorkDescription,
+    LearningGoal.travel => l10n.goalTravelDescription,
+    LearningGoal.culture => l10n.goalCultureDescription,
+    LearningGoal.exam => l10n.goalExamDescription,
+  };
 }
 
 /// Target latihan harian dalam menit.
 enum DailyTarget {
-  light(5, 'Ringan', 'Cukup untuk menjaga streak'),
-  steady(10, 'Mantap', 'Paling banyak dipilih'),
-  intense(15, 'Serius', 'Untuk yang sedang dikejar tenggat');
+  light(5),
+  steady(10),
+  intense(15);
 
-  const DailyTarget(this.minutes, this.label, this.description);
+  const DailyTarget(this.minutes);
 
   final int minutes;
-  final String label;
-  final String description;
+
+  String labelFor(AppL10n l10n) => switch (this) {
+    DailyTarget.light => l10n.targetLightLabel,
+    DailyTarget.steady => l10n.targetSteadyLabel,
+    DailyTarget.intense => l10n.targetIntenseLabel,
+  };
+
+  String descriptionFor(AppL10n l10n) => switch (this) {
+    DailyTarget.light => l10n.targetLightDescription,
+    DailyTarget.steady => l10n.targetSteadyDescription,
+    DailyTarget.intense => l10n.targetIntenseDescription,
+  };
 }
 
 /// Preferensi hasil onboarding, disimpan lokal.

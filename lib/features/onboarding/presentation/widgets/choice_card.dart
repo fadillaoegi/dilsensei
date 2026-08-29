@@ -25,7 +25,9 @@ class ChoiceCard extends StatelessWidget {
       selected: isSelected,
       button: true,
       child: Material(
-        color: isSelected ? AppColors.secondary : AppColors.white,
+        color: isSelected
+            ? context.palette.surfaceAccent
+            : context.palette.surfaceCard,
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
           onTap: onTap,
@@ -38,8 +40,8 @@ class ChoiceCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: isSelected
-                    ? AppColors.primary
-                    : AppColors.primary.withValues(alpha: 0.14),
+                    ? context.palette.primary
+                    : context.palette.primary.withValues(alpha: 0.14),
                 width: isSelected ? 1.6 : 1,
               ),
             ),
@@ -54,8 +56,8 @@ class ChoiceCard extends StatelessWidget {
                         style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w700,
                           color: isSelected
-                              ? AppColors.primary
-                              : AppColors.textPrimary,
+                              ? context.palette.primary
+                              : context.palette.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -70,8 +72,8 @@ class ChoiceCard extends StatelessWidget {
                       : Icons.circle_outlined,
                   size: 22,
                   color: isSelected
-                      ? AppColors.primary
-                      : AppColors.primary.withValues(alpha: 0.25),
+                      ? context.palette.primary
+                      : context.palette.primary.withValues(alpha: 0.25),
                 ),
               ],
             ),

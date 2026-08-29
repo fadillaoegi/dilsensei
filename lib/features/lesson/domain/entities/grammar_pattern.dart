@@ -1,52 +1,23 @@
+import '../../../../l10n/app_localizations.dart';
+
 /// Pola tata bahasa yang dilatih dan dilacak saat pengguna salah.
 ///
-/// Pola inilah yang nanti membentuk "peta kelemahan": kesalahan tidak dicatat
-/// sebagai "salah", tapi sebagai pola apa yang belum jadi refleks.
-class GrammarPattern {
-  const GrammarPattern({required this.id, required this.label});
-
-  final String id;
-
-  /// Nama pola dalam Bahasa Indonesia, dipakai langsung di UI.
-  final String label;
-}
-
-/// Katalog pola yang dipakai konten drill saat ini.
+/// Pola inilah yang membentuk "peta kelemahan": kesalahan tidak dicatat sebagai
+/// "salah", tapi sebagai pola apa yang belum jadi refleks.
+///
+/// Label-nya sengaja tidak disimpan di sini melainkan di berkas ARB, karena
+/// harus mengikuti bahasa yang dipilih pengguna.
 abstract final class GrammarPatterns {
-  static const particlePlace = GrammarPattern(
-    id: 'particle_place',
-    label: 'Partikel tempat',
-  );
-  static const particleObject = GrammarPattern(
-    id: 'particle_object',
-    label: 'Partikel objek',
-  );
-  static const particleTopic = GrammarPattern(
-    id: 'particle_topic',
-    label: 'Partikel topik',
-  );
-  static const wordOrderTime = GrammarPattern(
-    id: 'word_order_time',
-    label: 'Urutan keterangan waktu',
-  );
-  static const politeForm = GrammarPattern(
-    id: 'polite_form',
-    label: 'Bentuk sopan',
-  );
-  static const pastForm = GrammarPattern(
-    id: 'past_form',
-    label: 'Bentuk lampau',
-  );
-  static const negativeForm = GrammarPattern(
-    id: 'negative_form',
-    label: 'Bentuk negatif',
-  );
-  static const counterWord = GrammarPattern(
-    id: 'counter_word',
-    label: 'Kata bantu bilangan',
-  );
+  static const particlePlace = 'particle_place';
+  static const particleObject = 'particle_object';
+  static const particleTopic = 'particle_topic';
+  static const wordOrderTime = 'word_order_time';
+  static const politeForm = 'polite_form';
+  static const pastForm = 'past_form';
+  static const negativeForm = 'negative_form';
+  static const counterWord = 'counter_word';
 
-  static const all = <GrammarPattern>[
+  static const all = <String>[
     particlePlace,
     particleObject,
     particleTopic,
@@ -57,10 +28,17 @@ abstract final class GrammarPatterns {
     counterWord,
   ];
 
-  static final _byId = <String, GrammarPattern>{
-    for (final pattern in all) pattern.id: pattern,
+  /// Nama pola sesuai bahasa aktif; id yang tidak dikenal ditampilkan apa adanya
+  /// supaya konten baru tidak membuat layar kosong.
+  static String labelOf(AppL10n l10n, String id) => switch (id) {
+    particlePlace => l10n.patternParticlePlace,
+    particleObject => l10n.patternParticleObject,
+    particleTopic => l10n.patternParticleTopic,
+    wordOrderTime => l10n.patternWordOrderTime,
+    politeForm => l10n.patternPoliteForm,
+    pastForm => l10n.patternPastForm,
+    negativeForm => l10n.patternNegativeForm,
+    counterWord => l10n.patternCounterWord,
+    _ => id,
   };
-
-  /// Mengembalikan label pola, atau id itu sendiri bila pola tidak dikenal.
-  static String labelOf(String id) => _byId[id]?.label ?? id;
 }

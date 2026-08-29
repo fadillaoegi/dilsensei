@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_theme.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/onboarding_preferences.dart';
 import '../providers/onboarding_controller.dart';
 import '../widgets/choice_card.dart';
@@ -120,8 +121,8 @@ class _StepIndicator extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(999),
                       color: Color.lerp(
-                        AppColors.secondary,
-                        AppColors.primary,
+                        context.palette.surfaceAccent,
+                        context.palette.primary,
                         value,
                       ),
                     ),
@@ -150,7 +151,9 @@ class _StepHeading extends StatelessWidget {
       children: [
         Text(
           title,
-          style: textTheme.headlineMedium?.copyWith(color: AppColors.primary),
+          style: textTheme.headlineMedium?.copyWith(
+            color: context.palette.primary,
+          ),
         ),
         const SizedBox(height: 8),
         Text(subtitle, style: textTheme.bodyMedium),
@@ -176,9 +179,9 @@ class _NameStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _StepHeading(
-          title: 'Kita mulai dari\nnamamu',
-          subtitle: 'Dipakai untuk menyapamu setiap kali membuka latihan.',
+        _StepHeading(
+          title: AppL10n.of(context).onboardingNameTitle,
+          subtitle: AppL10n.of(context).onboardingNameSubtitle,
         ),
         TextField(
           controller: controller,
@@ -188,8 +191,8 @@ class _NameStep extends StatelessWidget {
           textCapitalization: TextCapitalization.words,
           textInputAction: TextInputAction.done,
           maxLength: 24,
-          decoration: const InputDecoration(
-            hintText: 'Nama panggilan',
+          decoration: InputDecoration(
+            hintText: AppL10n.of(context).onboardingNameHint,
             counterText: '',
           ),
         ),
@@ -209,16 +212,16 @@ class _GoalStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _StepHeading(
-          title: 'Kenapa belajar\nbahasa Jepang?',
-          subtitle: 'Ini menentukan frasa mana yang kamu latih lebih dulu.',
+        _StepHeading(
+          title: AppL10n.of(context).onboardingGoalTitle,
+          subtitle: AppL10n.of(context).onboardingGoalSubtitle,
         ),
         for (final goal in LearningGoal.values)
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: ChoiceCard(
-              title: goal.label,
-              description: goal.description,
+              title: goal.labelFor(AppL10n.of(context)),
+              description: goal.descriptionFor(AppL10n.of(context)),
               isSelected: goal == selected,
               onTap: () => onSelect(goal),
             ),
@@ -239,16 +242,19 @@ class _TargetStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _StepHeading(
-          title: 'Berapa menit\nsehari?',
-          subtitle: 'Refleks tumbuh dari rutinitas pendek yang tidak bolong.',
+        _StepHeading(
+          title: AppL10n.of(context).onboardingTargetTitle,
+          subtitle: AppL10n.of(context).onboardingTargetSubtitle,
         ),
         for (final target in DailyTarget.values)
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: ChoiceCard(
-              title: '${target.minutes} menit · ${target.label}',
-              description: target.description,
+              title: AppL10n.of(context).targetMinutes(
+                target.minutes,
+                target.labelFor(AppL10n.of(context)),
+              ),
+              description: target.descriptionFor(AppL10n.of(context)),
               isSelected: target == selected,
               onTap: () => onSelect(target),
             ),
@@ -278,7 +284,7 @@ class _OnboardingFooter extends StatelessWidget {
           if (draft.step > 0)
             TextButton(
               onPressed: draft.isSaving ? null : onBack,
-              child: const Text('Kembali'),
+              child: Text(AppL10n.of(context).commonBack),
             ),
           const Spacer(),
           SizedBox(
@@ -287,15 +293,19 @@ class _OnboardingFooter extends StatelessWidget {
             child: ElevatedButton(
               onPressed: draft.canContinue && !draft.isSaving ? onNext : null,
               child: draft.isSaving
-                  ? const SizedBox(
+                  ? SizedBox(
                       height: 20,
                       width: 20,
                       child: CircularProgressIndicator(
                         strokeWidth: 2.2,
-                        color: AppColors.white,
+                        color: context.palette.onPrimary,
                       ),
                     )
-                  : Text(draft.isLastStep ? 'Mulai Berlatih' : 'Lanjut'),
+                  : Text(
+                      draft.isLastStep
+                          ? AppL10n.of(context).onboardingStart
+                          : AppL10n.of(context).commonNext,
+                    ),
             ),
           ),
         ],

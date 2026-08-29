@@ -10,9 +10,6 @@ class MockLessonRepository implements LessonRepository {
     this.networkDelay = const Duration(milliseconds: 900),
   });
 
-  /// Jumlah butir maksimal per sesi agar durasinya tetap 5–10 menit.
-  static const itemsPerSession = 8;
-
   final LessonLocalDataSource dataSource;
 
   /// Simulasi latensi jaringan supaya state loading benar-benar teruji.
@@ -27,8 +24,9 @@ class MockLessonRepository implements LessonRepository {
   @override
   Future<List<DrillItem>> getDrillItems(String moduleId) async {
     await Future<void>.delayed(networkDelay);
-    final items = await dataSource.fetchDrillItems(moduleId);
 
-    return items.take(itemsPerSession).toList(growable: false);
+    // Jumlah butir per sesi ditentukan di layer presentation, mengikuti target
+    // harian pengguna, bukan dipaku di repository.
+    return dataSource.fetchDrillItems(moduleId);
   }
 }

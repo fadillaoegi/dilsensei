@@ -49,5 +49,6 @@ android/key.properties
 *.jks
 *.keystore
 revenuecat-key.json
+dart_defines.json
 *.p8
 *.p12

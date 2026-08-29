@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/analytics/analytics_providers.dart';
+import '../../../../core/analytics/analytics_service.dart';
 import '../../../../core/monetization/domain/subscription_models.dart';
 import '../../../../core/monetization/monetization_config.dart';
 import '../../../../core/monetization/monetization_providers.dart';
+import '../../../../core/monetization/purchase_messages.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../widgets/pricing_card.dart';
 
 /// Paywall langganan.
@@ -20,19 +24,26 @@ class PaywallScreen extends ConsumerStatefulWidget {
 }
 
 class _PaywallScreenState extends ConsumerState<PaywallScreen> {
-  static const _benefits = <String>[
-    'Seluruh modul dan sesi tanpa batas harian',
-    'Peta pola kelemahan lengkap, bukan ringkasan',
-    'Sesi otomatis dari pola yang belum jadi refleks',
-    'Riwayat skor refleks dan perkembangan mingguan',
-  ];
+  @override
+  void initState() {
+    super.initState();
+    // Dicatat sekali saat paywall dibuka, bukan pada setiap rebuild.
+    ref.read(analyticsServiceProvider).log(AnalyticsEvent.paywallViewed);
+  }
 
   String? _selectedPlanId;
   bool _isProcessing = false;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppL10n.of(context);
     final plansAsync = ref.watch(subscriptionPlansProvider);
+    final benefits = <String>[
+      l10n.paywallBenefitModules,
+      l10n.paywallBenefitMap,
+      l10n.paywallBenefitAuto,
+      l10n.paywallBenefitHistory,
+    ];
 
     return Scaffold(
       body: SafeArea(
@@ -48,26 +59,25 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 16),
+                    if (MonetizationConfig.isUsingTestStore)
+                      const _TestStoreBanner(),
                     Text(
-                      'Buka\nPotensi\nPenuhmu',
+                      l10n.paywallHeadline,
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        color: AppColors.primary,
+                        color: context.palette.primary,
                         height: 1.05,
                       ),
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'Jangan biarkan memori ototmu terputus. Latih pola yang '
-                      'masih membuatmu ragu, sampai bahasa Jepang keluar tanpa '
-                      'kamu pikirkan.',
+                      l10n.paywallBody,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: AppColors.textSecondary,
+                        color: context.palette.textSecondary,
                         height: 1.6,
                       ),
                     ),
                     const SizedBox(height: 32),
-                    for (final benefit in _benefits)
-                      _BenefitRow(label: benefit),
+                    for (final benefit in benefits) _BenefitRow(label: benefit),
                     const SizedBox(height: 24),
                     _PlanSection(
                       plansAsync: plansAsync,
@@ -104,26 +114,44 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   }
 
   Future<void> _purchase(List<SubscriptionPlan>? plans) async {
+    final l10n = AppL10n.of(context);
     final planId = _resolvePlanId(plans);
     if (planId == null || _isProcessing) return;
 
     setState(() => _isProcessing = true);
+    final analytics = ref.read(analyticsServiceProvider);
+    await analytics.log(
+      AnalyticsEvent.purchaseStarted,
+      parameters: <String, Object>{'plan_id': planId},
+    );
+
     final result = await ref.read(subscriptionServiceProvider).purchase(planId);
     if (!mounted) return;
     setState(() => _isProcessing = false);
 
     switch (result.outcome) {
       case PurchaseOutcome.success:
-        _showMessage('Langganan aktif. Selamat berlatih!');
+        // Analytics tidak di-await sebelum navigasi supaya BuildContext tidak
+        // dipakai melewati async gap; pencatatannya tetap terkirim.
+        analytics.log(
+          AnalyticsEvent.purchaseCompleted,
+          parameters: <String, Object>{'plan_id': planId},
+        );
+        _showMessage(l10n.paywallPurchaseSuccess);
         Navigator.of(context).pop();
       case PurchaseOutcome.cancelled:
         break;
       case PurchaseOutcome.failed:
-        _showMessage(result.message ?? 'Pembelian gagal.');
+        analytics.log(
+          AnalyticsEvent.purchaseFailed,
+          parameters: <String, Object>{'reason': result.failure.name},
+        );
+        _showMessage(purchaseFailureMessage(l10n, result));
     }
   }
 
   Future<void> _restore() async {
+    final l10n = AppL10n.of(context);
     if (_isProcessing) return;
 
     setState(() => _isProcessing = true);
@@ -134,19 +162,20 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     setState(() => _isProcessing = false);
 
     if (result.isSuccess) {
-      _showMessage('Langganan berhasil dipulihkan.');
+      _showMessage(l10n.settingsRestoreSuccess);
       Navigator.of(context).pop();
       return;
     }
 
-    _showMessage(result.message ?? 'Tidak ada langganan untuk dipulihkan.');
+    _showMessage(purchaseFailureMessage(l10n, result));
   }
 
   Future<void> _openLink(String url) async {
+    final l10n = AppL10n.of(context);
     final uri = Uri.parse(url);
     final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!opened && mounted) {
-      _showMessage('Tidak bisa membuka $url');
+      _showMessage(l10n.settingsCannotOpen(url));
     }
   }
 
@@ -154,6 +183,46 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
       ..showSnackBar(SnackBar(content: Text(message)));
+  }
+}
+
+/// Penanda bahwa app memakai Test Store RevenueCat.
+///
+/// Sengaja mencolok: pembelian di Test Store tidak menagih uang, jadi kalau
+/// banner ini pernah terlihat di rilis produksi, berarti key-nya salah dan
+/// seluruh konten premium sedang dibagikan gratis.
+class _TestStoreBanner extends StatelessWidget {
+  const _TestStoreBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: context.palette.error.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: context.palette.error.withValues(alpha: 0.35),
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.science_outlined, size: 18, color: context.palette.error),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              AppL10n.of(context).paywallTestStore,
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                color: context.palette.error,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -171,8 +240,8 @@ class _PaywallHeader extends StatelessWidget {
           IconButton(
             onPressed: onClose,
             icon: const Icon(Icons.close_rounded),
-            color: AppColors.textSecondary,
-            tooltip: 'Tutup',
+            color: context.palette.textSecondary,
+            tooltip: AppL10n.of(context).commonClose,
           ),
         ],
       ),
@@ -197,7 +266,7 @@ class _PlanSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return plansAsync.when(
       loading: () => Text(
-        'Mengambil harga dari store...',
+        AppL10n.of(context).paywallPricesLoading,
         style: Theme.of(context).textTheme.bodyMedium,
       ),
       error: (error, _) => _PlansUnavailable(onRetry: onRetry),
@@ -240,24 +309,29 @@ class _PlansUnavailable extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.16)),
+        border: Border.all(
+          color: context.palette.primary.withValues(alpha: 0.16),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Harga belum bisa ditampilkan',
+            AppL10n.of(context).paywallPricesErrorTitle,
             style: Theme.of(
               context,
             ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 6),
           Text(
-            'Periksa koneksimu, lalu muat ulang daftar paket.',
+            AppL10n.of(context).paywallPricesErrorBody,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 12),
-          OutlinedButton(onPressed: onRetry, child: const Text('Muat Ulang')),
+          OutlinedButton(
+            onPressed: onRetry,
+            child: Text(AppL10n.of(context).commonReload),
+          ),
         ],
       ),
     );
@@ -276,7 +350,7 @@ class _BenefitRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.check_rounded, size: 20, color: AppColors.primary),
+          Icon(Icons.check_rounded, size: 20, color: context.palette.primary),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
@@ -319,41 +393,42 @@ class _PaywallFooter extends StatelessWidget {
             child: ElevatedButton(
               onPressed: isProcessing || !canPurchase ? null : onPurchase,
               child: isProcessing
-                  ? const SizedBox(
+                  ? SizedBox(
                       height: 22,
                       width: 22,
                       child: CircularProgressIndicator(
                         strokeWidth: 2.4,
-                        color: AppColors.white,
+                        color: context.palette.onPrimary,
                       ),
                     )
-                  : const Text('Mulai Langganan'),
+                  : Text(AppL10n.of(context).paywallCta),
             ),
           ),
           const SizedBox(height: 4),
           TextButton(
             onPressed: isProcessing ? null : onRestore,
-            child: const Text('Restore Purchases'),
+            child: Text(AppL10n.of(context).paywallRestore),
           ),
           Text(
-            'Langganan diperpanjang otomatis sampai dibatalkan. '
-            'Pembatalan dilakukan lewat pengaturan akun store.',
+            AppL10n.of(context).paywallDisclosure,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 6),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          // Wrap, bukan Row: pada ponsel sempit kedua tautan tidak muat satu baris.
+          Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               TextButton(
                 onPressed: () => onOpenLink(MonetizationConfig.termsUrl),
-                child: const Text('Terms of Use'),
+                child: Text(AppL10n.of(context).settingsTerms),
               ),
               Text('·', style: Theme.of(context).textTheme.bodySmall),
               TextButton(
                 onPressed: () =>
                     onOpenLink(MonetizationConfig.privacyPolicyUrl),
-                child: const Text('Privacy Policy'),
+                child: Text(AppL10n.of(context).settingsPrivacy),
               ),
             ],
           ),

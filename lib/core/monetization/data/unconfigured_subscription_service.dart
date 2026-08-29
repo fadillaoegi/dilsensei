@@ -30,14 +30,16 @@ class UnconfiguredSubscriptionService implements SubscriptionService {
   @override
   Future<PurchaseResult> purchase(String planId) async {
     return const PurchaseResult.failed(
-      'Pembelian belum tersedia. Konfigurasi RevenueCat belum dipasang.',
+      null,
+      failure: PurchaseFailure.notConfigured,
     );
   }
 
   @override
   Future<PurchaseResult> restorePurchases() async {
     return const PurchaseResult.failed(
-      'Restore belum tersedia. Konfigurasi RevenueCat belum dipasang.',
+      null,
+      failure: PurchaseFailure.notConfigured,
     );
   }
 }

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/lesson_module.dart';
 
 /// Item daftar pada section "Peta Belajarmu".
 class LessonListItem extends StatelessWidget {
   const LessonListItem({
     required this.module,
+    required this.title,
+    required this.subtitle,
     required this.onTap,
     this.isUnlocked = false,
     super.key,
@@ -16,6 +19,10 @@ class LessonListItem extends StatelessWidget {
   static const lockAccent = Color(0xFFB08968);
 
   final LessonModule module;
+
+  /// Judul dan subtitle sudah diselesaikan sesuai bahasa aktif.
+  final String title;
+  final String subtitle;
   final VoidCallback onTap;
 
   /// True bila entitlement premium aktif, sehingga kunci tidak perlu tampil.
@@ -26,7 +33,7 @@ class LessonListItem extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Material(
-      color: AppColors.white,
+      color: context.palette.surfaceCard,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: onTap,
@@ -36,7 +43,7 @@ class LessonListItem extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: AppColors.primary.withValues(alpha: 0.12),
+              color: context.palette.primary.withValues(alpha: 0.12),
             ),
           ),
           child: Row(
@@ -45,12 +52,12 @@ class LessonListItem extends StatelessWidget {
                 height: 44,
                 width: 44,
                 decoration: BoxDecoration(
-                  color: AppColors.secondary,
+                  color: context.palette.surfaceAccent,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.play_arrow_rounded,
-                  color: AppColors.primary,
+                  color: context.palette.primary,
                 ),
               ),
               const SizedBox(width: 14),
@@ -59,14 +66,14 @@ class LessonListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      module.title,
+                      title,
                       style: textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      module.subtitle,
+                      subtitle,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: textTheme.bodySmall,
@@ -92,9 +99,11 @@ class _TrailingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppL10n.of(context);
+
     if (module.isPremium && !isUnlocked) {
       return Semantics(
-        label: 'Modul premium, perlu langganan',
+        label: l10n.homePremiumSemantics,
         child: const Icon(
           Icons.lock_rounded,
           size: 20,
@@ -104,10 +113,10 @@ class _TrailingIndicator extends StatelessWidget {
     }
 
     return Text(
-      '${module.durationMinutes} mnt',
+      l10n.homeMinutesShort(module.durationMinutes),
       style: Theme.of(
         context,
-      ).textTheme.labelMedium?.copyWith(color: AppColors.textSecondary),
+      ).textTheme.labelMedium?.copyWith(color: context.palette.textSecondary),
     );
   }
 }

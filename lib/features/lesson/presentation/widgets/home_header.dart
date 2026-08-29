@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../domain/services/day_parts.dart';
 
 /// Sapaan pengguna di kiri, indikator streak di kanan.
+///
+/// Sapaannya mengikuti waktu setempat: Ohayou pada pagi, Konnichiwa pada siang
+/// dan sore, Konbanwa pada malam.
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
     required this.userName,
     required this.streakDays,
+    required this.dayPart,
     super.key,
   });
 
   final String userName;
   final int streakDays;
+  final DayPart dayPart;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppL10n.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     return Row(
@@ -25,16 +33,13 @@ class HomeHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Konnichiwa, $userName!',
+                _greeting(l10n),
                 style: textTheme.headlineMedium?.copyWith(
-                  color: AppColors.primary,
+                  color: context.palette.primary,
                 ),
               ),
               const SizedBox(height: 6),
-              Text(
-                'Waktunya melatih memori ototmu',
-                style: textTheme.bodyMedium,
-              ),
+              Text(_subtitle(l10n), style: textTheme.bodyMedium),
             ],
           ),
         ),
@@ -43,6 +48,22 @@ class HomeHeader extends StatelessWidget {
       ],
     );
   }
+
+  /// Bahasa Jepang hanya punya tiga sapaan waktu, jadi siang dan sore sama-sama
+  /// memakai Konnichiwa. Yang membedakan keduanya adalah subjudulnya.
+  String _greeting(AppL10n l10n) => switch (dayPart) {
+    DayPart.morning => l10n.homeGreetingMorning(userName),
+    DayPart.midday => l10n.homeGreetingMidday(userName),
+    DayPart.afternoon => l10n.homeGreetingAfternoon(userName),
+    DayPart.evening => l10n.homeGreetingEvening(userName),
+  };
+
+  String _subtitle(AppL10n l10n) => switch (dayPart) {
+    DayPart.morning => l10n.homeSubtitleMorning,
+    DayPart.midday => l10n.homeSubtitleMidday,
+    DayPart.afternoon => l10n.homeSubtitleAfternoon,
+    DayPart.evening => l10n.homeSubtitleEvening,
+  };
 }
 
 class _StreakIndicator extends StatelessWidget {
@@ -53,22 +74,22 @@ class _StreakIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: 'Streak $days hari',
+      label: AppL10n.of(context).homeStreakSemantics(days),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
-          color: AppColors.secondary,
+          color: context.palette.surfaceAccent,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.eco, size: 18, color: AppColors.primary),
+            Icon(Icons.eco, size: 18, color: context.palette.primary),
             const SizedBox(width: 6),
             Text(
               '$days',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AppColors.primary,
+                color: context.palette.primary,
                 fontWeight: FontWeight.w700,
               ),
             ),

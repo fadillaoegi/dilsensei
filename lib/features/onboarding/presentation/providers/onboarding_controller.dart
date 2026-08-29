@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/analytics/analytics_providers.dart';
+import '../../../../core/analytics/analytics_service.dart';
 import '../../data/datasources/onboarding_local_data_source.dart';
 import '../../domain/onboarding_preferences.dart';
 
@@ -63,10 +65,14 @@ class OnboardingDraft {
 }
 
 class OnboardingController extends StateNotifier<OnboardingDraft> {
-  OnboardingController({required this.dataSource, required this.onCompleted})
-    : super(const OnboardingDraft());
+  OnboardingController({
+    required this.dataSource,
+    required this.onCompleted,
+    required this.analytics,
+  }) : super(const OnboardingDraft());
 
   final OnboardingLocalDataSource dataSource;
+  final AnalyticsService analytics;
 
   /// Dipanggil setelah preferensi tersimpan, untuk menyegarkan provider.
   final void Function() onCompleted;
@@ -104,6 +110,13 @@ class OnboardingController extends StateNotifier<OnboardingDraft> {
 
     if (!mounted) return;
     state = state.copyWith(isSaving: false);
+    await analytics.log(
+      AnalyticsEvent.onboardingCompleted,
+      parameters: <String, Object>{
+        'goal': (state.goal ?? LearningGoal.culture).name,
+        'daily_minutes': (state.dailyTarget ?? DailyTarget.steady).minutes,
+      },
+    );
     onCompleted();
   }
 }
@@ -114,6 +127,7 @@ final onboardingControllerProvider =
     ) {
       return OnboardingController(
         dataSource: ref.watch(onboardingDataSourceProvider),
+        analytics: ref.watch(analyticsServiceProvider),
         onCompleted: () => ref.invalidate(onboardingPreferencesProvider),
       );
     });

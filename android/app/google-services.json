@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "550710469257",
+    "project_id": "dilsensei-9254a",
+    "storage_bucket": "dilsensei-9254a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550710469257:android:847c07765ca9755a809c58",
+        "android_client_info": {
+          "package_name": "com.fldev.dilsensei"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMwZLc2VQbygREkhreehEwfn8XiDhQvxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

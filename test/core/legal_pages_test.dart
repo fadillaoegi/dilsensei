@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dilsensei/core/monetization/monetization_config.dart';
@@ -9,6 +10,23 @@ void main() {
   group('MonetizationConfig', () {
     test('entitlement id sesuai dashboard RevenueCat', () {
       expect(MonetizationConfig.entitlementId, 'pro');
+    });
+
+    test('key Test Store dikenali dari awalannya', () {
+      expect(MonetizationConfig.isTestKey('test_contohKeyTestStore'), isTrue);
+      expect(MonetizationConfig.isTestKey('goog_abc123'), isFalse);
+      expect(MonetizationConfig.isTestKey('appl_abc123'), isFalse);
+      expect(MonetizationConfig.isTestKey(''), isFalse);
+    });
+
+    test('key Test Store didahulukan atas key platform bila tersedia', () {
+      // Tanpa dart-define, testStoreKey kosong sehingga key platform dipakai.
+      expect(
+        MonetizationConfig.resolveApiKey(platformKey: 'goog_produksi'),
+        'goog_produksi',
+      );
+      expect(MonetizationConfig.resolveApiKey(platformKey: ''), isEmpty);
+      expect(MonetizationConfig.isUsingTestStore, isFalse);
     });
 
     test('URL legal tersusun ke halaman yang tepat', () {
@@ -70,6 +88,94 @@ void main() {
 
       expect(privacy, contains('RevenueCat'));
       expect(privacy, contains('Google Play'));
+    });
+
+    test('konfigurasi hosting tidak menerbitkan berkas internal', () {
+      // docs/ memuat materi submission yang bersifat internal: strategi
+      // kategori lomba dan daftar celah yang diketahui. Hosting docs/ apa
+      // adanya akan membocorkan semuanya, jadi dua aturan ignore menjaganya dan
+      // test ini memastikan aturan itu tidak hilang saat konfigurasi disunting.
+      final config =
+          jsonDecode(File('firebase.json').readAsStringSync())
+              as Map<String, dynamic>;
+      final hosting = config['hosting'] as Map<String, dynamic>;
+      final ignore = (hosting['ignore'] as List<dynamic>).cast<String>();
+
+      expect(hosting['public'], 'docs');
+      expect(ignore, contains('**/submission/**'));
+      expect(ignore, contains('**/*.md'));
+    });
+
+    test('hanya halaman legal yang akan terbit', () {
+      // Berkas apa pun di docs/ yang bukan .html atau .css harus berada di
+      // dalam submission/, sehingga kedua aturan ignore cukup untuk menutupinya.
+      final leaking = <String>[];
+
+      for (final entity in Directory('docs').listSync(recursive: true)) {
+        if (entity is! File) continue;
+
+        final path = entity.path.replaceAll(r'\\', '/');
+        final isPublicType = path.endsWith('.html') || path.endsWith('.css');
+        final isInternal =
+            path.contains('/submission/') || path.endsWith('.md');
+
+        if (!isPublicType && !isInternal) leaking.add(path);
+      }
+
+      expect(
+        leaking,
+        isEmpty,
+        reason:
+            'berkas ini akan ikut terbit ke internet padahal bukan halaman '
+            'legal: ${leaking.join(', ')}',
+      );
+    });
+
+    test('Privacy menyebut setiap SDK yang memproses data', () {
+      // Penjaga konsistensi antara kode dan kebijakan. Menambahkan SDK tanpa
+      // memperbarui halaman ini adalah pelanggaran deklarasi Play, dan itu
+      // ditemukan saat review — bukan saat coding.
+      final pubspec = File('pubspec.yaml').readAsStringSync();
+      final privacy = File(
+        'docs/privacy.html',
+      ).readAsStringSync().toLowerCase();
+
+      final rules = <String, List<String>>{
+        'purchases_flutter': ['revenuecat'],
+        'firebase_analytics': ['analytics'],
+        'flutter_local_notifications': ['reminder'],
+      };
+
+      for (final entry in rules.entries) {
+        if (!pubspec.contains('${entry.key}:')) continue;
+
+        for (final keyword in entry.value) {
+          expect(
+            privacy,
+            contains(keyword),
+            reason:
+                'pubspec memuat ${entry.key} tapi docs/privacy.html tidak '
+                'menyebut "$keyword"',
+          );
+        }
+      }
+    });
+
+    test('Privacy tidak mengklaim hal yang sudah tidak benar', () {
+      final pubspec = File('pubspec.yaml').readAsStringSync();
+      final privacy = File(
+        'docs/privacy.html',
+      ).readAsStringSync().toLowerCase();
+
+      if (pubspec.contains('firebase_analytics:')) {
+        // Klaim ini pernah ada di halaman dan menjadi salah begitu Analytics
+        // dipasang.
+        expect(
+          privacy,
+          isNot(contains('no analytics')),
+          reason: 'halaman masih mengaku tanpa analytics padahal SDK-nya ada',
+        );
+      }
     });
 
     // Dihitung saat pengumpulan test supaya bisa menentukan status skip.

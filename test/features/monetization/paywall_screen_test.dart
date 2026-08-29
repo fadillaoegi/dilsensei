@@ -11,12 +11,13 @@ Future<void> _openPaywall(
   WidgetTester tester, {
   FakeSubscriptionService? service,
 }) async {
+  usePhoneViewport(tester);
   await tester.pumpWidget(
     buildTestApp(subscriptionService: service ?? FakeSubscriptionService()),
   );
   await pumpUntilLoaded(tester);
 
-  await tester.tap(find.text('Angka & Jam'));
+  await tapModule(tester, 'Angka & Jam');
   await tester.pumpAndSettle();
 }
 

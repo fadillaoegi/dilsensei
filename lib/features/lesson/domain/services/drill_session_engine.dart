@@ -1,5 +1,6 @@
 import '../entities/drill_attempt.dart';
 import '../entities/drill_item.dart';
+import '../entities/pattern_event.dart';
 
 /// Ringkasan hasil satu sesi.
 class SessionSummary {
@@ -10,6 +11,7 @@ class SessionSummary {
     required this.medianResponseTime,
     required this.weakPatterns,
     required this.reflexScore,
+    required this.patternObservations,
   });
 
   final int plannedCount;
@@ -26,6 +28,10 @@ class SessionSummary {
 
   /// Skor refleks 0–100: gabungan akurasi percobaan pertama dan kecepatan.
   final int reflexScore;
+
+  /// Satu pengamatan per pasangan percobaan dan pola, dipakai untuk membangun
+  /// peta kelemahan yang memudar seiring waktu.
+  final List<PatternObservation> patternObservations;
 
   double get accuracy => plannedCount == 0 ? 0 : firstTryCorrect / plannedCount;
 }
@@ -192,6 +198,16 @@ abstract final class DrillSessionEngine {
 
     final median = _median(correctDurations);
 
+    final observations = <PatternObservation>[
+      for (final attempt in state.attempts)
+        for (final patternId in attempt.patternIds)
+          PatternObservation(
+            patternId: patternId,
+            wasCorrect: attempt.isCorrect,
+            responseTime: attempt.responseTime,
+          ),
+    ];
+
     return SessionSummary(
       plannedCount: state.plannedCount,
       firstTryCorrect: firstTryCorrect,
@@ -204,6 +220,7 @@ abstract final class DrillSessionEngine {
             : firstTryCorrect / state.plannedCount,
         median: median,
       ),
+      patternObservations: List<PatternObservation>.unmodifiable(observations),
     );
   }
 

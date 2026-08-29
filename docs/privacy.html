@@ -20,14 +20,16 @@
 
       <main>
         <h1>Privacy Policy</h1>
-        <p class="updated">Last updated: 28 August 2026</p>
+        <p class="updated">Last updated: 29 August 2026</p>
 
         <div class="callout">
           <p>
             <strong>The short version.</strong> DilSensei has no accounts and no
             sign-in. Your learning progress stays on your device. We do not sell
-            your data, we do not show ads, and we do not run any analytics or
-            tracking SDK.
+            your data and we do not show ads. We do use Google Analytics for
+            Firebase to count anonymous usage events, with advertising-ID
+            collection switched off. Daily reminders, if you turn them on, are
+            scheduled by your own device and involve no server.
           </p>
         </div>
 
@@ -91,29 +93,70 @@
           >.
         </p>
 
-        <h2>4. What we do not do</h2>
+        <h2>4. Usage analytics</h2>
+        <p>
+          We use Google Analytics for Firebase to understand how the app is used
+          in aggregate. It records events such as completing onboarding,
+          finishing a practice session, opening the paywall, and the outcome of a
+          purchase attempt, together with a Firebase-generated installation
+          identifier and basic device and country information.
+        </p>
+        <p>
+          Two limits we set deliberately: advertising-ID collection is disabled in
+          the app manifest, and we never attach your nickname, your lesson
+          answers, or any other content you type to an analytics event.
+        </p>
+        <p>
+          Analytics collection is enabled only in released builds. See
+          <a href="https://firebase.google.com/support/privacy" rel="noopener"
+            >Firebase's privacy documentation</a
+          >.
+        </p>
+
+        <h2>5. Practice reminders</h2>
+        <p>
+          You can switch on a daily practice reminder in Settings. The reminder is
+          scheduled and shown entirely by your own device using Android's
+          notification system. It does not involve any server, and we do not
+          receive a push token or any delivery information.
+        </p>
+        <p>
+          The reminder text may name the grammar pattern you are currently
+          weakest at, for example "Place particle is still slipping". That text is
+          composed on your device from data that never leaves it. Android may
+          display it on your lock screen, so turn the reminder off if you would
+          rather it not appear there.
+        </p>
+        <p>
+          The reminder is off by default and asks for notification permission only
+          when you turn it on. Denying the permission leaves the rest of the app
+          fully usable.
+        </p>
+
+        <h2>6. What we do not do</h2>
         <ul>
-          <li>No advertising and no advertising identifiers.</li>
-          <li>No analytics, attribution, or crash reporting SDK.</li>
+          <li>No advertising, and no advertising identifiers.</li>
+          <li>No crash reporting SDK.</li>
           <li>No sale or sharing of personal data with data brokers.</li>
           <li>No access to your contacts, photos, location, or microphone.</li>
           <li>No account, so no password to be leaked.</li>
         </ul>
 
-        <h2>5. Internet access</h2>
+        <h2>7. Internet access</h2>
         <p>
           Lesson content and fonts are bundled inside the app, so practice works
-          offline. The app connects to the internet only to verify your
-          subscription status and to load subscription prices on the paywall.
+          offline. The app connects to the internet to verify your subscription
+          status, to load subscription prices on the paywall, and to send the
+          anonymous usage events described in section 4.
         </p>
 
-        <h2>6. Children</h2>
+        <h2>8. Children</h2>
         <p>
           DilSensei is not directed to children under 13. We do not knowingly
           collect personal information from children.
         </p>
 
-        <h2>7. Your choices and rights</h2>
+        <h2>9. Your choices and rights</h2>
         <ul>
           <li>
             You can erase everything we store by deleting the app or clearing its
@@ -131,21 +174,21 @@
           </li>
         </ul>
 
-        <h2>8. Data retention</h2>
+        <h2>10. Data retention</h2>
         <p>
           Purchase records are retained by RevenueCat and Google Play for as long
           as needed to provide the subscription and to meet legal, tax, and
           accounting obligations.
         </p>
 
-        <h2>9. Changes to this policy</h2>
+        <h2>11. Changes to this policy</h2>
         <p>
-          If we add features that process new data, such as push notifications,
-          we will update this page and change the date above before the feature
-          is released.
+          If we add features that process new data, such as server-sent push
+          notifications or crash reporting, we will update this page and change
+          the date above before the feature is released.
         </p>
 
-        <h2>10. Contact</h2>
+        <h2>12. Contact</h2>
         <p>
           Questions about this policy:
           <a href="mailto:REPLACE_WITH_SUPPORT_EMAIL"

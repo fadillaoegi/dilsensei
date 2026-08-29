@@ -1,3 +1,22 @@
+import 'pattern_event.dart';
+
+/// Satu catatan sesi yang sudah tuntas, untuk halaman riwayat.
+class SessionRecord {
+  const SessionRecord({
+    required this.date,
+    required this.reflexScore,
+    required this.firstTryCorrect,
+    required this.plannedCount,
+  });
+
+  final DateTime date;
+  final int reflexScore;
+  final int firstTryCorrect;
+  final int plannedCount;
+
+  double get accuracy => plannedCount == 0 ? 0 : firstTryCorrect / plannedCount;
+}
+
 /// Progres belajar yang disimpan lokal di perangkat.
 class LearningProgress {
   const LearningProgress({
@@ -5,7 +24,10 @@ class LearningProgress {
     required this.lastSessionDate,
     required this.totalSessions,
     required this.bestReflexScore,
-    required this.patternMissCounts,
+    required this.patternEvents,
+    required this.sessionsToday,
+    required this.recentSessions,
+    required this.completedModuleIds,
   });
 
   const LearningProgress.empty()
@@ -13,7 +35,17 @@ class LearningProgress {
       lastSessionDate = null,
       totalSessions = 0,
       bestReflexScore = 0,
-      patternMissCounts = const <String, int>{};
+      patternEvents = const <PatternEvent>[],
+      sessionsToday = 0,
+      completedModuleIds = const <String>{},
+      recentSessions = const <SessionRecord>[];
+
+  /// Jumlah maksimal catatan sesi yang disimpan agar penyimpanan tidak tumbuh
+  /// tanpa batas.
+  static const maxRecentSessions = 30;
+
+  /// Batas jumlah peristiwa pola yang disimpan agar penyimpanan tetap kecil.
+  static const maxPatternEvents = 400;
 
   final int streakDays;
 
@@ -22,30 +54,42 @@ class LearningProgress {
   final int totalSessions;
   final int bestReflexScore;
 
-  /// Akumulasi kesalahan per pola sepanjang waktu, bukan hanya satu sesi.
-  final Map<String, int> patternMissCounts;
+  /// Riwayat pengamatan pola, terbaru di depan.
+  ///
+  /// Disimpan sebagai peristiwa bertanggal agar kesalahan lama bisa memudar dan
+  /// waktu respons ikut diperhitungkan saat menyusun peta kelemahan.
+  final List<PatternEvent> patternEvents;
 
-  /// Pola terlemah sepanjang waktu, terurut dari paling sering salah.
-  List<String> get weakestPatternIds {
-    final entries = patternMissCounts.entries.toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
+  /// Jumlah sesi yang diselesaikan pada [lastSessionDate].
+  final int sessionsToday;
 
-    return entries.map((entry) => entry.key).toList(growable: false);
-  }
+  /// Riwayat sesi terbaru, terurut dari yang paling baru.
+  final List<SessionRecord> recentSessions;
+
+  /// Modul yang pernah diselesaikan minimal satu sesi.
+  ///
+  /// Dipakai sebagai syarat kelayakan Training Record.
+  final Set<String> completedModuleIds;
 
   LearningProgress copyWith({
     int? streakDays,
     DateTime? lastSessionDate,
     int? totalSessions,
     int? bestReflexScore,
-    Map<String, int>? patternMissCounts,
+    List<PatternEvent>? patternEvents,
+    int? sessionsToday,
+    List<SessionRecord>? recentSessions,
+    Set<String>? completedModuleIds,
   }) {
     return LearningProgress(
       streakDays: streakDays ?? this.streakDays,
       lastSessionDate: lastSessionDate ?? this.lastSessionDate,
       totalSessions: totalSessions ?? this.totalSessions,
       bestReflexScore: bestReflexScore ?? this.bestReflexScore,
-      patternMissCounts: patternMissCounts ?? this.patternMissCounts,
+      patternEvents: patternEvents ?? this.patternEvents,
+      sessionsToday: sessionsToday ?? this.sessionsToday,
+      recentSessions: recentSessions ?? this.recentSessions,
+      completedModuleIds: completedModuleIds ?? this.completedModuleIds,
     );
   }
 }

@@ -5,7 +5,9 @@
     "subtitle": "Biasakan lidahmu dengan salam harian dari pagi hingga malam.",
     "duration_minutes": 5,
     "is_premium": false,
-    "background_char": "お"
+    "background_char": "お",
+    "title_en": "Greetings & Basic Aisatsu",
+    "subtitle_en": "Get your tongue used to daily greetings, morning to night."
   },
   {
     "id": "1c4d9e77-8a52-4f6b-b0d1-3e9c5a2f8b61",
@@ -13,7 +15,9 @@
     "subtitle": "Rangkai nama, asal, dan pekerjaan dalam satu tarikan napas.",
     "duration_minutes": 8,
     "is_premium": false,
-    "background_char": "私"
+    "background_char": "私",
+    "title_en": "Introducing Yourself",
+    "subtitle_en": "String together your name, origin, and job in one breath."
   },
   {
     "id": "5a2f7b13-6c9d-4e08-8f74-2d1b9e3c6a57",
@@ -21,7 +25,9 @@
     "subtitle": "Latih pola membaca angka, menit, dan janji temu tanpa berpikir lama.",
     "duration_minutes": 10,
     "is_premium": true,
-    "background_char": "時"
+    "background_char": "時",
+    "title_en": "Numbers & Time",
+    "subtitle_en": "Drill numbers, minutes, and appointments until they come instantly."
   },
   {
     "id": "b7e3c018-2f45-4d9a-91c6-8a0d5e7b3f24",
@@ -29,7 +35,9 @@
     "subtitle": "Tanyakan dan jelaskan jalan dengan partikel posisi yang tepat.",
     "duration_minutes": 10,
     "is_premium": true,
-    "background_char": "道"
+    "background_char": "道",
+    "title_en": "Directions & Places",
+    "subtitle_en": "Ask for and give directions with the right position particles."
   },
   {
     "id": "3d6a9f52-7b18-4c2e-a5f0-9e4b1d8c7a06",
@@ -37,7 +45,9 @@
     "subtitle": "Kuasai pola menawar, bertanya harga, dan menyebut jumlah barang.",
     "duration_minutes": 12,
     "is_premium": true,
-    "background_char": "円"
+    "background_char": "円",
+    "title_en": "Shopping & Prices",
+    "subtitle_en": "Master asking prices, counting items, and bargaining politely."
   },
   {
     "id": "8e1b4c96-5d27-4a03-bf68-7c2a9e5d1b40",
@@ -45,7 +55,9 @@
     "subtitle": "Frasa penting untuk membeli tiket dan berpindah antar jalur kereta.",
     "duration_minutes": 12,
     "is_premium": true,
-    "background_char": "駅"
+    "background_char": "駅",
+    "title_en": "Transport & Stations",
+    "subtitle_en": "Key phrases for buying tickets and changing train lines."
   },
   {
     "id": "2f9d7a35-1e64-4b8c-9d02-6a5c3b8e7f19",
@@ -53,7 +65,9 @@
     "subtitle": "Ubah kalimat biasa menjadi permintaan halus dengan bentuk kudasai.",
     "duration_minutes": 15,
     "is_premium": true,
-    "background_char": "願"
+    "background_char": "願",
+    "title_en": "Polite Requests (Light Keigo)",
+    "subtitle_en": "Turn plain sentences into soft requests with the kudasai form."
   },
   {
     "id": "6c0e8b41-9a73-4f52-8e1d-4b7f2a9c5d38",
@@ -61,6 +75,8 @@
     "subtitle": "Susun pengalaman kemarin memakai pola ta-form secara berulang.",
     "duration_minutes": 15,
     "is_premium": true,
-    "background_char": "昨"
+    "background_char": "昨",
+    "title_en": "Telling Past Stories",
+    "subtitle_en": "Recount yesterday using the ta-form, over and over."
   }
 ]

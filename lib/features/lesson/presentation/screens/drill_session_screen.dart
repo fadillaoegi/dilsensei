@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/analytics/analytics_providers.dart';
+import '../../../../core/analytics/analytics_service.dart';
+import '../../../../core/localization/language_controller.dart';
+import '../../../../core/routing/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/drill_item.dart';
 import '../../domain/entities/grammar_pattern.dart';
 import '../providers/drill_session_controller.dart';
+import '../providers/certificate_providers.dart';
 import '../providers/lesson_providers.dart';
 import '../providers/progress_controller.dart';
+import '../widgets/question_card.dart';
 import '../widgets/session_summary_view.dart';
 import '../widgets/shimmer_box.dart';
 import '../widgets/token_chip.dart';
@@ -44,6 +52,7 @@ class _SessionBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final languageCode = ref.watch(languageControllerProvider).code;
     final state = ref.watch(drillSessionControllerProvider(moduleId));
     final controller = ref.read(
       drillSessionControllerProvider(moduleId).notifier,
@@ -53,7 +62,20 @@ class _SessionBody extends ConsumerWidget {
     ref.listen(drillSessionControllerProvider(moduleId), (previous, next) {
       final summary = next.summary;
       if (previous?.summary == null && summary != null) {
-        ref.read(progressControllerProvider.notifier).recordSession(summary);
+        ref
+            .read(analyticsServiceProvider)
+            .log(
+              AnalyticsEvent.sessionCompleted,
+              parameters: <String, Object>{
+                'reflex_score': summary.reflexScore,
+                'planned_count': summary.plannedCount,
+                'first_try_correct': summary.firstTryCorrect,
+                'weak_patterns': summary.weakPatterns.length,
+              },
+            );
+        ref
+            .read(progressControllerProvider.notifier)
+            .recordSession(summary, moduleId: moduleId);
       }
     });
 
@@ -67,11 +89,22 @@ class _SessionBody extends ConsumerWidget {
               )
               .isNotEmpty;
 
+      final recordUnlocked =
+          ref.watch(trainingRecordProvider).valueOrNull?.isUnlocked ?? false;
+
       return SessionSummaryView(
         summary: summary,
         onClose: () => Navigator.of(context).pop(),
+        onOpenRecord: recordUnlocked
+            ? () => context.push(AppRoutes.trainingRecord)
+            : null,
         onDrillWeakPatterns: hasWeakPatterns
-            ? controller.restartWithWeakPatterns
+            ? () {
+                ref
+                    .read(analyticsServiceProvider)
+                    .log(AnalyticsEvent.weakPatternDrillStarted);
+                controller.restartWithWeakPatterns();
+              }
             : null,
       );
     }
@@ -96,26 +129,22 @@ class _SessionBody extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 8),
-                Text(
-                  'SUSUN DALAM BAHASA JEPANG',
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.8,
+                QuestionCard(
+                  item: item,
+                  selectedTokens: state.selectedTokens,
+                  languageCode: languageCode,
+                ),
+                const SizedBox(height: 24),
+                // Area jawaban tersusun hanya relevan untuk menyusun kalimat;
+                // tipe pilihan sudah menampilkan jawabannya di kartu pertanyaan.
+                if (item.type == DrillType.assembleSentence) ...[
+                  AnswerCanvas(
+                    tokens: state.selectedTokens,
+                    isLocked: state.isShowingFeedback,
+                    onRemoveAt: controller.removeTokenAt,
                   ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  item.prompt,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                const SizedBox(height: 24),
-                AnswerCanvas(
-                  tokens: state.selectedTokens,
-                  isLocked: state.isShowingFeedback,
-                  onRemoveAt: controller.removeTokenAt,
-                ),
-                const SizedBox(height: 24),
+                  const SizedBox(height: 24),
+                ],
                 _TokenBank(
                   item: item,
                   selectedTokens: state.selectedTokens,
@@ -130,6 +159,7 @@ class _SessionBody extends ConsumerWidget {
         _SessionFooter(
           state: state,
           item: item,
+          languageCode: languageCode,
           onSubmit: controller.submit,
           onAdvance: controller.advance,
           onClear: controller.clearSelection,
@@ -161,8 +191,8 @@ class _SessionHeader extends StatelessWidget {
           IconButton(
             onPressed: onClose,
             icon: const Icon(Icons.close_rounded),
-            color: AppColors.textSecondary,
-            tooltip: 'Keluar sesi',
+            color: context.palette.textSecondary,
+            tooltip: AppL10n.of(context).sessionExitTooltip,
           ),
           Expanded(
             child: ClipRRect(
@@ -174,9 +204,9 @@ class _SessionHeader extends StatelessWidget {
                 builder: (context, value, _) => LinearProgressIndicator(
                   value: value,
                   minHeight: 8,
-                  backgroundColor: AppColors.secondary,
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                    AppColors.primary,
+                  backgroundColor: context.palette.surfaceAccent,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    context.palette.primary,
                   ),
                 ),
               ),
@@ -185,9 +215,9 @@ class _SessionHeader extends StatelessWidget {
           const SizedBox(width: 12),
           Text(
             '$resolved/$total',
-            style: Theme.of(
-              context,
-            ).textTheme.labelMedium?.copyWith(color: AppColors.textSecondary),
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+              color: context.palette.textSecondary,
+            ),
           ),
         ],
       ),
@@ -247,6 +277,7 @@ class _SessionFooter extends StatelessWidget {
   const _SessionFooter({
     required this.state,
     required this.item,
+    required this.languageCode,
     required this.onSubmit,
     required this.onAdvance,
     required this.onClear,
@@ -254,31 +285,41 @@ class _SessionFooter extends StatelessWidget {
 
   final DrillSessionUiState state;
   final DrillItem item;
+  final String languageCode;
   final VoidCallback onSubmit;
   final VoidCallback onAdvance;
   final VoidCallback onClear;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppL10n.of(context);
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 20),
       decoration: BoxDecoration(
         border: Border(
-          top: BorderSide(color: AppColors.primary.withValues(alpha: 0.1)),
+          top: BorderSide(
+            color: context.palette.primary.withValues(alpha: 0.1),
+          ),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (state.isShowingFeedback) _FeedbackPanel(state: state, item: item),
+          if (state.isShowingFeedback)
+            _FeedbackPanel(
+              state: state,
+              item: item,
+              languageCode: languageCode,
+            ),
           if (state.isShowingFeedback) const SizedBox(height: 16),
           Row(
             children: [
               if (!state.isShowingFeedback)
                 TextButton(
                   onPressed: state.selectedTokens.isEmpty ? null : onClear,
-                  child: const Text('Hapus'),
+                  child: Text(AppL10n.of(context).commonClear),
                 ),
               const Spacer(),
               SizedBox(
@@ -292,8 +333,10 @@ class _SessionFooter extends StatelessWidget {
                       : null,
                   child: Text(
                     state.isShowingFeedback
-                        ? (state.session.isFinished ? 'Lihat Hasil' : 'Lanjut')
-                        : 'Periksa',
+                        ? (state.session.isFinished
+                              ? l10n.sessionSeeResult
+                              : l10n.sessionContinue)
+                        : l10n.sessionCheck,
                   ),
                 ),
               ),
@@ -306,13 +349,20 @@ class _SessionFooter extends StatelessWidget {
 }
 
 class _FeedbackPanel extends StatelessWidget {
-  const _FeedbackPanel({required this.state, required this.item});
+  const _FeedbackPanel({
+    required this.state,
+    required this.item,
+    required this.languageCode,
+  });
 
   final DrillSessionUiState state;
   final DrillItem item;
+  final String languageCode;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppL10n.of(context);
+    final note = item.noteFor(languageCode);
     final textTheme = Theme.of(context).textTheme;
     final isCorrect = state.feedback == DrillFeedback.correct;
     final willRepeat = state.feedback == DrillFeedback.incorrectWillRepeat;
@@ -325,8 +375,8 @@ class _FeedbackPanel extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isCorrect
-              ? AppColors.secondary
-              : AppColors.error.withValues(alpha: 0.08),
+              ? context.palette.surfaceAccent
+              : context.palette.error.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -337,19 +387,23 @@ class _FeedbackPanel extends StatelessWidget {
                 Icon(
                   isCorrect ? Icons.check_circle_rounded : Icons.replay_rounded,
                   size: 20,
-                  color: isCorrect ? AppColors.primary : AppColors.error,
+                  color: isCorrect
+                      ? context.palette.primary
+                      : context.palette.error,
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     isCorrect
-                        ? 'Tepat.'
+                        ? l10n.feedbackCorrect
                         : willRepeat
-                        ? 'Belum tepat — butir ini muncul lagi nanti.'
-                        : 'Belum tepat. Simpan untuk sesi besok.',
+                        ? l10n.feedbackWrongRepeat
+                        : l10n.feedbackWrongMovedOn,
                     style: textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: isCorrect ? AppColors.primary : AppColors.error,
+                      color: isCorrect
+                          ? context.palette.primary
+                          : context.palette.error,
                     ),
                   ),
                 ),
@@ -360,14 +414,17 @@ class _FeedbackPanel extends StatelessWidget {
             if (!isCorrect && item.patternIds.isNotEmpty) ...[
               const SizedBox(height: 8),
               Text(
-                'Pola yang perlu dilatih: '
-                '${item.patternIds.map(GrammarPatterns.labelOf).join(', ')}',
+                l10n.feedbackPatternToPractise(
+                  item.patternIds
+                      .map((id) => GrammarPatterns.labelOf(l10n, id))
+                      .join(', '),
+                ),
                 style: textTheme.bodySmall,
               ),
             ],
-            if (item.note != null) ...[
+            if (note != null) ...[
               const SizedBox(height: 6),
-              Text(item.note!, style: textTheme.bodySmall),
+              Text(note, style: textTheme.bodySmall),
             ],
           ],
         ),
@@ -391,7 +448,7 @@ class _SessionLoadingView extends StatelessWidget {
           const ShimmerBox(height: 76, borderRadius: 20),
           const SizedBox(height: 24),
           Text(
-            'Menyiapkan butir latihan...',
+            AppL10n.of(context).sessionLoading,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],
@@ -409,7 +466,7 @@ class _SessionEmptyView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Text(
-          'Butir latihan untuk modul ini belum tersedia.',
+          AppL10n.of(context).sessionEmpty,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       ),
@@ -431,11 +488,14 @@ class _SessionErrorView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Latihan belum bisa dimuat',
+              AppL10n.of(context).sessionErrorTitle,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 12),
-            OutlinedButton(onPressed: onRetry, child: const Text('Coba Lagi')),
+            OutlinedButton(
+              onPressed: onRetry,
+              child: Text(AppL10n.of(context).commonRetry),
+            ),
           ],
         ),
       ),

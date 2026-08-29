@@ -82,7 +82,10 @@ class RevenueCatSubscriptionService implements SubscriptionService {
           .firstOrNull;
 
       if (package == null) {
-        return const PurchaseResult.failed('Paket tidak ditemukan.');
+        return const PurchaseResult.failed(
+          null,
+          failure: PurchaseFailure.planNotFound,
+        );
       }
 
       final result = await Purchases.purchase(PurchaseParams.package(package));
@@ -91,13 +94,19 @@ class RevenueCatSubscriptionService implements SubscriptionService {
 
       return status.isPremium
           ? const PurchaseResult.success()
-          : const PurchaseResult.failed('Langganan belum aktif.');
+          : const PurchaseResult.failed(
+              null,
+              failure: PurchaseFailure.notActive,
+            );
     } on PlatformException catch (error) {
       if (PurchasesErrorHelper.getErrorCode(error) ==
           PurchasesErrorCode.purchaseCancelledError) {
         return const PurchaseResult.cancelled();
       }
-      return PurchaseResult.failed(error.message ?? 'Pembelian gagal.');
+      return PurchaseResult.failed(
+        error.message,
+        failure: PurchaseFailure.storeError,
+      );
     }
   }
 
@@ -111,10 +120,14 @@ class RevenueCatSubscriptionService implements SubscriptionService {
       return status.isPremium
           ? const PurchaseResult.success()
           : const PurchaseResult.failed(
-              'Tidak ada langganan aktif untuk akun ini.',
+              null,
+              failure: PurchaseFailure.noneToRestore,
             );
     } on PlatformException catch (error) {
-      return PurchaseResult.failed(error.message ?? 'Restore gagal.');
+      return PurchaseResult.failed(
+        error.message,
+        failure: PurchaseFailure.storeError,
+      );
     }
   }
 
@@ -134,43 +147,35 @@ class RevenueCatSubscriptionService implements SubscriptionService {
 
     return SubscriptionPlan(
       id: package.identifier,
-      title: _titleFor(package.packageType, product.title),
+      storeTitle: product.title,
       priceLabel: product.priceString,
       period: _periodFor(package.packageType),
-      trialDescription: _trialFor(product),
+      trialDays: _trialDaysFor(product),
       isRecommended: isRecommended,
     );
   }
 
-  String _titleFor(PackageType type, String fallback) => switch (type) {
-    PackageType.weekly => 'Paket Mingguan',
-    PackageType.monthly => 'Paket Bulanan',
-    PackageType.annual => 'Paket Tahunan',
-    PackageType.lifetime => 'Akses Selamanya',
-    _ => fallback,
-  };
-
   BillingPeriod _periodFor(PackageType type) => switch (type) {
     PackageType.weekly => BillingPeriod.weekly,
     PackageType.monthly => BillingPeriod.monthly,
+    // Dashboard DilSensei memakai $rc_annual; tanpa baris ini paket tahunan
+    // tampil sebagai "Bulanan" tanpa label periode.
+    PackageType.annual => BillingPeriod.annual,
     PackageType.lifetime => BillingPeriod.lifetime,
     _ => BillingPeriod.unknown,
   };
 
-  String? _trialFor(StoreProduct product) {
-    final phase = product.defaultOption?.freePhase;
-    final period = phase?.billingPeriod;
+  /// Lama masa percobaan dalam hari; null bila produk tidak menawarkannya.
+  int? _trialDaysFor(StoreProduct product) {
+    final period = product.defaultOption?.freePhase?.billingPeriod;
     if (period == null) return null;
 
-    final unit = switch (period.unit) {
-      PeriodUnit.day => 'hari',
-      PeriodUnit.week => 'minggu',
-      PeriodUnit.month => 'bulan',
-      PeriodUnit.year => 'tahun',
+    return switch (period.unit) {
+      PeriodUnit.day => period.value,
+      PeriodUnit.week => period.value * 7,
+      PeriodUnit.month => period.value * 30,
+      PeriodUnit.year => period.value * 365,
       PeriodUnit.unknown => null,
     };
-    if (unit == null) return null;
-
-    return '${period.value} $unit gratis';
   }
 }

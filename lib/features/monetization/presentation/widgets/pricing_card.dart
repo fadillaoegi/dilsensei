@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/monetization/domain/subscription_models.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// Kartu satu paket langganan pada paywall.
 class PricingCard extends StatelessWidget {
@@ -24,7 +25,9 @@ class PricingCard extends StatelessWidget {
       selected: isSelected,
       button: true,
       child: Material(
-        color: isSelected ? AppColors.secondary : AppColors.white,
+        color: isSelected
+            ? context.palette.surfaceAccent
+            : context.palette.surfaceCard,
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
           onTap: onTap,
@@ -36,8 +39,8 @@ class PricingCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: isSelected
-                    ? AppColors.primary
-                    : AppColors.primary.withValues(alpha: 0.16),
+                    ? context.palette.primary
+                    : context.palette.primary.withValues(alpha: 0.16),
                 width: isSelected ? 1.6 : 1,
               ),
             ),
@@ -49,10 +52,13 @@ class PricingCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            plan.title,
-                            style: textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
+                          Expanded(
+                            child: Text(
+                              plan.titleFor(AppL10n.of(context)),
+                              overflow: TextOverflow.ellipsis,
+                              style: textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                           if (plan.isRecommended) ...[
@@ -66,22 +72,33 @@ class PricingCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.baseline,
                         textBaseline: TextBaseline.alphabetic,
                         children: [
-                          Text(
-                            plan.priceLabel,
-                            style: textTheme.headlineSmall?.copyWith(
-                              color: AppColors.primary,
+                          // Flexible agar harga panjang tidak meluber di ponsel.
+                          Flexible(
+                            child: Text(
+                              plan.priceLabel,
+                              overflow: TextOverflow.ellipsis,
+                              style: textTheme.headlineSmall?.copyWith(
+                                color: context.palette.primary,
+                              ),
                             ),
                           ),
                           const SizedBox(width: 6),
-                          Text(plan.periodLabel, style: textTheme.bodyMedium),
+                          Flexible(
+                            child: Text(
+                              plan.periodLabelFor(AppL10n.of(context)),
+                              overflow: TextOverflow.ellipsis,
+                              style: textTheme.bodyMedium,
+                            ),
+                          ),
                         ],
                       ),
-                      if (plan.trialDescription != null) ...[
+                      if (plan.trialDescriptionFor(AppL10n.of(context)) !=
+                          null) ...[
                         const SizedBox(height: 6),
                         Text(
-                          plan.trialDescription!,
+                          plan.trialDescriptionFor(AppL10n.of(context))!,
                           style: textTheme.bodySmall?.copyWith(
-                            color: AppColors.primary,
+                            color: context.palette.primary,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -94,8 +111,8 @@ class PricingCard extends StatelessWidget {
                       ? Icons.radio_button_checked
                       : Icons.radio_button_unchecked,
                   color: isSelected
-                      ? AppColors.primary
-                      : AppColors.textSecondary,
+                      ? context.palette.primary
+                      : context.palette.textSecondary,
                 ),
               ],
             ),
@@ -114,13 +131,13 @@ class _RecommendedBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: context.palette.primary,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
-        'HEMAT',
+        AppL10n.of(context).paywallRecommended,
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-          color: AppColors.white,
+          color: context.palette.onPrimary,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.6,
         ),

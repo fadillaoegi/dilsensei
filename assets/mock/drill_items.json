@@ -3,385 +3,1293 @@
     "id": "drill-aisatsu-01",
     "module_id": "9f8b1c2a-4d7e-4a31-9c58-1b6e2f0a7d34",
     "prompt": "Selamat pagi, Pak Tanaka.",
-    "answer_tokens": ["たなかさん", "、", "おはよう", "ございます"],
-    "distractor_tokens": ["こんばんは", "を"],
-    "pattern_ids": ["polite_form"],
-    "note": "Sapaan pagi yang sopan memakai ございます."
+    "answer_tokens": [
+      "たなかさん",
+      "、",
+      "おはよう",
+      "ございます"
+    ],
+    "distractor_tokens": [
+      "こんばんは",
+      "を"
+    ],
+    "pattern_ids": [
+      "polite_form"
+    ],
+    "note": "Sapaan pagi yang sopan memakai ございます.",
+    "prompt_en": "Good morning, Mr Tanaka.",
+    "note_en": "The polite morning greeting uses gozaimasu."
   },
   {
     "id": "drill-aisatsu-02",
     "module_id": "9f8b1c2a-4d7e-4a31-9c58-1b6e2f0a7d34",
     "prompt": "Saya permisi pulang lebih dulu.",
-    "answer_tokens": ["おさきに", "しつれい", "します"],
-    "distractor_tokens": ["ください", "は"],
-    "pattern_ids": ["polite_form"],
-    "note": "Diucapkan saat pulang lebih dulu dari rekan kerja."
+    "answer_tokens": [
+      "おさきに",
+      "しつれい",
+      "します"
+    ],
+    "distractor_tokens": [
+      "ください",
+      "は"
+    ],
+    "pattern_ids": [
+      "polite_form"
+    ],
+    "note": "Diucapkan saat pulang lebih dulu dari rekan kerja.",
+    "prompt_en": "Excuse me, I'm heading home first.",
+    "note_en": "Said when leaving before your colleagues."
   },
   {
     "id": "drill-aisatsu-03",
     "module_id": "9f8b1c2a-4d7e-4a31-9c58-1b6e2f0a7d34",
     "prompt": "Maaf, saya datang terlambat.",
-    "answer_tokens": ["おくれて", "すみません"],
-    "distractor_tokens": ["ありがとう", "が"],
-    "pattern_ids": ["polite_form"],
-    "note": "おくれて adalah bentuk penghubung dari おくれる."
+    "answer_tokens": [
+      "おくれて",
+      "すみません"
+    ],
+    "distractor_tokens": [
+      "ありがとう",
+      "が"
+    ],
+    "pattern_ids": [
+      "polite_form"
+    ],
+    "note": "おくれて adalah bentuk penghubung dari おくれる.",
+    "prompt_en": "Sorry, I'm late.",
+    "note_en": "Okurete is the connective form of okureru."
   },
   {
     "id": "drill-aisatsu-04",
     "module_id": "9f8b1c2a-4d7e-4a31-9c58-1b6e2f0a7d34",
     "prompt": "Saya pergi ke sekolah setiap hari.",
-    "answer_tokens": ["まいにち", "がっこう", "に", "いきます"],
-    "distractor_tokens": ["を", "で"],
-    "pattern_ids": ["particle_place", "word_order_time"],
-    "note": "Tujuan gerak memakai に, keterangan waktu di depan kalimat."
+    "answer_tokens": [
+      "まいにち",
+      "がっこう",
+      "に",
+      "いきます"
+    ],
+    "distractor_tokens": [
+      "を",
+      "で"
+    ],
+    "pattern_ids": [
+      "particle_place",
+      "word_order_time"
+    ],
+    "note": "Tujuan gerak memakai に, keterangan waktu di depan kalimat.",
+    "prompt_en": "I go to school every day.",
+    "note_en": "Movement targets take ni; time words come first."
   },
   {
     "id": "drill-aisatsu-05",
     "module_id": "9f8b1c2a-4d7e-4a31-9c58-1b6e2f0a7d34",
     "prompt": "Saya tidak minum kopi.",
-    "answer_tokens": ["コーヒー", "を", "のみません"],
-    "distractor_tokens": ["に", "のみます"],
-    "pattern_ids": ["particle_object", "negative_form"],
-    "note": "Objek langsung memakai を; bentuk negatif sopan berakhiran ません."
+    "answer_tokens": [
+      "コーヒー",
+      "を",
+      "のみません"
+    ],
+    "distractor_tokens": [
+      "に",
+      "のみます"
+    ],
+    "pattern_ids": [
+      "particle_object",
+      "negative_form"
+    ],
+    "note": "Objek langsung memakai を; bentuk negatif sopan berakhiran ません.",
+    "prompt_en": "I don't drink coffee.",
+    "note_en": "Direct objects take wo; polite negatives end in masen."
   },
   {
     "id": "drill-aisatsu-06",
     "module_id": "9f8b1c2a-4d7e-4a31-9c58-1b6e2f0a7d34",
     "prompt": "Terima kasih banyak.",
-    "answer_tokens": ["どうも", "ありがとう", "ございました"],
-    "distractor_tokens": ["すみません", "です"],
-    "pattern_ids": ["polite_form", "past_form"],
-    "note": "ございました dipakai untuk bantuan yang sudah selesai."
+    "answer_tokens": [
+      "どうも",
+      "ありがとう",
+      "ございました"
+    ],
+    "distractor_tokens": [
+      "すみません",
+      "です"
+    ],
+    "pattern_ids": [
+      "polite_form",
+      "past_form"
+    ],
+    "note": "ございました dipakai untuk bantuan yang sudah selesai.",
+    "prompt_en": "Thank you very much.",
+    "note_en": "Gozaimashita is used for help already received."
   },
-
+  {
+    "id": "drill-p-aisatsu",
+    "module_id": "9f8b1c2a-4d7e-4a31-9c58-1b6e2f0a7d34",
+    "type": "particle",
+    "prompt": "Saya pulang ke rumah.",
+    "question_text": "わたしは うち＿ かえります",
+    "answer_tokens": [
+      "に"
+    ],
+    "distractor_tokens": [
+      "を",
+      "で",
+      "が"
+    ],
+    "pattern_ids": [
+      "particle_place"
+    ],
+    "note": "Tujuan gerak memakai に, bukan で.",
+    "prompt_en": "I go home.",
+    "note_en": "Movement targets take ni, not de."
+  },
+  {
+    "id": "drill-t-aisatsu",
+    "module_id": "9f8b1c2a-4d7e-4a31-9c58-1b6e2f0a7d34",
+    "type": "transform",
+    "prompt": "Tidak minum.",
+    "question_text": "のみます",
+    "instruction": "Ubah ke bentuk negatif sopan",
+    "answer_tokens": [
+      "のみません"
+    ],
+    "distractor_tokens": [
+      "のみました",
+      "のみたい",
+      "のみましょう"
+    ],
+    "pattern_ids": [
+      "negative_form"
+    ],
+    "note": "Bentuk negatif sopan mengganti ます menjadi ません.",
+    "prompt_en": "Do not drink.",
+    "instruction_en": "Change to the polite negative",
+    "note_en": "The polite negative swaps masu for masen."
+  },
   {
     "id": "drill-jiko-01",
     "module_id": "1c4d9e77-8a52-4f6b-b0d1-3e9c5a2f8b61",
     "prompt": "Nama saya Rina.",
-    "answer_tokens": ["わたし", "は", "リナ", "です"],
-    "distractor_tokens": ["を", "に"],
-    "pattern_ids": ["particle_topic"],
-    "note": "は menandai topik kalimat."
+    "answer_tokens": [
+      "わたし",
+      "は",
+      "リナ",
+      "です"
+    ],
+    "distractor_tokens": [
+      "を",
+      "に"
+    ],
+    "pattern_ids": [
+      "particle_topic"
+    ],
+    "note": "は menandai topik kalimat.",
+    "prompt_en": "My name is Rina.",
+    "note_en": "Wa marks the topic of the sentence."
   },
   {
     "id": "drill-jiko-02",
     "module_id": "1c4d9e77-8a52-4f6b-b0d1-3e9c5a2f8b61",
     "prompt": "Saya orang Indonesia.",
-    "answer_tokens": ["わたし", "は", "インドネシアじん", "です"],
-    "distractor_tokens": ["が", "います"],
-    "pattern_ids": ["particle_topic"],
-    "note": "じん ditambahkan pada nama negara untuk menyebut kewarganegaraan."
+    "answer_tokens": [
+      "わたし",
+      "は",
+      "インドネシアじん",
+      "です"
+    ],
+    "distractor_tokens": [
+      "が",
+      "います"
+    ],
+    "pattern_ids": [
+      "particle_topic"
+    ],
+    "note": "じん ditambahkan pada nama negara untuk menyebut kewarganegaraan.",
+    "prompt_en": "I am Indonesian.",
+    "note_en": "Add jin to a country name to state nationality."
   },
   {
     "id": "drill-jiko-03",
     "module_id": "1c4d9e77-8a52-4f6b-b0d1-3e9c5a2f8b61",
     "prompt": "Saya bekerja di Jakarta.",
-    "answer_tokens": ["ジャカルタ", "で", "はたらいて", "います"],
-    "distractor_tokens": ["に", "を"],
-    "pattern_ids": ["particle_place"],
-    "note": "Tempat berlangsungnya aktivitas memakai で, bukan に."
+    "answer_tokens": [
+      "ジャカルタ",
+      "で",
+      "はたらいて",
+      "います"
+    ],
+    "distractor_tokens": [
+      "に",
+      "を"
+    ],
+    "pattern_ids": [
+      "particle_place"
+    ],
+    "note": "Tempat berlangsungnya aktivitas memakai で, bukan に.",
+    "prompt_en": "I work in Jakarta.",
+    "note_en": "The place where an action happens takes de, not ni."
   },
   {
     "id": "drill-jiko-04",
     "module_id": "1c4d9e77-8a52-4f6b-b0d1-3e9c5a2f8b61",
     "prompt": "Kemarin saya bertemu Bu Sato.",
-    "answer_tokens": ["きのう", "さとうさん", "に", "あいました"],
-    "distractor_tokens": ["を", "あいます"],
-    "pattern_ids": ["particle_place", "past_form", "word_order_time"],
-    "note": "Verba あう memakai partikel に untuk orang yang ditemui."
+    "answer_tokens": [
+      "きのう",
+      "さとうさん",
+      "に",
+      "あいました"
+    ],
+    "distractor_tokens": [
+      "を",
+      "あいます"
+    ],
+    "pattern_ids": [
+      "particle_place",
+      "past_form",
+      "word_order_time"
+    ],
+    "note": "Verba あう memakai partikel に untuk orang yang ditemui.",
+    "prompt_en": "I met Ms Sato yesterday.",
+    "note_en": "The verb au takes the particle ni for the person met."
   },
   {
     "id": "drill-jiko-05",
     "module_id": "1c4d9e77-8a52-4f6b-b0d1-3e9c5a2f8b61",
     "prompt": "Saya belajar bahasa Jepang dua tahun.",
-    "answer_tokens": ["にねん", "にほんご", "を", "べんきょう", "しました"],
-    "distractor_tokens": ["に", "します"],
-    "pattern_ids": ["counter_word", "past_form", "particle_object"],
-    "note": "ねん adalah kata bantu bilangan untuk tahun."
+    "answer_tokens": [
+      "にねん",
+      "にほんご",
+      "を",
+      "べんきょう",
+      "しました"
+    ],
+    "distractor_tokens": [
+      "に",
+      "します"
+    ],
+    "pattern_ids": [
+      "counter_word",
+      "past_form",
+      "particle_object"
+    ],
+    "note": "ねん adalah kata bantu bilangan untuk tahun.",
+    "prompt_en": "I studied Japanese for two years.",
+    "note_en": "Nen is the counter for years."
   },
   {
     "id": "drill-jiko-06",
     "module_id": "1c4d9e77-8a52-4f6b-b0d1-3e9c5a2f8b61",
     "prompt": "Mohon bantuannya mulai hari ini.",
-    "answer_tokens": ["きょう", "から", "よろしく", "おねがい", "します"],
-    "distractor_tokens": ["まで", "を"],
-    "pattern_ids": ["polite_form", "word_order_time"],
-    "note": "から menandai titik mulai."
+    "answer_tokens": [
+      "きょう",
+      "から",
+      "よろしく",
+      "おねがい",
+      "します"
+    ],
+    "distractor_tokens": [
+      "まで",
+      "を"
+    ],
+    "pattern_ids": [
+      "polite_form",
+      "word_order_time"
+    ],
+    "note": "から menandai titik mulai.",
+    "prompt_en": "Please treat me well from today.",
+    "note_en": "Kara marks a starting point, paired with a time word."
   },
-
+  {
+    "id": "drill-p-jiko",
+    "module_id": "1c4d9e77-8a52-4f6b-b0d1-3e9c5a2f8b61",
+    "type": "particle",
+    "prompt": "Saya belajar bahasa Jepang.",
+    "question_text": "にほんご＿ べんきょうします",
+    "answer_tokens": [
+      "を"
+    ],
+    "distractor_tokens": [
+      "に",
+      "へ",
+      "と"
+    ],
+    "pattern_ids": [
+      "particle_object"
+    ],
+    "note": "Objek langsung ditandai を.",
+    "prompt_en": "I study Japanese.",
+    "note_en": "Direct objects are marked with wo."
+  },
+  {
+    "id": "drill-t-jiko",
+    "module_id": "1c4d9e77-8a52-4f6b-b0d1-3e9c5a2f8b61",
+    "type": "transform",
+    "prompt": "Sudah bertemu.",
+    "question_text": "あいます",
+    "instruction": "Ubah ke bentuk lampau sopan",
+    "answer_tokens": [
+      "あいました"
+    ],
+    "distractor_tokens": [
+      "あいません",
+      "あって",
+      "あいたい"
+    ],
+    "pattern_ids": [
+      "past_form"
+    ],
+    "note": "Bentuk lampau sopan mengganti ます menjadi ました.",
+    "prompt_en": "Already met.",
+    "instruction_en": "Change to the polite past",
+    "note_en": "The polite past swaps masu for mashita."
+  },
   {
     "id": "drill-jikan-01",
     "module_id": "5a2f7b13-6c9d-4e08-8f74-2d1b9e3c6a57",
     "prompt": "Sekarang jam tujuh.",
-    "answer_tokens": ["いま", "しちじ", "です"],
-    "distractor_tokens": ["ななじ", "に"],
-    "pattern_ids": ["counter_word"],
-    "note": "Jam tujuh dibaca しちじ, bukan ななじ."
+    "answer_tokens": [
+      "いま",
+      "しちじ",
+      "です"
+    ],
+    "distractor_tokens": [
+      "ななじ",
+      "に"
+    ],
+    "pattern_ids": [
+      "counter_word"
+    ],
+    "note": "Jam tujuh dibaca しちじ, bukan ななじ.",
+    "prompt_en": "It's seven o'clock now.",
+    "note_en": "Seven o clock is read shichi-ji, not nana-ji."
   },
   {
     "id": "drill-jikan-02",
     "module_id": "5a2f7b13-6c9d-4e08-8f74-2d1b9e3c6a57",
     "prompt": "Rapat mulai jam sembilan.",
-    "answer_tokens": ["かいぎ", "は", "くじ", "に", "はじまります"],
-    "distractor_tokens": ["で", "きゅうじ"],
-    "pattern_ids": ["particle_place", "counter_word"],
-    "note": "Titik waktu memakai partikel に; jam sembilan dibaca くじ."
+    "answer_tokens": [
+      "かいぎ",
+      "は",
+      "くじ",
+      "に",
+      "はじまります"
+    ],
+    "distractor_tokens": [
+      "で",
+      "きゅうじ"
+    ],
+    "pattern_ids": [
+      "particle_place",
+      "counter_word"
+    ],
+    "note": "Titik waktu memakai partikel に; jam sembilan dibaca くじ.",
+    "prompt_en": "The meeting starts at nine.",
+    "note_en": "Points in time take ni; nine o clock is ku-ji."
   },
   {
     "id": "drill-jikan-03",
     "module_id": "5a2f7b13-6c9d-4e08-8f74-2d1b9e3c6a57",
     "prompt": "Saya bangun jam enam setiap pagi.",
-    "answer_tokens": ["まいあさ", "ろくじ", "に", "おきます"],
-    "distractor_tokens": ["を", "おきました"],
-    "pattern_ids": ["word_order_time", "counter_word"],
-    "note": "Keterangan frekuensi diletakkan sebelum keterangan jam."
+    "answer_tokens": [
+      "まいあさ",
+      "ろくじ",
+      "に",
+      "おきます"
+    ],
+    "distractor_tokens": [
+      "を",
+      "おきました"
+    ],
+    "pattern_ids": [
+      "word_order_time",
+      "counter_word"
+    ],
+    "note": "Keterangan frekuensi diletakkan sebelum keterangan jam.",
+    "prompt_en": "I wake up at six every morning.",
+    "note_en": "Frequency words come before the clock time."
   },
   {
     "id": "drill-jikan-04",
     "module_id": "5a2f7b13-6c9d-4e08-8f74-2d1b9e3c6a57",
     "prompt": "Kerja selesai jam lima.",
-    "answer_tokens": ["しごと", "は", "ごじ", "に", "おわります"],
-    "distractor_tokens": ["で", "おわりません"],
-    "pattern_ids": ["particle_topic", "counter_word"],
-    "note": "Pola A は B に + verba menyatakan jadwal."
+    "answer_tokens": [
+      "しごと",
+      "は",
+      "ごじ",
+      "に",
+      "おわります"
+    ],
+    "distractor_tokens": [
+      "で",
+      "おわりません"
+    ],
+    "pattern_ids": [
+      "particle_topic",
+      "counter_word"
+    ],
+    "note": "Pola A は B に + verba menyatakan jadwal.",
+    "prompt_en": "Work finishes at five.",
+    "note_en": "The pattern A wa B ni + verb states a schedule."
   },
   {
     "id": "drill-jikan-05",
     "module_id": "5a2f7b13-6c9d-4e08-8f74-2d1b9e3c6a57",
     "prompt": "Kemarin saya tidur jam sebelas.",
-    "answer_tokens": ["きのう", "じゅういちじ", "に", "ねました"],
-    "distractor_tokens": ["ねます", "で"],
-    "pattern_ids": ["past_form", "word_order_time"],
-    "note": "ねました adalah bentuk lampau sopan dari ねる."
+    "answer_tokens": [
+      "きのう",
+      "じゅういちじ",
+      "に",
+      "ねました"
+    ],
+    "distractor_tokens": [
+      "ねます",
+      "で"
+    ],
+    "pattern_ids": [
+      "past_form",
+      "word_order_time"
+    ],
+    "note": "ねました adalah bentuk lampau sopan dari ねる.",
+    "prompt_en": "I slept at eleven yesterday.",
+    "note_en": "Nemashita is the polite past of neru."
   },
-
+  {
+    "id": "drill-p-jikan",
+    "module_id": "5a2f7b13-6c9d-4e08-8f74-2d1b9e3c6a57",
+    "type": "particle",
+    "prompt": "Rapat mulai jam sembilan.",
+    "question_text": "かいぎは くじ＿ はじまります",
+    "answer_tokens": [
+      "に"
+    ],
+    "distractor_tokens": [
+      "で",
+      "を",
+      "から"
+    ],
+    "pattern_ids": [
+      "particle_place",
+      "counter_word"
+    ],
+    "note": "Titik waktu memakai に.",
+    "prompt_en": "The meeting starts at nine.",
+    "note_en": "Points in time take ni."
+  },
+  {
+    "id": "drill-t-jikan",
+    "module_id": "5a2f7b13-6c9d-4e08-8f74-2d1b9e3c6a57",
+    "type": "transform",
+    "prompt": "Belum bangun.",
+    "question_text": "おきます",
+    "instruction": "Ubah ke bentuk negatif sopan",
+    "answer_tokens": [
+      "おきません"
+    ],
+    "distractor_tokens": [
+      "おきました",
+      "おきて",
+      "おきましょう"
+    ],
+    "pattern_ids": [
+      "negative_form"
+    ],
+    "note": "Pola yang sama berlaku untuk semua verba ます.",
+    "prompt_en": "Not awake yet.",
+    "instruction_en": "Change to the polite negative",
+    "note_en": "The same pattern applies to every masu verb."
+  },
   {
     "id": "drill-basho-01",
     "module_id": "b7e3c018-2f45-4d9a-91c6-8a0d5e7b3f24",
     "prompt": "Di mana stasiunnya?",
-    "answer_tokens": ["えき", "は", "どこ", "です", "か"],
-    "distractor_tokens": ["なに", "に"],
-    "pattern_ids": ["particle_topic"],
-    "note": "Pertanyaan lokasi memakai どこ dengan pola A は どこ ですか."
+    "answer_tokens": [
+      "えき",
+      "は",
+      "どこ",
+      "です",
+      "か"
+    ],
+    "distractor_tokens": [
+      "なに",
+      "に"
+    ],
+    "pattern_ids": [
+      "particle_topic"
+    ],
+    "note": "Pertanyaan lokasi memakai どこ dengan pola A は どこ ですか.",
+    "prompt_en": "Where is the station?",
+    "note_en": "Ask locations with doko using A wa doko desu ka."
   },
   {
     "id": "drill-basho-02",
     "module_id": "b7e3c018-2f45-4d9a-91c6-8a0d5e7b3f24",
     "prompt": "Tolong lurus terus.",
-    "answer_tokens": ["まっすぐ", "いって", "ください"],
-    "distractor_tokens": ["みぎ", "を"],
-    "pattern_ids": ["polite_form"],
-    "note": "Bentuk ～てください untuk permintaan sopan."
+    "answer_tokens": [
+      "まっすぐ",
+      "いって",
+      "ください"
+    ],
+    "distractor_tokens": [
+      "みぎ",
+      "を"
+    ],
+    "pattern_ids": [
+      "polite_form"
+    ],
+    "note": "Bentuk ～てください untuk permintaan sopan.",
+    "prompt_en": "Please go straight ahead.",
+    "note_en": "The te-kudasai form makes a polite request."
   },
   {
     "id": "drill-basho-03",
     "module_id": "b7e3c018-2f45-4d9a-91c6-8a0d5e7b3f24",
     "prompt": "Belok kanan di lampu merah itu.",
-    "answer_tokens": ["あの", "しんごう", "を", "みぎ", "に", "まがって"],
-    "distractor_tokens": ["で", "ひだり"],
-    "pattern_ids": ["particle_object", "particle_place"],
-    "note": "Titik belok memakai を, arah tujuan memakai に."
+    "answer_tokens": [
+      "あの",
+      "しんごう",
+      "を",
+      "みぎ",
+      "に",
+      "まがって"
+    ],
+    "distractor_tokens": [
+      "で",
+      "ひだり"
+    ],
+    "pattern_ids": [
+      "particle_object",
+      "particle_place"
+    ],
+    "note": "Titik belok memakai を, arah tujuan memakai に.",
+    "prompt_en": "Turn right at that traffic light.",
+    "note_en": "The turning point takes wo; the direction takes ni."
   },
   {
     "id": "drill-basho-04",
     "module_id": "b7e3c018-2f45-4d9a-91c6-8a0d5e7b3f24",
     "prompt": "Bank ada di sebelah kantor pos.",
-    "answer_tokens": ["ぎんこう", "は", "ゆうびんきょく", "の", "となり", "です"],
-    "distractor_tokens": ["に", "から"],
-    "pattern_ids": ["particle_topic", "particle_place"],
-    "note": "Kata posisi seperti となり dirangkai dengan partikel の."
+    "answer_tokens": [
+      "ぎんこう",
+      "は",
+      "ゆうびんきょく",
+      "の",
+      "となり",
+      "です"
+    ],
+    "distractor_tokens": [
+      "に",
+      "から"
+    ],
+    "pattern_ids": [
+      "particle_topic",
+      "particle_place"
+    ],
+    "note": "Kata posisi seperti となり dirangkai dengan partikel の.",
+    "prompt_en": "The bank is next to the post office.",
+    "note_en": "Position words like tonari connect with no."
   },
   {
     "id": "drill-basho-05",
     "module_id": "b7e3c018-2f45-4d9a-91c6-8a0d5e7b3f24",
     "prompt": "Toilet tidak ada di sini.",
-    "answer_tokens": ["トイレ", "は", "ここ", "に", "ありません"],
-    "distractor_tokens": ["あります", "で"],
-    "pattern_ids": ["particle_place", "negative_form"],
-    "note": "Keberadaan benda memakai あります; negatifnya ありません."
+    "answer_tokens": [
+      "トイレ",
+      "は",
+      "ここ",
+      "に",
+      "ありません"
+    ],
+    "distractor_tokens": [
+      "あります",
+      "で"
+    ],
+    "pattern_ids": [
+      "particle_place",
+      "negative_form"
+    ],
+    "note": "Keberadaan benda memakai あります; negatifnya ありません.",
+    "prompt_en": "There is no toilet here.",
+    "note_en": "Existence uses arimasu; its negative is arimasen."
   },
-
+  {
+    "id": "drill-p-basho",
+    "module_id": "b7e3c018-2f45-4d9a-91c6-8a0d5e7b3f24",
+    "type": "particle",
+    "prompt": "Saya makan di kantin.",
+    "question_text": "しょくどう＿ たべます",
+    "answer_tokens": [
+      "で"
+    ],
+    "distractor_tokens": [
+      "に",
+      "を",
+      "へ"
+    ],
+    "pattern_ids": [
+      "particle_place"
+    ],
+    "note": "Tempat berlangsungnya aktivitas memakai で.",
+    "prompt_en": "I eat at the canteen.",
+    "note_en": "The place where an action happens takes de."
+  },
+  {
+    "id": "drill-t-basho",
+    "module_id": "b7e3c018-2f45-4d9a-91c6-8a0d5e7b3f24",
+    "type": "transform",
+    "prompt": "Silakan belok.",
+    "question_text": "まがります",
+    "instruction": "Ubah ke bentuk permintaan sopan",
+    "answer_tokens": [
+      "まがってください"
+    ],
+    "distractor_tokens": [
+      "まがりません",
+      "まがりました",
+      "まがりたい"
+    ],
+    "pattern_ids": [
+      "polite_form"
+    ],
+    "note": "Bentuk ～てください untuk meminta dengan sopan.",
+    "prompt_en": "Please turn.",
+    "instruction_en": "Change to the polite request",
+    "note_en": "The te-kudasai form asks politely."
+  },
   {
     "id": "drill-kaimono-01",
     "module_id": "3d6a9f52-7b18-4c2e-a5f0-9e4b1d8c7a06",
     "prompt": "Berapa harganya?",
-    "answer_tokens": ["いくら", "です", "か"],
-    "distractor_tokens": ["どこ", "に"],
-    "pattern_ids": ["polite_form"],
-    "note": "いくら khusus untuk menanyakan harga."
+    "answer_tokens": [
+      "いくら",
+      "です",
+      "か"
+    ],
+    "distractor_tokens": [
+      "どこ",
+      "に"
+    ],
+    "pattern_ids": [
+      "polite_form"
+    ],
+    "note": "いくら khusus untuk menanyakan harga.",
+    "prompt_en": "How much is it?",
+    "note_en": "Ikura is only used to ask prices."
   },
   {
     "id": "drill-kaimono-02",
     "module_id": "3d6a9f52-7b18-4c2e-a5f0-9e4b1d8c7a06",
     "prompt": "Yang ini seribu yen.",
-    "answer_tokens": ["これ", "は", "せんえん", "です"],
-    "distractor_tokens": ["それ", "を"],
-    "pattern_ids": ["particle_topic", "counter_word"],
-    "note": "えん adalah satuan mata uang; seribu dibaca せん."
+    "answer_tokens": [
+      "これ",
+      "は",
+      "せんえん",
+      "です"
+    ],
+    "distractor_tokens": [
+      "それ",
+      "を"
+    ],
+    "pattern_ids": [
+      "particle_topic",
+      "counter_word"
+    ],
+    "note": "えん adalah satuan mata uang; seribu dibaca せん.",
+    "prompt_en": "This one is a thousand yen.",
+    "note_en": "En is the currency unit; a thousand is read sen."
   },
   {
     "id": "drill-kaimono-03",
     "module_id": "3d6a9f52-7b18-4c2e-a5f0-9e4b1d8c7a06",
     "prompt": "Tolong yang ini dua buah.",
-    "answer_tokens": ["これ", "を", "ふたつ", "ください"],
-    "distractor_tokens": ["に", "につ"],
-    "pattern_ids": ["counter_word", "particle_object"],
-    "note": "ふたつ adalah cara menghitung benda umum, bukan につ."
+    "answer_tokens": [
+      "これ",
+      "を",
+      "ふたつ",
+      "ください"
+    ],
+    "distractor_tokens": [
+      "に",
+      "につ"
+    ],
+    "pattern_ids": [
+      "counter_word",
+      "particle_object"
+    ],
+    "note": "ふたつ adalah cara menghitung benda umum, bukan につ.",
+    "prompt_en": "Two of these, please.",
+    "note_en": "Futatsu counts general objects; nitsu is not a word."
   },
   {
     "id": "drill-kaimono-04",
     "module_id": "3d6a9f52-7b18-4c2e-a5f0-9e4b1d8c7a06",
     "prompt": "Apakah bisa pakai kartu?",
-    "answer_tokens": ["カード", "が", "つかえます", "か"],
-    "distractor_tokens": ["を", "つかいます"],
-    "pattern_ids": ["particle_object", "polite_form"],
-    "note": "Bentuk potensial つかえます memakai partikel が."
+    "answer_tokens": [
+      "カード",
+      "が",
+      "つかえます",
+      "か"
+    ],
+    "distractor_tokens": [
+      "を",
+      "つかいます"
+    ],
+    "pattern_ids": [
+      "particle_object",
+      "polite_form"
+    ],
+    "note": "Bentuk potensial つかえます memakai partikel が.",
+    "prompt_en": "Can I pay by card?",
+    "note_en": "The potential form tsukaemasu takes ga."
   },
   {
     "id": "drill-kaimono-05",
     "module_id": "3d6a9f52-7b18-4c2e-a5f0-9e4b1d8c7a06",
     "prompt": "Saya beli tas kemarin.",
-    "answer_tokens": ["きのう", "かばん", "を", "かいました"],
-    "distractor_tokens": ["かいます", "に"],
-    "pattern_ids": ["past_form", "particle_object", "word_order_time"],
-    "note": "かいました adalah bentuk lampau sopan dari かう."
+    "answer_tokens": [
+      "きのう",
+      "かばん",
+      "を",
+      "かいました"
+    ],
+    "distractor_tokens": [
+      "かいます",
+      "に"
+    ],
+    "pattern_ids": [
+      "past_form",
+      "particle_object",
+      "word_order_time"
+    ],
+    "note": "かいました adalah bentuk lampau sopan dari かう.",
+    "prompt_en": "I bought a bag yesterday.",
+    "note_en": "Kaimashita is the polite past of kau."
   },
-
+  {
+    "id": "drill-p-kaimono",
+    "module_id": "3d6a9f52-7b18-4c2e-a5f0-9e4b1d8c7a06",
+    "type": "particle",
+    "prompt": "Saya membeli dua buah.",
+    "question_text": "これ＿ ふたつ ください",
+    "answer_tokens": [
+      "を"
+    ],
+    "distractor_tokens": [
+      "が",
+      "に",
+      "は"
+    ],
+    "pattern_ids": [
+      "particle_object",
+      "counter_word"
+    ],
+    "note": "Benda yang diminta ditandai を.",
+    "prompt_en": "I am buying two of these.",
+    "note_en": "The item requested is marked with wo."
+  },
+  {
+    "id": "drill-t-kaimono",
+    "module_id": "3d6a9f52-7b18-4c2e-a5f0-9e4b1d8c7a06",
+    "type": "transform",
+    "prompt": "Sudah membeli.",
+    "question_text": "かいます",
+    "instruction": "Ubah ke bentuk lampau sopan",
+    "answer_tokens": [
+      "かいました"
+    ],
+    "distractor_tokens": [
+      "かいません",
+      "かって",
+      "かいたい"
+    ],
+    "pattern_ids": [
+      "past_form"
+    ],
+    "note": "かいました berarti sudah membeli.",
+    "prompt_en": "Already bought.",
+    "instruction_en": "Change to the polite past",
+    "note_en": "Kaimashita means already bought."
+  },
   {
     "id": "drill-densha-01",
     "module_id": "8e1b4c96-5d27-4a03-bf68-7c2a9e5d1b40",
     "prompt": "Tolong satu tiket ke Tokyo.",
-    "answer_tokens": ["とうきょう", "まで", "きっぷ", "を", "いちまい", "ください"],
-    "distractor_tokens": ["から", "いちつ"],
-    "pattern_ids": ["counter_word", "particle_object"],
-    "note": "まで menandai batas tujuan; まい untuk benda tipis seperti tiket."
+    "answer_tokens": [
+      "とうきょう",
+      "まで",
+      "きっぷ",
+      "を",
+      "いちまい",
+      "ください"
+    ],
+    "distractor_tokens": [
+      "から",
+      "いちつ"
+    ],
+    "pattern_ids": [
+      "counter_word",
+      "particle_object"
+    ],
+    "note": "まで menandai batas tujuan; まい untuk benda tipis seperti tiket.",
+    "prompt_en": "One ticket to Tokyo, please.",
+    "note_en": "Made marks the destination; mai counts flat items."
   },
   {
     "id": "drill-densha-02",
     "module_id": "8e1b4c96-5d27-4a03-bf68-7c2a9e5d1b40",
     "prompt": "Saya pergi ke kantor dengan kereta.",
-    "answer_tokens": ["でんしゃ", "で", "かいしゃ", "に", "いきます"],
-    "distractor_tokens": ["を", "から"],
-    "pattern_ids": ["particle_place"],
-    "note": "Alat transportasi memakai で, tujuan memakai に."
+    "answer_tokens": [
+      "でんしゃ",
+      "で",
+      "かいしゃ",
+      "に",
+      "いきます"
+    ],
+    "distractor_tokens": [
+      "を",
+      "から"
+    ],
+    "pattern_ids": [
+      "particle_place"
+    ],
+    "note": "Alat transportasi memakai で, tujuan memakai に.",
+    "prompt_en": "I go to the office by train.",
+    "note_en": "Transport takes de; the destination takes ni."
   },
   {
     "id": "drill-densha-03",
     "module_id": "8e1b4c96-5d27-4a03-bf68-7c2a9e5d1b40",
     "prompt": "Kereta berikutnya jam berapa?",
-    "answer_tokens": ["つぎ", "の", "でんしゃ", "は", "なんじ", "です", "か"],
-    "distractor_tokens": ["いくら", "に"],
-    "pattern_ids": ["particle_topic", "counter_word"],
-    "note": "なんじ untuk menanyakan jam berapa."
+    "answer_tokens": [
+      "つぎ",
+      "の",
+      "でんしゃ",
+      "は",
+      "なんじ",
+      "です",
+      "か"
+    ],
+    "distractor_tokens": [
+      "いくら",
+      "に"
+    ],
+    "pattern_ids": [
+      "particle_topic",
+      "counter_word"
+    ],
+    "note": "なんじ untuk menanyakan jam berapa.",
+    "prompt_en": "What time is the next train?",
+    "note_en": "Nanji asks what time."
   },
   {
     "id": "drill-densha-04",
     "module_id": "8e1b4c96-5d27-4a03-bf68-7c2a9e5d1b40",
     "prompt": "Saya turun di stasiun berikutnya.",
-    "answer_tokens": ["つぎ", "の", "えき", "で", "おります"],
-    "distractor_tokens": ["に", "のります"],
-    "pattern_ids": ["particle_place"],
-    "note": "Tempat aktivitas turun memakai で; おります berarti turun."
+    "answer_tokens": [
+      "つぎ",
+      "の",
+      "えき",
+      "で",
+      "おります"
+    ],
+    "distractor_tokens": [
+      "に",
+      "のります"
+    ],
+    "pattern_ids": [
+      "particle_place"
+    ],
+    "note": "Tempat aktivitas turun memakai で; おります berarti turun.",
+    "prompt_en": "I get off at the next station.",
+    "note_en": "The place of the action takes de; orimasu means to get off."
   },
   {
     "id": "drill-densha-05",
     "module_id": "8e1b4c96-5d27-4a03-bf68-7c2a9e5d1b40",
     "prompt": "Kereta ini tidak berhenti di Shibuya.",
-    "answer_tokens": ["この", "でんしゃ", "は", "しぶや", "に", "とまりません"],
-    "distractor_tokens": ["とまります", "で"],
-    "pattern_ids": ["particle_place", "negative_form"],
-    "note": "Verba とまる memakai に untuk titik berhenti."
+    "answer_tokens": [
+      "この",
+      "でんしゃ",
+      "は",
+      "しぶや",
+      "に",
+      "とまりません"
+    ],
+    "distractor_tokens": [
+      "とまります",
+      "で"
+    ],
+    "pattern_ids": [
+      "particle_place",
+      "negative_form"
+    ],
+    "note": "Verba とまる memakai に untuk titik berhenti.",
+    "prompt_en": "This train does not stop at Shibuya.",
+    "note_en": "The verb tomaru takes ni for the stopping point."
   },
-
+  {
+    "id": "drill-p-densha",
+    "module_id": "8e1b4c96-5d27-4a03-bf68-7c2a9e5d1b40",
+    "type": "particle",
+    "prompt": "Saya pergi dengan kereta.",
+    "question_text": "でんしゃ＿ いきます",
+    "answer_tokens": [
+      "で"
+    ],
+    "distractor_tokens": [
+      "に",
+      "を",
+      "から"
+    ],
+    "pattern_ids": [
+      "particle_place"
+    ],
+    "note": "Alat transportasi ditandai で.",
+    "prompt_en": "I go by train.",
+    "note_en": "Means of transport are marked with de."
+  },
+  {
+    "id": "drill-t-densha",
+    "module_id": "8e1b4c96-5d27-4a03-bf68-7c2a9e5d1b40",
+    "type": "transform",
+    "prompt": "Tidak berhenti.",
+    "question_text": "とまります",
+    "instruction": "Ubah ke bentuk negatif sopan",
+    "answer_tokens": [
+      "とまりません"
+    ],
+    "distractor_tokens": [
+      "とまりました",
+      "とまって",
+      "とまろう"
+    ],
+    "pattern_ids": [
+      "negative_form"
+    ],
+    "note": "Dipakai untuk mengumumkan kereta yang tidak berhenti.",
+    "prompt_en": "Does not stop.",
+    "instruction_en": "Change to the polite negative",
+    "note_en": "Used to announce trains that skip a station."
+  },
   {
     "id": "drill-keigo-01",
     "module_id": "2f9d7a35-1e64-4b8c-9d02-6a5c3b8e7f19",
     "prompt": "Tolong tunggu sebentar.",
-    "answer_tokens": ["しょうしょう", "おまち", "ください"],
-    "distractor_tokens": ["まって", "を"],
-    "pattern_ids": ["polite_form"],
-    "note": "Pola お + akar verba + ください lebih halus dari ～てください."
+    "answer_tokens": [
+      "しょうしょう",
+      "おまち",
+      "ください"
+    ],
+    "distractor_tokens": [
+      "まって",
+      "を"
+    ],
+    "pattern_ids": [
+      "polite_form"
+    ],
+    "note": "Pola お + akar verba + ください lebih halus dari ～てください.",
+    "prompt_en": "Please wait a moment.",
+    "note_en": "O + verb stem + kudasai is softer than te-kudasai."
   },
   {
     "id": "drill-keigo-02",
     "module_id": "2f9d7a35-1e64-4b8c-9d02-6a5c3b8e7f19",
     "prompt": "Boleh saya bertanya sedikit?",
-    "answer_tokens": ["すこし", "しつもん", "しても", "いい", "です", "か"],
-    "distractor_tokens": ["だめ", "を"],
-    "pattern_ids": ["polite_form"],
-    "note": "Pola ～てもいいですか untuk meminta izin."
+    "answer_tokens": [
+      "すこし",
+      "しつもん",
+      "しても",
+      "いい",
+      "です",
+      "か"
+    ],
+    "distractor_tokens": [
+      "だめ",
+      "を"
+    ],
+    "pattern_ids": [
+      "polite_form"
+    ],
+    "note": "Pola ～てもいいですか untuk meminta izin.",
+    "prompt_en": "May I ask something?",
+    "note_en": "The temo ii desu ka pattern asks permission."
   },
   {
     "id": "drill-keigo-03",
     "module_id": "2f9d7a35-1e64-4b8c-9d02-6a5c3b8e7f19",
     "prompt": "Maaf, saya belum mengerti.",
-    "answer_tokens": ["すみません", "、", "まだ", "わかりません"],
-    "distractor_tokens": ["もう", "わかります"],
-    "pattern_ids": ["negative_form"],
-    "note": "まだ berpasangan dengan bentuk negatif."
+    "answer_tokens": [
+      "すみません",
+      "、",
+      "まだ",
+      "わかりません"
+    ],
+    "distractor_tokens": [
+      "もう",
+      "わかります"
+    ],
+    "pattern_ids": [
+      "negative_form"
+    ],
+    "note": "まだ berpasangan dengan bentuk negatif.",
+    "prompt_en": "Sorry, I don't understand yet.",
+    "note_en": "Mada pairs with a negative form."
   },
   {
     "id": "drill-keigo-04",
     "module_id": "2f9d7a35-1e64-4b8c-9d02-6a5c3b8e7f19",
     "prompt": "Tolong ajari saya caranya.",
-    "answer_tokens": ["やりかた", "を", "おしえて", "ください"],
-    "distractor_tokens": ["に", "おしえます"],
-    "pattern_ids": ["particle_object", "polite_form"],
-    "note": "やりかた berarti cara melakukan sesuatu."
+    "answer_tokens": [
+      "やりかた",
+      "を",
+      "おしえて",
+      "ください"
+    ],
+    "distractor_tokens": [
+      "に",
+      "おしえます"
+    ],
+    "pattern_ids": [
+      "particle_object",
+      "polite_form"
+    ],
+    "note": "やりかた berarti cara melakukan sesuatu.",
+    "prompt_en": "Please teach me how to do it.",
+    "note_en": "Yarikata means the way to do something."
   },
   {
     "id": "drill-keigo-05",
     "module_id": "2f9d7a35-1e64-4b8c-9d02-6a5c3b8e7f19",
     "prompt": "Hari ini saya tidak bisa lembur.",
-    "answer_tokens": ["きょう", "は", "ざんぎょう", "が", "できません"],
-    "distractor_tokens": ["を", "できます"],
-    "pattern_ids": ["particle_object", "negative_form"],
-    "note": "できます dan できません memakai partikel が."
+    "answer_tokens": [
+      "きょう",
+      "は",
+      "ざんぎょう",
+      "が",
+      "できません"
+    ],
+    "distractor_tokens": [
+      "を",
+      "できます"
+    ],
+    "pattern_ids": [
+      "particle_object",
+      "negative_form"
+    ],
+    "note": "できます dan できません memakai partikel が.",
+    "prompt_en": "I can't work overtime today.",
+    "note_en": "Dekimasu and dekimasen take the particle ga."
   },
-
+  {
+    "id": "drill-p-keigo",
+    "module_id": "2f9d7a35-1e64-4b8c-9d02-6a5c3b8e7f19",
+    "type": "particle",
+    "prompt": "Tolong ajari saya caranya.",
+    "question_text": "やりかた＿ おしえてください",
+    "answer_tokens": [
+      "を"
+    ],
+    "distractor_tokens": [
+      "に",
+      "が",
+      "で"
+    ],
+    "pattern_ids": [
+      "particle_object",
+      "polite_form"
+    ],
+    "note": "Yang diajarkan ditandai を.",
+    "prompt_en": "Please teach me how to do it.",
+    "note_en": "What is taught is marked with wo."
+  },
+  {
+    "id": "drill-t-keigo",
+    "module_id": "2f9d7a35-1e64-4b8c-9d02-6a5c3b8e7f19",
+    "type": "transform",
+    "prompt": "Mohon tunggu.",
+    "question_text": "まちます",
+    "instruction": "Ubah ke bentuk permintaan sopan",
+    "answer_tokens": [
+      "おまちください"
+    ],
+    "distractor_tokens": [
+      "まちません",
+      "まちました",
+      "まちたい"
+    ],
+    "pattern_ids": [
+      "polite_form"
+    ],
+    "note": "Pola お + akar verba + ください terasa lebih halus.",
+    "prompt_en": "Kindly wait.",
+    "instruction_en": "Change to the polite request",
+    "note_en": "The o + stem + kudasai pattern sounds softer."
+  },
   {
     "id": "drill-kako-01",
     "module_id": "6c0e8b41-9a73-4f52-8e1d-4b7f2a9c5d38",
     "prompt": "Kemarin saya makan ramen.",
-    "answer_tokens": ["きのう", "ラーメン", "を", "たべました"],
-    "distractor_tokens": ["たべます", "に"],
-    "pattern_ids": ["past_form", "particle_object", "word_order_time"],
-    "note": "たべました adalah bentuk lampau sopan dari たべる."
+    "answer_tokens": [
+      "きのう",
+      "ラーメン",
+      "を",
+      "たべました"
+    ],
+    "distractor_tokens": [
+      "たべます",
+      "に"
+    ],
+    "pattern_ids": [
+      "past_form",
+      "particle_object",
+      "word_order_time"
+    ],
+    "note": "たべました adalah bentuk lampau sopan dari たべる.",
+    "prompt_en": "I ate ramen yesterday.",
+    "note_en": "Tabemashita is the polite past of taberu."
   },
   {
     "id": "drill-kako-02",
     "module_id": "6c0e8b41-9a73-4f52-8e1d-4b7f2a9c5d38",
     "prompt": "Akhir pekan lalu saya tidak pergi ke mana-mana.",
-    "answer_tokens": ["せんしゅう", "の", "しゅうまつ", "は", "どこ", "にも", "いきませんでした"],
-    "distractor_tokens": ["いきました", "を"],
-    "pattern_ids": ["past_form", "negative_form"],
-    "note": "どこにも berpasangan dengan bentuk negatif lampau."
+    "answer_tokens": [
+      "せんしゅう",
+      "の",
+      "しゅうまつ",
+      "は",
+      "どこ",
+      "にも",
+      "いきませんでした"
+    ],
+    "distractor_tokens": [
+      "いきました",
+      "を"
+    ],
+    "pattern_ids": [
+      "past_form",
+      "negative_form"
+    ],
+    "note": "どこにも berpasangan dengan bentuk negatif lampau.",
+    "prompt_en": "I didn't go anywhere last weekend.",
+    "note_en": "Doko nimo pairs with the past negative."
   },
   {
     "id": "drill-kako-03",
     "module_id": "6c0e8b41-9a73-4f52-8e1d-4b7f2a9c5d38",
     "prompt": "Film itu sangat menarik.",
-    "answer_tokens": ["あの", "えいが", "は", "とても", "おもしろかった", "です"],
-    "distractor_tokens": ["おもしろいでした", "が"],
-    "pattern_ids": ["past_form"],
-    "note": "Kata sifat -i menjadi ～かった, bukan おもしろいでした."
+    "answer_tokens": [
+      "あの",
+      "えいが",
+      "は",
+      "とても",
+      "おもしろかった",
+      "です"
+    ],
+    "distractor_tokens": [
+      "おもしろいでした",
+      "が"
+    ],
+    "pattern_ids": [
+      "past_form"
+    ],
+    "note": "Kata sifat -i menjadi ～かった, bukan おもしろいでした.",
+    "prompt_en": "That film was very interesting.",
+    "note_en": "I-adjectives become katta, not i-deshita."
   },
   {
     "id": "drill-kako-04",
     "module_id": "6c0e8b41-9a73-4f52-8e1d-4b7f2a9c5d38",
     "prompt": "Saya pernah ke Jepang dua kali.",
-    "answer_tokens": ["にほん", "に", "にかい", "いった", "ことが", "あります"],
-    "distractor_tokens": ["で", "につ"],
-    "pattern_ids": ["counter_word", "past_form"],
-    "note": "Pola ～たことがあります menyatakan pengalaman; かい untuk jumlah kali."
+    "answer_tokens": [
+      "にほん",
+      "に",
+      "にかい",
+      "いった",
+      "ことが",
+      "あります"
+    ],
+    "distractor_tokens": [
+      "で",
+      "につ"
+    ],
+    "pattern_ids": [
+      "counter_word",
+      "past_form"
+    ],
+    "note": "Pola ～たことがあります menyatakan pengalaman; かい untuk jumlah kali.",
+    "prompt_en": "I have been to Japan twice.",
+    "note_en": "The ta koto ga arimasu pattern states experience; kai counts times."
   },
   {
     "id": "drill-kako-05",
     "module_id": "6c0e8b41-9a73-4f52-8e1d-4b7f2a9c5d38",
     "prompt": "Setelah bekerja saya belajar bahasa Jepang.",
-    "answer_tokens": ["しごと", "の", "あと", "で", "にほんご", "を", "べんきょう", "しました"],
-    "distractor_tokens": ["まえ", "に"],
-    "pattern_ids": ["particle_place", "past_form", "word_order_time"],
-    "note": "Pola A のあとで berarti setelah A."
+    "answer_tokens": [
+      "しごと",
+      "の",
+      "あと",
+      "で",
+      "にほんご",
+      "を",
+      "べんきょう",
+      "しました"
+    ],
+    "distractor_tokens": [
+      "まえ",
+      "に"
+    ],
+    "pattern_ids": [
+      "particle_place",
+      "past_form",
+      "word_order_time"
+    ],
+    "note": "Pola A のあとで berarti setelah A.",
+    "prompt_en": "After work I studied Japanese.",
+    "note_en": "The A no ato de pattern means after A."
+  },
+  {
+    "id": "drill-p-kako",
+    "module_id": "6c0e8b41-9a73-4f52-8e1d-4b7f2a9c5d38",
+    "type": "particle",
+    "prompt": "Kemarin saya makan ramen.",
+    "question_text": "きのう ラーメン＿ たべました",
+    "answer_tokens": [
+      "を"
+    ],
+    "distractor_tokens": [
+      "が",
+      "に",
+      "で"
+    ],
+    "pattern_ids": [
+      "particle_object",
+      "past_form"
+    ],
+    "note": "Objek tetap ditandai を pada bentuk lampau.",
+    "prompt_en": "I ate ramen yesterday.",
+    "note_en": "Objects still take wo in the past form."
+  },
+  {
+    "id": "drill-t-kako",
+    "module_id": "6c0e8b41-9a73-4f52-8e1d-4b7f2a9c5d38",
+    "type": "transform",
+    "prompt": "Menarik (bentuk lampau).",
+    "question_text": "おもしろいです",
+    "instruction": "Ubah ke bentuk lampau",
+    "answer_tokens": [
+      "おもしろかったです"
+    ],
+    "distractor_tokens": [
+      "おもしろいでした",
+      "おもしろくないです",
+      "おもしろくて"
+    ],
+    "pattern_ids": [
+      "past_form"
+    ],
+    "note": "Kata sifat -i menjadi ～かった, bukan ～いでした.",
+    "prompt_en": "Interesting (past form).",
+    "instruction_en": "Change to the past form",
+    "note_en": "I-adjectives become katta, never i-deshita."
   }
 ]
