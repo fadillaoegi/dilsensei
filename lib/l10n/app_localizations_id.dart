@@ -354,6 +354,9 @@ class AppL10nId extends AppL10n {
   String get settingsSectionLanguage => 'Bahasa';
 
   @override
+  String get settingsSectionPractice => 'Latihan';
+
+  @override
   String get settingsSectionAppearance => 'Tampilan';
 
   @override
@@ -472,6 +475,11 @@ class AppL10nId extends AppL10n {
 
   @override
   String get paywallRecommended => 'HEMAT';
+
+  @override
+  String paywallSavePercent(int percent) {
+    return 'Hemat $percent%';
+  }
 
   @override
   String get planPeriodWeekly => '/ minggu';
@@ -701,4 +709,76 @@ class AppL10nId extends AppL10n {
   @override
   String get purchaseErrorNotConfigured =>
       'Pembelian belum tersedia di build ini.';
+
+  @override
+  String get updateAvailableTitle => 'Pembaruan tersedia';
+
+  @override
+  String get updateAvailableBody =>
+      'Versi DilSensei yang lebih baru sudah ada di Google Play.';
+
+  @override
+  String get updateAction => 'Perbarui';
+
+  @override
+  String get updateDismiss => 'Nanti';
+
+  @override
+  String get updateDownloadingTitle => 'Mengunduh pembaruan';
+
+  @override
+  String get updateDownloadingBody =>
+      'Kamu bisa tetap berlatih sambil menunggu.';
+
+  @override
+  String get updateReadyTitle => 'Pembaruan siap';
+
+  @override
+  String get updateReadyBody =>
+      'Mulai ulang app untuk menyelesaikan pemasangan.';
+
+  @override
+  String get updateReadyAction => 'Mulai ulang';
+
+  @override
+  String get updateFailedTitle => 'Pembaruan tidak bisa dimulai';
+
+  @override
+  String get updateFailedBody =>
+      'Buka DilSensei di Google Play untuk memperbarui manual.';
+
+  @override
+  String get updateFailedAction => 'Buka Google Play';
+
+  @override
+  String get diagnosticsTitle => 'Diagnostik';
+
+  @override
+  String get diagnosticsSubtitle => 'Catatan teknis untuk sesi ini';
+
+  @override
+  String get diagnosticsCopy => 'Salin semua';
+
+  @override
+  String get diagnosticsClear => 'Bersihkan';
+
+  @override
+  String get diagnosticsCopied => 'Log disalin ke papan klip';
+
+  @override
+  String get diagnosticsEmpty =>
+      'Belum ada catatan. Buka paywall untuk merekam aktivitas langganan.';
+
+  @override
+  String get practicePreferencesTitle => 'Preferensi latihan';
+
+  @override
+  String get practicePreferencesSubtitle =>
+      'Ubah kapan saja bila alasanmu belajar berubah. Progres dan streak tetap tersimpan.';
+
+  @override
+  String get practicePreferencesEntry => 'Tujuan & target harian';
+
+  @override
+  String get practicePreferencesError => 'Tidak bisa memuat preferensimu.';
 }

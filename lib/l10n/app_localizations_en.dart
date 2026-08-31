@@ -354,6 +354,9 @@ class AppL10nEn extends AppL10n {
   String get settingsSectionLanguage => 'Language';
 
   @override
+  String get settingsSectionPractice => 'Practice';
+
+  @override
   String get settingsSectionAppearance => 'Appearance';
 
   @override
@@ -470,6 +473,11 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get paywallRecommended => 'SAVE';
+
+  @override
+  String paywallSavePercent(int percent) {
+    return 'Save $percent%';
+  }
 
   @override
   String get planPeriodWeekly => '/ week';
@@ -699,4 +707,75 @@ class AppL10nEn extends AppL10n {
   @override
   String get purchaseErrorNotConfigured =>
       'Purchases are not available in this build.';
+
+  @override
+  String get updateAvailableTitle => 'Update available';
+
+  @override
+  String get updateAvailableBody =>
+      'A newer version of DilSensei is on Google Play.';
+
+  @override
+  String get updateAction => 'Update';
+
+  @override
+  String get updateDismiss => 'Later';
+
+  @override
+  String get updateDownloadingTitle => 'Downloading update';
+
+  @override
+  String get updateDownloadingBody =>
+      'You can keep practising while it downloads.';
+
+  @override
+  String get updateReadyTitle => 'Update ready';
+
+  @override
+  String get updateReadyBody => 'Restart the app to finish installing.';
+
+  @override
+  String get updateReadyAction => 'Restart';
+
+  @override
+  String get updateFailedTitle => 'Update could not start';
+
+  @override
+  String get updateFailedBody =>
+      'Open DilSensei on Google Play to update manually.';
+
+  @override
+  String get updateFailedAction => 'Open Google Play';
+
+  @override
+  String get diagnosticsTitle => 'Diagnostics';
+
+  @override
+  String get diagnosticsSubtitle => 'Technical log for this session';
+
+  @override
+  String get diagnosticsCopy => 'Copy all';
+
+  @override
+  String get diagnosticsClear => 'Clear';
+
+  @override
+  String get diagnosticsCopied => 'Log copied to clipboard';
+
+  @override
+  String get diagnosticsEmpty =>
+      'Nothing recorded yet. Open the paywall to capture subscription activity.';
+
+  @override
+  String get practicePreferencesTitle => 'Practice preferences';
+
+  @override
+  String get practicePreferencesSubtitle =>
+      'Change these whenever your reason for learning changes. Your progress and streak are kept.';
+
+  @override
+  String get practicePreferencesEntry => 'Goal & daily target';
+
+  @override
+  String get practicePreferencesError => 'Could not load your preferences.';
 }

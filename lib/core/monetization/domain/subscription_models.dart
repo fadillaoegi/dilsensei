@@ -15,6 +15,8 @@ class SubscriptionPlan {
     this.storeTitle,
     this.trialDays,
     this.isRecommended = false,
+    this.price,
+    this.currencyCode,
   });
 
   final String id;
@@ -26,7 +28,16 @@ class SubscriptionPlan {
   final int? trialDays;
 
   /// Harga sudah terformat sesuai mata uang perangkat, misalnya "Rp 49.000".
+  ///
+  /// Nilainya datang apa adanya dari store. App tidak pernah mengonversi mata
+  /// uang sendiri: yang ditampilkan harus sama dengan yang benar-benar ditagih.
   final String priceLabel;
+
+  /// Harga numerik dalam mata uang [currencyCode], dipakai untuk menghitung
+  /// penghematan antar paket. Null bila store tidak melaporkannya.
+  final double? price;
+
+  final String? currencyCode;
   final BillingPeriod period;
 
   final bool isRecommended;
@@ -47,6 +58,30 @@ class SubscriptionPlan {
     BillingPeriod.lifetime => l10n.planPeriodLifetime,
     BillingPeriod.unknown => '',
   };
+
+  /// Persentase penghematan paket tahunan dibanding membayar bulanan setahun.
+  ///
+  /// Dihitung dari harga nyata di store, bukan angka yang dipatok di kode.
+  /// Dengan begitu badge diskonnya tetap benar di mata uang apa pun dan tidak
+  /// pernah berbohong bila harga di Play Console diubah.
+  static int? annualSavingsPercent({
+    required SubscriptionPlan? monthly,
+    required SubscriptionPlan? annual,
+  }) {
+    final monthlyPrice = monthly?.price;
+    final annualPrice = annual?.price;
+
+    if (monthlyPrice == null || annualPrice == null) return null;
+    if (monthlyPrice <= 0 || annualPrice <= 0) return null;
+    if (monthly?.currencyCode != annual?.currencyCode) return null;
+
+    final yearAtMonthlyRate = monthlyPrice * 12;
+    if (annualPrice >= yearAtMonthlyRate) return null;
+
+    final saved = (1 - annualPrice / yearAtMonthlyRate) * 100;
+
+    return saved.round();
+  }
 
   /// Deskripsi masa percobaan sesuai bahasa aktif, misalnya "3 days free".
   String? trialDescriptionFor(AppL10n l10n) {

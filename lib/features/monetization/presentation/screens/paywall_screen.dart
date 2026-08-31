@@ -23,6 +23,14 @@ class PaywallScreen extends ConsumerStatefulWidget {
   ConsumerState<PaywallScreen> createState() => _PaywallScreenState();
 }
 
+/// Mencari paket dengan periode tertentu; null bila store tidak menyediakannya.
+SubscriptionPlan? _planWithPeriod(
+  List<SubscriptionPlan> plans,
+  BillingPeriod period,
+) {
+  return plans.where((plan) => plan.period == period).firstOrNull;
+}
+
 class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   @override
   void initState() {
@@ -287,6 +295,15 @@ class _PlanSection extends StatelessWidget {
                 child: PricingCard(
                   plan: plan,
                   isSelected: plan.id == effectiveId,
+                  savingsPercent: plan.period == BillingPeriod.annual
+                      ? SubscriptionPlan.annualSavingsPercent(
+                          monthly: _planWithPeriod(
+                            plans,
+                            BillingPeriod.monthly,
+                          ),
+                          annual: plan,
+                        )
+                      : null,
                   onTap: () => onSelect(plan.id),
                 ),
               ),

@@ -1,5 +1,5 @@
 {
-  "_comment": "Salin file ini menjadi dart_defines.json lalu isi nilainya. dart_defines.json sudah masuk .gitignore. Key Test Store hanya dipakai saat debug; build rilis selalu memakai REVENUECAT_ANDROID_KEY.",
+  "_comment": "Key RevenueCat sudah punya nilai bawaan di kode dan dipilih otomatis: debug memakai test_..., rilis memakai goog_.... File ini hanya perlu bila kamu berpindah project RevenueCat, dan untuk mengisi LEGAL_BASE_URL yang tidak punya nilai bawaan yang sah.",
   "REVENUECAT_TEST_KEY": "test_xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
   "REVENUECAT_ANDROID_KEY": "goog_xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
   "LEGAL_BASE_URL": "https://username.github.io/dilsensei"

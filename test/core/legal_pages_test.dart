@@ -19,16 +19,6 @@ void main() {
       expect(MonetizationConfig.isTestKey(''), isFalse);
     });
 
-    test('key Test Store didahulukan atas key platform bila tersedia', () {
-      // Tanpa dart-define, testStoreKey kosong sehingga key platform dipakai.
-      expect(
-        MonetizationConfig.resolveApiKey(platformKey: 'goog_produksi'),
-        'goog_produksi',
-      );
-      expect(MonetizationConfig.resolveApiKey(platformKey: ''), isEmpty);
-      expect(MonetizationConfig.isUsingTestStore, isFalse);
-    });
-
     test('URL legal tersusun ke halaman yang tepat', () {
       expect(
         MonetizationConfig.privacyPolicyUrl,

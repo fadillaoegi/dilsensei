@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/localization/language_controller.dart';
+import '../../../../core/diagnostics/diagnostics_providers.dart';
 import '../../../../core/monetization/dev_premium_override.dart';
 import '../../../../core/monetization/monetization_config.dart';
 import '../../../../core/monetization/monetization_providers.dart';
@@ -96,6 +97,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             const SizedBox(height: 28),
             const _TrainingRecordTile(),
             const SizedBox(height: 18),
+            _SectionLabel(l10n.settingsSectionPractice),
+            _SettingsTile(
+              icon: Icons.tune_rounded,
+              title: l10n.practicePreferencesEntry,
+              subtitle: target == null
+                  ? null
+                  : l10n.settingsDailyTarget(target.minutes),
+              onTap: () => context.push(AppRoutes.practicePreferences),
+            ),
+            const SizedBox(height: 24),
             _SectionLabel(l10n.settingsSectionLanguage),
             const _LanguageSelector(),
             const SizedBox(height: 24),
@@ -139,7 +150,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               title: l10n.settingsTerms,
               onTap: () => _openLink(MonetizationConfig.termsUrl),
             ),
-            if (DevTools.isEnabled) ...[
+            if (ref.watch(diagnosticsEnabledProvider)) ...[
+              const SizedBox(height: 24),
+              _SectionLabel(l10n.diagnosticsTitle),
+              _SettingsTile(
+                icon: Icons.bug_report_outlined,
+                title: l10n.diagnosticsTitle,
+                subtitle: l10n.diagnosticsSubtitle,
+                onTap: () => context.push(AppRoutes.diagnostics),
+              ),
+            ],
+            if (ref.watch(devToolsEnabledProvider)) ...[
               const SizedBox(height: 24),
               _SectionLabel(l10n.settingsSectionDevelopment),
               const _DevPremiumToggle(),
@@ -242,7 +263,8 @@ class _ThemeSelector extends ConsumerWidget {
 /// Tombol dev yang menandai seluruh modul selesai, agar Training Record bisa
 /// diperiksa tanpa menyelesaikan delapan modul secara manual.
 ///
-/// Sama seperti tombol Pro, blok ini hanya dirender saat [DevTools.isEnabled]
+/// Sama seperti tombol Pro, blok ini hanya dirender saat
+/// [devToolsEnabledProvider] bernilai true
 /// dan aksinya menolak berjalan di build release.
 class _DevCompleteAllButton extends ConsumerStatefulWidget {
   const _DevCompleteAllButton();
@@ -439,7 +461,8 @@ class _ReminderControlsState extends ConsumerState<_ReminderControls> {
 
 /// Tombol dev untuk memaksa akses Pro.
 ///
-/// Hanya dirender saat [DevTools.isEnabled], yaitu build debug atau profile.
+/// Hanya dirender saat [devToolsEnabledProvider] bernilai true, yaitu build
+/// debug atau profile.
 class _DevPremiumToggle extends ConsumerWidget {
   const _DevPremiumToggle();
 

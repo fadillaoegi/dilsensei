@@ -199,7 +199,7 @@ class _SessionHeader extends StatelessWidget {
               borderRadius: BorderRadius.circular(999),
               child: TweenAnimationBuilder<double>(
                 tween: Tween<double>(end: progress),
-                duration: const Duration(milliseconds: 420),
+                duration: context.motion(const Duration(milliseconds: 420)),
                 curve: Curves.easeOutCubic,
                 builder: (context, value, _) => LinearProgressIndicator(
                   value: value,
@@ -368,7 +368,7 @@ class _FeedbackPanel extends StatelessWidget {
     final willRepeat = state.feedback == DrillFeedback.incorrectWillRepeat;
 
     return AnimatedSize(
-      duration: const Duration(milliseconds: 220),
+      duration: context.motion(const Duration(milliseconds: 220)),
       curve: Curves.easeOut,
       child: Container(
         width: double.infinity,

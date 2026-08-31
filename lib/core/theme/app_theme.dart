@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'app_palette.dart';
 
+export 'app_motion.dart' show AppMotionX;
+
 export 'app_palette.dart' show AppColors, AppPalette, AppPaletteX;
 
 abstract final class AppFonts {

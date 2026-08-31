@@ -7,6 +7,8 @@ import '../../features/lesson/presentation/screens/insights_screen.dart';
 import '../../features/lesson/presentation/screens/training_record_screen.dart';
 import '../../features/monetization/presentation/screens/paywall_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../../features/settings/presentation/screens/diagnostics_screen.dart';
+import '../../features/settings/presentation/screens/practice_preferences_screen.dart';
 import 'app_gate.dart';
 
 abstract final class AppRoutes {
@@ -15,6 +17,8 @@ abstract final class AppRoutes {
   static const session = '/session';
   static const insights = '/insights';
   static const settings = '/settings';
+  static const diagnostics = '/diagnostics';
+  static const practicePreferences = '/practice-preferences';
   static const trainingRecord = '/training-record';
   static const kana = '/kana';
 
@@ -48,6 +52,14 @@ GoRouter createAppRouter({String initialLocation = AppRoutes.home}) {
       GoRoute(
         path: AppRoutes.settings,
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.diagnostics,
+        builder: (context, state) => const DiagnosticsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.practicePreferences,
+        builder: (context, state) => const PracticePreferencesScreen(),
       ),
       GoRoute(
         path: '${AppRoutes.kana}/:script',

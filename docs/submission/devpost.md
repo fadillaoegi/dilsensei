@@ -168,8 +168,11 @@ Specific things worth looking at:
 5. Typography is bundled, not fetched. Space Grotesk for headings, Plus Jakarta Sans for body — the latter made by Tokotype, an Indonesian type foundry, which matters for an app built in Indonesia. Bundling also means the typography is correct on first launch with no network.
 6. The app icon and the feature graphic are both rendered programmatically from source art by scripts in the repo, so they can be regenerated exactly rather than hand-exported.
 7. The onboarding steps rise and fade rather than sliding, and the step indicator interpolates colour instead of switching it.
+8. Light and dark themes built from one semantic palette, so the brand green shifts to a lighter tone on dark surfaces instead of staying unreadable. Contrast ratios for both themes are asserted by tests, not eyeballed.
 
-Everything above renders offline, including the Japanese characters, which fall back to the system CJK font through an explicit fallback chain rather than by accident. The end-of-session celebration honours the platform's reduced-motion setting and does not play when it is on.
+Everything above renders offline, including the Japanese characters, which fall back to the system CJK font through an explicit fallback chain rather than by accident.
+
+Every animation in the app honours the platform's reduced-motion setting. Turn it on and the transitions resolve instantly to their final state rather than being skipped, so nothing is lost — and the loading skeleton stops pulsing entirely, because an endlessly repeating animation is exactly what that setting exists to prevent. A test walks the source tree and fails the build if any animated widget ignores it.
 ```
 
 ---
@@ -224,12 +227,6 @@ termasuk keputusan yang salah dan diperbaiki. Bahan jujur yang sudah tersedia:
 Dicatat di sini supaya tidak ada klaim di materi submission yang melebihi
 keadaan kode.
 
-- **Reduced motion belum menyeluruh.** Hanya `session_complete_burst.dart` yang
-  memanggil `MediaQuery.maybeDisableAnimationsOf`. Delapan berkas lain punya
-  animasi yang tetap berjalan: layar sesi, Insights, Training Record, ringkasan
-  sesi, shimmer skeleton, PricingCard, onboarding, dan ChoiceCard. Belum ada test
-  yang memverifikasi perilaku ini. Design Award kemungkinan diuji dengan setelan
-  aksesibilitas menyala, jadi ini layak dibereskan sebelum submission.
 - **Entitlement `pro` belum terbukti terpasang** ke ketiga produk di dashboard
   RevenueCat. Gejalanya bila belum: pembelian berhasil tapi app menampilkan
   "langganan belum aktif" (`PurchaseFailure.notActive`).

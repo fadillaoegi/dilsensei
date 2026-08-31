@@ -11,6 +11,17 @@ abstract final class DevTools {
   static bool get isEnabled => kDebugMode || kProfileMode;
 }
 
+/// Gerbang render untuk blok perkakas dev.
+///
+/// Nilainya berasal dari [DevTools.isEnabled], tapi dibungkus provider supaya
+/// test bisa menirukan build release — `kDebugMode` adalah konstanta, sehingga
+/// tanpa ini perilaku rilis hanya bisa diasumsikan, tidak diuji.
+///
+/// Perhatikan bahwa [isDevPremiumActiveProvider] tetap memeriksa
+/// [DevTools.isEnabled] secara langsung. Jadi walau gerbang render ini ditimpa,
+/// konten premium tetap tidak mungkin terbuka gratis di build release.
+final devToolsEnabledProvider = Provider<bool>((ref) => DevTools.isEnabled);
+
 /// Status override yang dikendalikan tombol dev.
 class DevPremiumOverride extends StateNotifier<bool> {
   DevPremiumOverride() : super(false);

@@ -703,6 +703,12 @@ abstract class AppL10n {
   /// **'Language'**
   String get settingsSectionLanguage;
 
+  /// No description provided for @settingsSectionPractice.
+  ///
+  /// In en, this message translates to:
+  /// **'Practice'**
+  String get settingsSectionPractice;
+
   /// No description provided for @settingsSectionAppearance.
   ///
   /// In en, this message translates to:
@@ -918,6 +924,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'SAVE'**
   String get paywallRecommended;
+
+  /// No description provided for @paywallSavePercent.
+  ///
+  /// In en, this message translates to:
+  /// **'Save {percent}%'**
+  String paywallSavePercent(int percent);
 
   /// No description provided for @planPeriodWeekly.
   ///
@@ -1308,6 +1320,138 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Purchases are not available in this build.'**
   String get purchaseErrorNotConfigured;
+
+  /// No description provided for @updateAvailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update available'**
+  String get updateAvailableTitle;
+
+  /// No description provided for @updateAvailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A newer version of DilSensei is on Google Play.'**
+  String get updateAvailableBody;
+
+  /// No description provided for @updateAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get updateAction;
+
+  /// No description provided for @updateDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get updateDismiss;
+
+  /// No description provided for @updateDownloadingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading update'**
+  String get updateDownloadingTitle;
+
+  /// No description provided for @updateDownloadingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You can keep practising while it downloads.'**
+  String get updateDownloadingBody;
+
+  /// No description provided for @updateReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update ready'**
+  String get updateReadyTitle;
+
+  /// No description provided for @updateReadyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart the app to finish installing.'**
+  String get updateReadyBody;
+
+  /// No description provided for @updateReadyAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get updateReadyAction;
+
+  /// No description provided for @updateFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update could not start'**
+  String get updateFailedTitle;
+
+  /// No description provided for @updateFailedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Open DilSensei on Google Play to update manually.'**
+  String get updateFailedBody;
+
+  /// No description provided for @updateFailedAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Google Play'**
+  String get updateFailedAction;
+
+  /// No description provided for @diagnosticsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnostics'**
+  String get diagnosticsTitle;
+
+  /// No description provided for @diagnosticsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical log for this session'**
+  String get diagnosticsSubtitle;
+
+  /// No description provided for @diagnosticsCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy all'**
+  String get diagnosticsCopy;
+
+  /// No description provided for @diagnosticsClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get diagnosticsClear;
+
+  /// No description provided for @diagnosticsCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Log copied to clipboard'**
+  String get diagnosticsCopied;
+
+  /// No description provided for @diagnosticsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded yet. Open the paywall to capture subscription activity.'**
+  String get diagnosticsEmpty;
+
+  /// No description provided for @practicePreferencesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Practice preferences'**
+  String get practicePreferencesTitle;
+
+  /// No description provided for @practicePreferencesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change these whenever your reason for learning changes. Your progress and streak are kept.'**
+  String get practicePreferencesSubtitle;
+
+  /// No description provided for @practicePreferencesEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal & daily target'**
+  String get practicePreferencesEntry;
+
+  /// No description provided for @practicePreferencesError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load your preferences.'**
+  String get practicePreferencesError;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

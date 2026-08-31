@@ -68,6 +68,7 @@ void main() {
     testWidgets('mengganti bahasa di Pengaturan langsung mengubah seluruh UI', (
       tester,
     ) async {
+      usePhoneViewport(tester);
       await tester.pumpWidget(buildTestApp(language: AppLanguage.english));
       await pumpUntilLoaded(tester);
 
@@ -77,13 +78,17 @@ void main() {
       expect(find.byType(SettingsScreen), findsOneWidget);
       expect(find.text('Settings'), findsWidgets);
       expect(find.text('Free plan'), findsOneWidget);
-      expect(find.text('Bahasa Indonesia'), findsOneWidget);
+
+      // Pilihan bahasa berada di bawah kartu status dan bagian Latihan.
+      await scrollSettingsTo(tester, 'Bahasa Indonesia');
 
       await tester.tap(find.text('Bahasa Indonesia'));
       await tester.pumpAndSettle();
 
-      // Judul dan status ikut berganti tanpa perlu restart.
+      // Judul dan status ikut berganti tanpa perlu restart. Kartu status berada
+      // di puncak daftar, jadi digulir kembali ke atas.
       expect(find.text('Pengaturan'), findsWidgets);
+      await scrollSettingsTo(tester, 'Versi gratis');
       expect(find.text('Versi gratis'), findsOneWidget);
       expect(find.text('Free plan'), findsNothing);
 

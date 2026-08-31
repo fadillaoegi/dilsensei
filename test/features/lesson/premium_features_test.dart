@@ -154,21 +154,11 @@ void main() {
       expect(find.byType(SettingsScreen), findsOneWidget);
       expect(find.text('Versi gratis'), findsOneWidget);
 
-      // Bagian langganan berada di bawah bagian bahasa dan pengingat.
-      await tester.scrollUntilVisible(
-        find.text('Kelola langganan'),
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.pumpAndSettle();
+      // Bagian langganan berada di bawah bagian bahasa, tampilan, dan pengingat.
+      await scrollSettingsTo(tester, 'Kelola langganan');
       expect(find.text('Kelola langganan'), findsOneWidget);
 
-      await tester.scrollUntilVisible(
-        find.text('Restore Purchases'),
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.pumpAndSettle();
+      await scrollSettingsTo(tester, 'Restore Purchases');
       await tester.tap(find.text('Restore Purchases'));
       await tester.pumpAndSettle();
 

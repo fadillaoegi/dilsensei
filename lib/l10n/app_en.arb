@@ -209,6 +209,7 @@
     }
   },
   "settingsSectionLanguage": "Language",
+  "settingsSectionPractice": "Practice",
   "settingsSectionAppearance": "Appearance",
   "themeSystem": "Match device",
   "themeLight": "Light",
@@ -252,6 +253,14 @@
   "paywallPurchaseFailed": "Purchase failed.",
   "paywallTestStore": "TEST STORE MODE — purchases are not charged",
   "paywallRecommended": "SAVE",
+  "paywallSavePercent": "Save {percent}%",
+  "@paywallSavePercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
   "planPeriodWeekly": "/ week",
   "planPeriodMonthly": "/ month",
   "planPeriodAnnual": "/ year",
@@ -392,5 +401,27 @@
   "purchaseErrorPlanNotFound": "That plan is not available right now.",
   "purchaseErrorNotActive": "The subscription is not active yet.",
   "purchaseErrorStore": "The store could not complete the purchase.",
-  "purchaseErrorNotConfigured": "Purchases are not available in this build."
+  "purchaseErrorNotConfigured": "Purchases are not available in this build.",
+  "updateAvailableTitle": "Update available",
+  "updateAvailableBody": "A newer version of DilSensei is on Google Play.",
+  "updateAction": "Update",
+  "updateDismiss": "Later",
+  "updateDownloadingTitle": "Downloading update",
+  "updateDownloadingBody": "You can keep practising while it downloads.",
+  "updateReadyTitle": "Update ready",
+  "updateReadyBody": "Restart the app to finish installing.",
+  "updateReadyAction": "Restart",
+  "updateFailedTitle": "Update could not start",
+  "updateFailedBody": "Open DilSensei on Google Play to update manually.",
+  "updateFailedAction": "Open Google Play",
+  "diagnosticsTitle": "Diagnostics",
+  "diagnosticsSubtitle": "Technical log for this session",
+  "diagnosticsCopy": "Copy all",
+  "diagnosticsClear": "Clear",
+  "diagnosticsCopied": "Log copied to clipboard",
+  "diagnosticsEmpty": "Nothing recorded yet. Open the paywall to capture subscription activity.",
+  "practicePreferencesTitle": "Practice preferences",
+  "practicePreferencesSubtitle": "Change these whenever your reason for learning changes. Your progress and streak are kept.",
+  "practicePreferencesEntry": "Goal & daily target",
+  "practicePreferencesError": "Could not load your preferences."
 }

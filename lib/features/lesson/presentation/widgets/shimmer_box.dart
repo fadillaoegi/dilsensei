@@ -24,7 +24,25 @@ class _ShimmerBoxState extends State<ShimmerBox>
   late final AnimationController _controller = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1100),
-  )..repeat(reverse: true);
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Denyut yang berulang tanpa henti justru paling mengganggu pengguna yang
+    // menyalakan "kurangi gerak". Skeletonnya tetap tampil — yang dihentikan
+    // hanya gerakannya, dibekukan pada keadaan paling terang agar tidak terlihat
+    // seperti elemen yang dinonaktifkan.
+    if (context.prefersReducedMotion) {
+      _controller.stop();
+      _controller.value = 1;
+
+      return;
+    }
+
+    if (!_controller.isAnimating) _controller.repeat(reverse: true);
+  }
 
   @override
   void dispose() {

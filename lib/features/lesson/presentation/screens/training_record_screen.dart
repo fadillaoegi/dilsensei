@@ -250,7 +250,7 @@ class _ScoreBlock extends StatelessWidget {
           children: [
             TweenAnimationBuilder<double>(
               tween: Tween<double>(end: score.toDouble()),
-              duration: const Duration(milliseconds: 900),
+              duration: context.motion(const Duration(milliseconds: 900)),
               curve: Curves.easeOutCubic,
               builder: (context, value, _) => Text(
                 '${value.round()}',
@@ -415,7 +415,7 @@ class _Component extends StatelessWidget {
             borderRadius: BorderRadius.circular(999),
             child: TweenAnimationBuilder<double>(
               tween: Tween<double>(end: value),
-              duration: const Duration(milliseconds: 700),
+              duration: context.motion(const Duration(milliseconds: 700)),
               curve: Curves.easeOutCubic,
               builder: (context, animated, _) => LinearProgressIndicator(
                 value: animated,

@@ -81,7 +81,7 @@ class _StepTransition extends StatelessWidget {
     return TweenAnimationBuilder<double>(
       key: ValueKey<int>(step),
       tween: Tween<double>(begin: 0, end: 1),
-      duration: const Duration(milliseconds: 260),
+      duration: context.motion(const Duration(milliseconds: 260)),
       curve: Curves.easeOutCubic,
       builder: (context, value, child) => Opacity(
         opacity: value,
@@ -114,7 +114,7 @@ class _StepIndicator extends StatelessWidget {
                 ),
                 child: TweenAnimationBuilder<double>(
                   tween: Tween<double>(end: i <= step ? 1 : 0),
-                  duration: const Duration(milliseconds: 320),
+                  duration: context.motion(const Duration(milliseconds: 320)),
                   curve: Curves.easeOut,
                   builder: (context, value, _) => Container(
                     height: 4,

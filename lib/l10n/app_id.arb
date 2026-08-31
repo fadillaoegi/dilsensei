@@ -209,6 +209,7 @@
     }
   },
   "settingsSectionLanguage": "Bahasa",
+  "settingsSectionPractice": "Latihan",
   "settingsSectionAppearance": "Tampilan",
   "themeSystem": "Ikuti perangkat",
   "themeLight": "Terang",
@@ -252,6 +253,14 @@
   "paywallPurchaseFailed": "Pembelian gagal.",
   "paywallTestStore": "MODE TEST STORE — pembelian tidak menagih uang",
   "paywallRecommended": "HEMAT",
+  "paywallSavePercent": "Hemat {percent}%",
+  "@paywallSavePercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
   "planPeriodWeekly": "/ minggu",
   "planPeriodMonthly": "/ bulan",
   "planPeriodAnnual": "/ tahun",
@@ -392,5 +401,27 @@
   "purchaseErrorPlanNotFound": "Paket itu sedang tidak tersedia.",
   "purchaseErrorNotActive": "Langganan belum aktif.",
   "purchaseErrorStore": "Store tidak bisa menyelesaikan pembelian.",
-  "purchaseErrorNotConfigured": "Pembelian belum tersedia di build ini."
+  "purchaseErrorNotConfigured": "Pembelian belum tersedia di build ini.",
+  "updateAvailableTitle": "Pembaruan tersedia",
+  "updateAvailableBody": "Versi DilSensei yang lebih baru sudah ada di Google Play.",
+  "updateAction": "Perbarui",
+  "updateDismiss": "Nanti",
+  "updateDownloadingTitle": "Mengunduh pembaruan",
+  "updateDownloadingBody": "Kamu bisa tetap berlatih sambil menunggu.",
+  "updateReadyTitle": "Pembaruan siap",
+  "updateReadyBody": "Mulai ulang app untuk menyelesaikan pemasangan.",
+  "updateReadyAction": "Mulai ulang",
+  "updateFailedTitle": "Pembaruan tidak bisa dimulai",
+  "updateFailedBody": "Buka DilSensei di Google Play untuk memperbarui manual.",
+  "updateFailedAction": "Buka Google Play",
+  "diagnosticsTitle": "Diagnostik",
+  "diagnosticsSubtitle": "Catatan teknis untuk sesi ini",
+  "diagnosticsCopy": "Salin semua",
+  "diagnosticsClear": "Bersihkan",
+  "diagnosticsCopied": "Log disalin ke papan klip",
+  "diagnosticsEmpty": "Belum ada catatan. Buka paywall untuk merekam aktivitas langganan.",
+  "practicePreferencesTitle": "Preferensi latihan",
+  "practicePreferencesSubtitle": "Ubah kapan saja bila alasanmu belajar berubah. Progres dan streak tetap tersimpan.",
+  "practicePreferencesEntry": "Tujuan & target harian",
+  "practicePreferencesError": "Tidak bisa memuat preferensimu."
 }

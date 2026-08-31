@@ -3,6 +3,12 @@ import 'dart:async';
 import 'package:dilsensei/core/analytics/analytics_providers.dart';
 import 'package:dilsensei/core/analytics/analytics_service.dart';
 import 'package:dilsensei/core/localization/language_controller.dart';
+import 'package:dilsensei/core/diagnostics/diagnostics_log.dart';
+import 'package:dilsensei/core/diagnostics/diagnostics_providers.dart';
+import 'package:dilsensei/core/monetization/dev_premium_override.dart';
+import 'package:dilsensei/core/update/app_update_service.dart';
+import 'package:dilsensei/core/update/play_app_update_service.dart';
+import 'package:dilsensei/core/update/update_providers.dart';
 import 'package:dilsensei/core/theme/theme_mode_controller.dart';
 import 'package:dilsensei/core/monetization/domain/subscription_models.dart';
 import 'package:dilsensei/core/monetization/domain/subscription_service.dart';
@@ -228,6 +234,12 @@ Widget buildTestApp({
   ReminderScheduler? reminderScheduler,
   AnalyticsService? analytics,
   AppThemeMode themeMode = AppThemeMode.light,
+  bool? devToolsEnabled,
+  AppUpdateService? updateService,
+  bool? diagnosticsEnabled,
+  DiagnosticsLog? diagnosticsLog,
+  bool reducedMotion = false,
+  bool useStoredPreferences = false,
 }) {
   return ProviderScope(
     overrides: [
@@ -245,7 +257,9 @@ Widget buildTestApp({
       ),
       // Sebagian besar test menguji layar setelah onboarding, jadi preferensinya
       // dianggap sudah terisi. Test onboarding sendiri memakai skipOnboarding: false.
-      if (skipOnboarding)
+      // useStoredPreferences membiarkan provider membaca SharedPreferences yang
+      // sudah diisi test, sehingga alur simpan-lalu-baca benar-benar teruji.
+      if (skipOnboarding && !useStoredPreferences)
         onboardingPreferencesProvider.overrideWith(
           (ref) async => OnboardingPreferences(
             name: userName,
@@ -262,6 +276,18 @@ Widget buildTestApp({
           initial: themeMode,
         ),
       ),
+      // Gerbang perkakas dev dapat ditirukan supaya perilaku build release
+      // bisa diuji; kDebugMode sendiri adalah konstanta.
+      if (devToolsEnabled != null)
+        devToolsEnabledProvider.overrideWithValue(devToolsEnabled),
+      if (diagnosticsEnabled != null)
+        diagnosticsEnabledProvider.overrideWithValue(diagnosticsEnabled),
+      if (diagnosticsLog != null)
+        diagnosticsLogProvider.overrideWithValue(diagnosticsLog),
+      // Layanan pembaruan selalu difake: test tidak boleh menyentuh Play Core.
+      appUpdateServiceProvider.overrideWithValue(
+        updateService ?? const UnavailableAppUpdateService(),
+      ),
       // Analytics selalu difake: test tidak boleh menyentuh Firebase.
       analyticsServiceProvider.overrideWithValue(
         analytics ?? FakeAnalyticsService(),
@@ -275,7 +301,13 @@ Widget buildTestApp({
       // sekarang mengikuti waktu, dan test tidak boleh bergantung jam nyata.
       nowProvider.overrideWithValue(() => now ?? DateTime(2026, 9, 1, 12)),
     ],
-    child: DilSenseiApp(router: createAppRouter()),
+    child: reducedMotion
+        // Menirukan setelan aksesibilitas "kurangi gerak" milik sistem.
+        ? MediaQuery(
+            data: const MediaQueryData(disableAnimations: true),
+            child: DilSenseiApp(router: createAppRouter()),
+          )
+        : DilSenseiApp(router: createAppRouter()),
   );
 }
 
@@ -396,4 +428,83 @@ class FakeAnalyticsService implements AnalyticsService {
   Future<void> setCurrentScreen(String screenName) async {
     screens.add(screenName);
   }
+}
+
+/// Layanan pembaruan palsu yang dapat diatur hasilnya.
+class FakeAppUpdateService implements AppUpdateService {
+  FakeAppUpdateService({
+    this.info = const AppUpdateInfo.unknown(),
+    this.startResult = UpdateStartResult.started,
+    this.installSucceeds = true,
+  });
+
+  final AppUpdateInfo info;
+  final UpdateStartResult startResult;
+  final bool installSucceeds;
+
+  int checkCount = 0;
+  int startCount = 0;
+  int installCount = 0;
+
+  @override
+  Future<AppUpdateInfo> check() async {
+    checkCount++;
+
+    return info;
+  }
+
+  @override
+  Future<UpdateStartResult> startFlexibleUpdate() async {
+    startCount++;
+
+    return startResult;
+  }
+
+  @override
+  Future<bool> completeFlexibleUpdate() async {
+    installCount++;
+
+    return installSucceeds;
+  }
+}
+
+/// Pembaruan yang tersedia dan bisa diunduh dari dalam app.
+const availableUpdate = AppUpdateInfo(
+  availability: UpdateAvailability.available,
+  isFlexibleAllowed: true,
+  availableVersionCode: 7,
+);
+
+/// Menggulir daftar Pengaturan sampai [text] benar-benar terbangun dan terlihat.
+///
+/// `scrollUntilVisible` terbukti rapuh di layar ini: ListView-nya lazy dan
+/// daftarnya bertambah panjang setiap kali ada bagian pengaturan baru, sehingga
+/// jarak gulir yang dipatok selalu basi. Helper ini menggulir bertahap sampai
+/// widgetnya ada, lalu memastikannya masuk viewport.
+Future<void> scrollSettingsTo(
+  WidgetTester tester,
+  String text, {
+  int maxSteps = 30,
+}) async {
+  final finder = find.text(text);
+
+  // Selalu kembali ke puncak lebih dulu. Tanpa ini, memanggil helper dua kali
+  // berurutan bisa gagal karena target kedua berada di atas posisi saat ini,
+  // dan widgetnya sudah dilepas dari cache ListView.
+  await tester.drag(find.byType(Scrollable).first, const Offset(0, 4000));
+  await tester.pumpAndSettle();
+
+  for (var step = 0; step < maxSteps; step++) {
+    if (finder.evaluate().isNotEmpty) {
+      await tester.ensureVisible(finder.first);
+      await tester.pumpAndSettle();
+
+      return;
+    }
+
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, -200));
+    await tester.pumpAndSettle();
+  }
+
+  throw StateError('tidak menemukan "$text" setelah menggulir Pengaturan');
 }

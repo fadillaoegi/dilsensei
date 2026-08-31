@@ -231,7 +231,7 @@ class _PatternRow extends StatelessWidget {
             borderRadius: BorderRadius.circular(999),
             child: TweenAnimationBuilder<double>(
               tween: Tween<double>(end: insight.mastery),
-              duration: const Duration(milliseconds: 600),
+              duration: context.motion(const Duration(milliseconds: 600)),
               curve: Curves.easeOutCubic,
               builder: (context, value, _) => LinearProgressIndicator(
                 value: value,

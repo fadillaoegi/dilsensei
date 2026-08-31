@@ -10,12 +10,17 @@ class PricingCard extends StatelessWidget {
     required this.plan,
     required this.isSelected,
     required this.onTap,
+    this.savingsPercent,
     super.key,
   });
 
   final SubscriptionPlan plan;
   final bool isSelected;
   final VoidCallback onTap;
+
+  /// Persentase penghematan dibanding membayar bulanan, bila ada. Dihitung dari
+  /// harga nyata di store, jadi angkanya benar di mata uang apa pun.
+  final int? savingsPercent;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,7 @@ class PricingCard extends StatelessWidget {
           onTap: onTap,
           borderRadius: BorderRadius.circular(20),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 180),
+            duration: context.motion(const Duration(milliseconds: 180)),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
@@ -61,9 +66,20 @@ class PricingCard extends StatelessWidget {
                               ),
                             ),
                           ),
-                          if (plan.isRecommended) ...[
+                          if (plan.isRecommended || savingsPercent != null) ...[
                             const SizedBox(width: 8),
-                            const _RecommendedBadge(),
+                            // Wrap: dua badge berdampingan mudah meluber pada
+                            // ponsel sempit, terutama saat mata uangnya panjang.
+                            Wrap(
+                              spacing: 6,
+                              runSpacing: 4,
+                              children: [
+                                if (savingsPercent != null)
+                                  _SavingsBadge(percent: savingsPercent!),
+                                if (plan.isRecommended)
+                                  const _RecommendedBadge(),
+                              ],
+                            ),
                           ],
                         ],
                       ),
@@ -117,6 +133,32 @@ class PricingCard extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Badge penghematan untuk paket tahunan.
+class _SavingsBadge extends StatelessWidget {
+  const _SavingsBadge({required this.percent});
+
+  final int percent;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: context.palette.primary.withValues(alpha: 0.16),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        AppL10n.of(context).paywallSavePercent(percent),
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+          color: context.palette.primary,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.4,
         ),
       ),
     );

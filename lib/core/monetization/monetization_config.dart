@@ -2,8 +2,18 @@ import 'package:flutter/foundation.dart';
 
 /// Konfigurasi RevenueCat dan tautan legal.
 ///
-/// Nilai yang berbeda antar lingkungan diisi lewat dart-define supaya tidak
-/// ikut masuk ke repository. Cara termudah memakai file:
+/// Pemilihan key bersifat otomatis menurut mode build:
+///
+/// | Build            | Key yang dipakai            |
+/// | ---------------- | --------------------------- |
+/// | debug / profile  | `test_...` (Test Store)     |
+/// | release / AAB    | `goog_...` (Google Play)    |
+///
+/// Keduanya punya nilai bawaan di kode, jadi `flutter run` dan
+/// `flutter build appbundle --release` sama-sama berfungsi tanpa argumen
+/// tambahan. Nilai bawaan itu aman karena key SDK RevenueCat memang publik.
+///
+/// Nilai non-publik — misalnya [legalBaseUrl] — tetap diisi lewat dart-define:
 ///
 /// ```
 /// cp dart_defines.example.json dart_defines.json   # lalu isi nilainya
@@ -13,7 +23,23 @@ abstract final class MonetizationConfig {
   /// Nama entitlement di dashboard RevenueCat yang membuka fitur premium.
   static const entitlementId = 'pro';
 
-  static const androidApiKey = String.fromEnvironment('REVENUECAT_ANDROID_KEY');
+  /// Key publik RevenueCat untuk Google Play.
+  ///
+  /// Punya nilai bawaan yang sengaja ditanam di kode. Alasannya dua. Pertama,
+  /// key SDK RevenueCat memang **publik** — ia dirancang untuk ikut ke dalam
+  /// binary app dan hanya mengizinkan operasi sisi klien, berbeda dari secret
+  /// key yang tidak boleh keluar dari server. Kedua, tanpa nilai bawaan,
+  /// `flutter build appbundle --release` yang dijalankan tanpa
+  /// `--dart-define-from-file` akan menghasilkan app tanpa key sama sekali:
+  /// paywall kosong, tidak ada yang bisa dibeli, dan tidak ada tanda apa pun
+  /// sampai seseorang membukanya di perangkat.
+  ///
+  /// Masih bisa ditimpa lewat dart-define bila kamu berpindah project.
+  static const androidApiKey = String.fromEnvironment(
+    'REVENUECAT_ANDROID_KEY',
+    defaultValue: 'goog_yhYUxqEwsyIluACOTgGRLkTALuo',
+  );
+
   static const iosApiKey = String.fromEnvironment('REVENUECAT_IOS_KEY');
 
   /// Key Test Store RevenueCat (berawalan `test_`).
@@ -21,7 +47,14 @@ abstract final class MonetizationConfig {
   /// Test Store adalah backend penagihan tiruan: pembelian tidak menagih uang,
   /// tapi tetap memperbarui entitlement. Berguna untuk mengembangkan paywall
   /// sebelum produk di Play Console siap.
-  static const testStoreKey = String.fromEnvironment('REVENUECAT_TEST_KEY');
+  ///
+  /// Juga bernilai bawaan supaya `flutter run` tanpa dart-define langsung bisa
+  /// menguji paywall. Key ini **tidak pernah** dipakai pada build rilis; lihat
+  /// [resolveApiKey].
+  static const testStoreKey = String.fromEnvironment(
+    'REVENUECAT_TEST_KEY',
+    defaultValue: 'test_xkhiIpvpIVdZOIOXkSICTzOxDrP',
+  );
 
   /// Basis URL halaman legal yang dihosting statis (mis. GitHub Pages).
   static const legalBaseUrl = String.fromEnvironment(

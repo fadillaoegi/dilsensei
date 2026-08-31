@@ -13,17 +13,49 @@ void main() {
       expect(MonetizationConfig.isTestKey(''), isFalse);
     });
 
-    test('tanpa key apa pun hasilnya kosong, bukan key palsu', () {
-      // Test dijalankan dalam mode debug tanpa dart-define, sehingga
-      // testStoreKey kosong dan yang tersisa hanyalah platformKey.
-      expect(MonetizationConfig.resolveApiKey(platformKey: ''), isEmpty);
-    });
-
-    test('key platform dipakai apa adanya bila Test Store tidak diisi', () {
+    test('key Test Store diprioritaskan di debug walau platform terisi', () {
+      // Di debug, pengembang hampir selalu ingin Test Store: pembelian tidak
+      // menagih uang tapi entitlement tetap berubah.
       expect(
         MonetizationConfig.resolveApiKey(platformKey: 'goog_produksi'),
-        'goog_produksi',
+        MonetizationConfig.testStoreKey,
       );
+    });
+
+    test('hasil pemilihan tidak pernah kosong di debug', () {
+      // Konsekuensi key bawaan: paywall selalu punya sesuatu untuk dimuat saat
+      // pengembangan, bahkan tanpa dart-define sama sekali.
+      expect(MonetizationConfig.resolveApiKey(platformKey: ''), isNotEmpty);
+    });
+
+    test('key bawaan tersedia tanpa dart-define', () {
+      // Tanpa nilai bawaan, `flutter build appbundle --release` yang dijalankan
+      // tanpa --dart-define-from-file menghasilkan app tanpa key: paywall
+      // kosong dan tidak ada tanda apa pun sampai dibuka di perangkat.
+      expect(MonetizationConfig.androidApiKey, startsWith('goog_'));
+      expect(MonetizationConfig.testStoreKey, startsWith('test_'));
+      expect(MonetizationConfig.hasAndroidKey, isTrue);
+    });
+
+    test('build debug memakai key Test Store, bukan key produksi', () {
+      // Test berjalan dalam mode debug, jadi ini menguji cabang debug secara
+      // langsung.
+      final resolved = MonetizationConfig.resolveApiKey(
+        platformKey: MonetizationConfig.androidApiKey,
+      );
+
+      expect(
+        kReleaseMode,
+        isFalse,
+        reason: 'test seharusnya berjalan di debug',
+      );
+      expect(resolved, MonetizationConfig.testStoreKey);
+      expect(MonetizationConfig.isTestKey(resolved), isTrue);
+      expect(resolved, isNot(startsWith('goog_')));
+    });
+
+    test('banner Test Store menyala di debug agar tidak salah paham', () {
+      expect(MonetizationConfig.isUsingTestStore, isTrue);
     });
 
     test('mode rilis tidak pernah memakai key Test Store', () {
