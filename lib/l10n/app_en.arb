@@ -404,7 +404,7 @@
   "purchaseErrorNotConfigured": "Purchases are not available in this build.",
   "updateAvailableTitle": "Update available",
   "updateAvailableBody": "A newer version of DilSensei is on Google Play.",
-  "updateAction": "Update",
+  "updateDialogAction": "Update now",
   "updateDismiss": "Later",
   "updateDownloadingTitle": "Downloading update",
   "updateDownloadingBody": "You can keep practising while it downloads.",

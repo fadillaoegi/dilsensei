@@ -1333,11 +1333,11 @@ abstract class AppL10n {
   /// **'A newer version of DilSensei is on Google Play.'**
   String get updateAvailableBody;
 
-  /// No description provided for @updateAction.
+  /// No description provided for @updateDialogAction.
   ///
   /// In en, this message translates to:
-  /// **'Update'**
-  String get updateAction;
+  /// **'Update now'**
+  String get updateDialogAction;
 
   /// No description provided for @updateDismiss.
   ///

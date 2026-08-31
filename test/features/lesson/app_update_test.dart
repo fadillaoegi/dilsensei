@@ -2,6 +2,7 @@ import 'package:dilsensei/core/localization/language_controller.dart';
 import 'package:dilsensei/core/update/app_update_service.dart';
 import 'package:dilsensei/core/update/play_app_update_service.dart';
 import 'package:dilsensei/core/update/update_providers.dart';
+import 'package:dilsensei/features/lesson/presentation/widgets/update_dialog.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -145,8 +146,8 @@ void main() {
     });
   });
 
-  group('banner di Home', () {
-    testWidgets('tidak ada banner bila tidak ada pembaruan', (tester) async {
+  group('dialog di Home', () {
+    testWidgets('tidak ada dialog bila tidak ada pembaruan', (tester) async {
       usePhoneViewport(tester);
       await tester.pumpWidget(
         buildTestApp(
@@ -155,13 +156,15 @@ void main() {
         ),
       );
       await pumpUntilLoaded(tester);
+      await tester.pumpAndSettle();
 
+      expect(find.byType(UpdateDialog), findsNothing);
       expect(find.text('Update available'), findsNothing);
       // Home tetap berfungsi normal.
       expect(find.text('Start session (5 min)'), findsOneWidget);
     });
 
-    testWidgets('banner muncul dan mengunduh saat ditekan', (tester) async {
+    testWidgets('dialog muncul dan mengunduh saat ditekan', (tester) async {
       final service = FakeAppUpdateService(info: availableUpdate);
 
       usePhoneViewport(tester);
@@ -169,18 +172,41 @@ void main() {
         buildTestApp(language: AppLanguage.english, updateService: service),
       );
       await pumpUntilLoaded(tester);
-
-      expect(find.text('Update available'), findsOneWidget);
-
-      await tester.tap(find.text('Update'));
       await tester.pumpAndSettle();
 
+      expect(find.byType(UpdateDialog), findsOneWidget);
+      expect(find.text('Update available'), findsOneWidget);
+
+      await tester.tap(find.text('Update now'));
+      await tester.pumpAndSettle();
+
+      // Dialog menutup; banner mengambil alih perkembangannya.
+      expect(find.byType(UpdateDialog), findsNothing);
       expect(service.startCount, 1);
       expect(find.text('Update ready'), findsOneWidget);
       expect(find.text('Restart'), findsOneWidget);
     });
 
-    testWidgets('tombol Nanti menutup banner', (tester) async {
+    testWidgets('tombol Nanti menutup tawaran sepenuhnya', (tester) async {
+      final service = FakeAppUpdateService(info: availableUpdate);
+
+      usePhoneViewport(tester);
+      await tester.pumpWidget(
+        buildTestApp(language: AppLanguage.english, updateService: service),
+      );
+      await pumpUntilLoaded(tester);
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Later'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(UpdateDialog), findsNothing);
+      expect(find.text('Update available'), findsNothing);
+      // Menolak tawaran tidak boleh diam-diam memulai unduhan.
+      expect(service.startCount, 0);
+    });
+
+    testWidgets('dialog hanya ditawarkan sekali per hidup app', (tester) async {
       usePhoneViewport(tester);
       await tester.pumpWidget(
         buildTestApp(
@@ -189,11 +215,19 @@ void main() {
         ),
       );
       await pumpUntilLoaded(tester);
+      await tester.pumpAndSettle();
 
       await tester.tap(find.text('Later'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Update available'), findsNothing);
+      // Pergi ke layar lain lalu kembali: Home dibangun ulang, tapi tawaran
+      // yang sudah ditolak tidak boleh muncul lagi.
+      await tester.tap(find.byTooltip('Settings'));
+      await tester.pumpAndSettle();
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+
+      expect(find.byType(UpdateDialog), findsNothing);
     });
 
     testWidgets('kegagalan mengarahkan ke Google Play', (tester) async {
@@ -208,15 +242,16 @@ void main() {
         ),
       );
       await pumpUntilLoaded(tester);
+      await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Update'));
+      await tester.tap(find.text('Update now'));
       await tester.pumpAndSettle();
 
       expect(find.text('Update could not start'), findsOneWidget);
       expect(find.text('Open Google Play'), findsOneWidget);
     });
 
-    testWidgets('banner ikut diterjemahkan', (tester) async {
+    testWidgets('dialog ikut diterjemahkan', (tester) async {
       usePhoneViewport(tester);
       await tester.pumpWidget(
         buildTestApp(
@@ -225,9 +260,11 @@ void main() {
         ),
       );
       await pumpUntilLoaded(tester);
+      await tester.pumpAndSettle();
 
       expect(find.text('Pembaruan tersedia'), findsOneWidget);
-      expect(find.text('Perbarui'), findsOneWidget);
+      expect(find.text('Perbarui sekarang'), findsOneWidget);
+      expect(find.text('Nanti'), findsOneWidget);
       expect(find.text('Update available'), findsNothing);
     });
   });

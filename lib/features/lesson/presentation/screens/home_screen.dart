@@ -15,6 +15,7 @@ import '../providers/lesson_providers.dart';
 import '../providers/progress_controller.dart';
 import '../widgets/home_header.dart';
 import '../widgets/update_banner.dart';
+import '../widgets/update_dialog.dart';
 import '../widgets/lesson_list_item.dart';
 import '../widgets/shimmer_box.dart';
 import '../widgets/today_module_card.dart';
@@ -49,9 +50,13 @@ class HomeScreen extends ConsumerWidget {
                 dayPart: dayPart,
               ),
               const SizedBox(height: 28),
-              // Tawaran pembaruan berada di bawah header dan di atas daftar
-              // modul: terlihat, tapi tidak menggeser tombol mulai sesi ke luar
-              // layar saat tidak ada pembaruan (widgetnya nol tinggi).
+              // Dialog pembaruan dipicu dari sini: Home adalah layar pertama,
+              // jadi tawarannya sampai tanpa perlu pengguna menjelajah.
+              const UpdateDialogHost(),
+              // Banner melanjutkan setelah pengguna setuju memperbarui. Ia
+              // berada di bawah header dan di atas daftar modul: terlihat, tapi
+              // tidak menggeser tombol mulai sesi ke luar layar saat tidak ada
+              // pembaruan (widgetnya nol tinggi).
               const UpdateBanner(),
               board.when(
                 loading: () => const _HomeLoadingView(),

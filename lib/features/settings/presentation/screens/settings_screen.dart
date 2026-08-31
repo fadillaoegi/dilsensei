@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/localization/language_controller.dart';
 import '../../../../core/diagnostics/diagnostics_providers.dart';
 import '../../../../core/monetization/dev_premium_override.dart';
+import '../../../../core/monetization/domain/subscription_models.dart';
 import '../../../../core/monetization/monetization_config.dart';
 import '../../../../core/monetization/monetization_providers.dart';
 import '../../../../core/monetization/purchase_messages.dart';
@@ -40,11 +41,21 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     setState(() => _isRestoring = true);
 
     final l10n = AppL10n.of(context);
-    final result = await ref
-        .read(subscriptionServiceProvider)
-        .restorePurchases();
+
+    PurchaseResult result;
+    try {
+      result = await ref.read(subscriptionServiceProvider).restorePurchases();
+    } on Object catch (error) {
+      result = PurchaseResult.failed(
+        '$error',
+        failure: PurchaseFailure.storeError,
+      );
+    } finally {
+      // Sama seperti di paywall: bendera ini harus turun apa pun yang terjadi,
+      // kalau tidak tombol Restore mati permanen tanpa pesan apa pun.
+      if (mounted) setState(() => _isRestoring = false);
+    }
     if (!mounted) return;
-    setState(() => _isRestoring = false);
 
     _showMessage(
       result.isSuccess

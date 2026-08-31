@@ -404,7 +404,7 @@
   "purchaseErrorNotConfigured": "Pembelian belum tersedia di build ini.",
   "updateAvailableTitle": "Pembaruan tersedia",
   "updateAvailableBody": "Versi DilSensei yang lebih baru sudah ada di Google Play.",
-  "updateAction": "Perbarui",
+  "updateDialogAction": "Perbarui sekarang",
   "updateDismiss": "Nanti",
   "updateDownloadingTitle": "Mengunduh pembaruan",
   "updateDownloadingBody": "Kamu bisa tetap berlatih sambil menunggu.",

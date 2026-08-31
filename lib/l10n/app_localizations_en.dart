@@ -716,7 +716,7 @@ class AppL10nEn extends AppL10n {
       'A newer version of DilSensei is on Google Play.';
 
   @override
-  String get updateAction => 'Update';
+  String get updateDialogAction => 'Update now';
 
   @override
   String get updateDismiss => 'Later';

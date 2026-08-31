@@ -133,9 +133,23 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       parameters: <String, Object>{'plan_id': planId},
     );
 
-    final result = await ref.read(subscriptionServiceProvider).purchase(planId);
+    PurchaseResult result;
+    try {
+      result = await ref.read(subscriptionServiceProvider).purchase(planId);
+    } on Object catch (error) {
+      // Service seharusnya sudah mengubah galat menjadi hasil; ini jaring
+      // terakhir supaya sisa kasus pun berakhir sebagai pesan, bukan tombol mati.
+      result = PurchaseResult.failed(
+        '$error',
+        failure: PurchaseFailure.storeError,
+      );
+    } finally {
+      // finally, bukan setelah await: galat tak terduga dari service pernah
+      // membuat bendera ini tersangkut true, dan sejak itu tombol Mulai maupun
+      // Restore mati tanpa penjelasan sampai app dimuat ulang.
+      if (mounted) setState(() => _isProcessing = false);
+    }
     if (!mounted) return;
-    setState(() => _isProcessing = false);
 
     switch (result.outcome) {
       case PurchaseOutcome.success:
@@ -163,11 +177,19 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     if (_isProcessing) return;
 
     setState(() => _isProcessing = true);
-    final result = await ref
-        .read(subscriptionServiceProvider)
-        .restorePurchases();
+
+    PurchaseResult result;
+    try {
+      result = await ref.read(subscriptionServiceProvider).restorePurchases();
+    } on Object catch (error) {
+      result = PurchaseResult.failed(
+        '$error',
+        failure: PurchaseFailure.storeError,
+      );
+    } finally {
+      if (mounted) setState(() => _isProcessing = false);
+    }
     if (!mounted) return;
-    setState(() => _isProcessing = false);
 
     if (result.isSuccess) {
       _showMessage(l10n.settingsRestoreSuccess);

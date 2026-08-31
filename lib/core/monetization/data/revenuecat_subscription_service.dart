@@ -7,6 +7,7 @@ import 'package:flutter/services.dart' show PlatformException;
 import 'package:purchases_flutter/purchases_flutter.dart' hide PurchaseResult;
 
 import '../../diagnostics/diagnostics_log.dart';
+import '../domain/entitlement_resolution.dart';
 import '../domain/subscription_models.dart';
 import '../domain/subscription_service.dart';
 import '../monetization_config.dart';
@@ -74,16 +75,29 @@ class RevenueCatSubscriptionService implements SubscriptionService {
         'pesan=${error.message ?? '-'}';
   }
 
+  /// Keterangan untuk galat apa pun, termasuk yang bukan [PlatformException].
+  ///
+  /// Dibutuhkan karena tidak semua kegagalan SDK berbentuk PlatformException:
+  /// `UnsupportedPlatformException` dan `MissingPluginException` misalnya lolos
+  /// dari penyaringan lama, lalu menembus sampai ke UI. Di paywall akibatnya
+  /// fatal — Future-nya gagal, `_isProcessing` tidak pernah kembali false, dan
+  /// tombol Mulai maupun Restore mati sampai app dimuat ulang.
+  String _describeAny(Object error) {
+    if (error is PlatformException) return _describe(error);
+
+    return 'tipe=${error.runtimeType} pesan=$error';
+  }
+
   Future<void> _initializeOnce() async {
     _log('konfigurasi SDK dimulai', detail: 'key=${maskKey(apiKey)}');
 
     try {
       await _configure(apiKey);
-    } on PlatformException catch (error) {
+    } on Object catch (error) {
       _log(
         'konfigurasi SDK gagal',
         level: DiagnosticSeverity.error,
-        detail: _describe(error),
+        detail: _describeAny(error),
       );
       rethrow;
     }
@@ -112,8 +126,14 @@ class RevenueCatSubscriptionService implements SubscriptionService {
       await initialize();
 
       return _statusFrom(await Purchases.getCustomerInfo());
-    } on PlatformException {
+    } on Object catch (error) {
       // Gagal menghubungi store tidak boleh membuat app berhenti; anggap gratis.
+      _log(
+        'gagal membaca status pelanggan',
+        level: DiagnosticSeverity.error,
+        detail: _describeAny(error),
+      );
+
       return const PremiumStatus.free();
     }
   }
@@ -159,6 +179,14 @@ class RevenueCatSubscriptionService implements SubscriptionService {
         'gagal memuat offering',
         level: DiagnosticSeverity.error,
         detail: _describe(error),
+      );
+
+      return const <SubscriptionPlan>[];
+    } on Object catch (error) {
+      _log(
+        'gagal memuat offering',
+        level: DiagnosticSeverity.error,
+        detail: _describeAny(error),
       );
 
       return const <SubscriptionPlan>[];
@@ -233,6 +261,19 @@ class RevenueCatSubscriptionService implements SubscriptionService {
         error.message,
         failure: PurchaseFailure.storeError,
       );
+    } on Object catch (error) {
+      // Galat di luar PlatformException tetap harus menjadi hasil, bukan
+      // lemparan: paywall menunggu jawaban dan akan macet tanpa itu.
+      _log(
+        'pembelian gagal di luar dugaan',
+        level: DiagnosticSeverity.error,
+        detail: _describeAny(error),
+      );
+
+      return const PurchaseResult.failed(
+        null,
+        failure: PurchaseFailure.storeError,
+      );
     }
   }
 
@@ -264,17 +305,34 @@ class RevenueCatSubscriptionService implements SubscriptionService {
         error.message,
         failure: PurchaseFailure.storeError,
       );
+    } on Object catch (error) {
+      _log(
+        'restore gagal di luar dugaan',
+        level: DiagnosticSeverity.error,
+        detail: _describeAny(error),
+      );
+
+      return const PurchaseResult.failed(
+        null,
+        failure: PurchaseFailure.storeError,
+      );
     }
   }
 
   PremiumStatus _statusFrom(CustomerInfo info) {
-    final entitlement = info.entitlements.all[MonetizationConfig.entitlementId];
-    final isActive = entitlement?.isActive ?? false;
-    final expiration = entitlement?.expirationDate;
-
-    return PremiumStatus(
-      isPremium: isActive,
-      expiresAt: expiration == null ? null : DateTime.tryParse(expiration),
+    return premiumStatusFrom(
+      info.entitlements.all.entries
+          .map(
+            (entry) => EntitlementSnapshot(
+              id: entry.key,
+              isActive: entry.value.isActive,
+              expiresAt: entry.value.expirationDate,
+            ),
+          )
+          .toList(growable: false),
+      acceptedIds: MonetizationConfig.acceptedEntitlementIds,
+      onWarning: (message, detail) =>
+          _log(message, level: DiagnosticSeverity.warning, detail: detail),
     );
   }
 

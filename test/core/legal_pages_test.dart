@@ -9,7 +9,22 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('MonetizationConfig', () {
     test('entitlement id sesuai dashboard RevenueCat', () {
-      expect(MonetizationConfig.entitlementId, 'pro');
+      // Sumber kebenarannya dashboard, bukan selera kode. Dashboard DilSensei
+      // memisahkan keduanya: produk Google Play menempel ke `premium`, produk
+      // Test Store ke `dilsensei_pro`. Nilai ini pernah salah (`pro`, yang tidak
+      // pernah ada), dan akibatnya setiap pembelian dilaporkan "langganan belum
+      // aktif". Periksa ulang dengan tool/check_revenuecat.sh bila berubah.
+      expect(MonetizationConfig.releaseEntitlementId, 'premium');
+      expect(MonetizationConfig.testStoreEntitlementId, 'dilsensei_pro');
+
+      // Keduanya diterima, apa pun mode build-nya.
+      expect(
+        MonetizationConfig.acceptedEntitlementIds,
+        containsAll(<String>['premium', 'dilsensei_pro']),
+      );
+
+      // Build test berjalan pada mode debug, jadi Test Store yang utama.
+      expect(MonetizationConfig.entitlementId, 'dilsensei_pro');
     });
 
     test('key Test Store dikenali dari awalannya', () {

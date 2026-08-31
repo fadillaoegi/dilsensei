@@ -10,11 +10,12 @@ import '../../../../l10n/app_localizations.dart';
 const _playStoreUrl =
     'https://play.google.com/store/apps/details?id=com.fldev.dilsensei';
 
-/// Tawaran pembaruan di Home.
+/// Perkembangan pembaruan di Home.
 ///
-/// Sengaja berupa kartu tenang, bukan dialog. Pembaruan bukan hal yang lebih
-/// penting daripada alasan pengguna membuka app, jadi ia tidak boleh menghalangi
-/// tombol mulai sesi.
+/// Tawaran awalnya dibawakan `UpdateDialog`; banner ini mengambil alih sesudah
+/// pengguna setuju, yaitu saat mengunduh, siap dipasang, atau gagal. Bentuknya
+/// kartu tenang supaya proses yang berjalan di latar tidak menghalangi tombol
+/// mulai sesi.
 class UpdateBanner extends ConsumerWidget {
   const UpdateBanner({super.key});
 
@@ -28,14 +29,9 @@ class UpdateBanner extends ConsumerWidget {
 
     return switch (state.stage) {
       UpdateStage.idle => const SizedBox.shrink(),
-      UpdateStage.available => _UpdateCard(
-        icon: Icons.system_update_outlined,
-        title: l10n.updateAvailableTitle,
-        body: l10n.updateAvailableBody,
-        actionLabel: l10n.updateAction,
-        onAction: controller.startDownload,
-        onDismiss: controller.dismiss,
-      ),
+      // Tahap ini milik dialog. Menampilkannya di dua tempat sekaligus hanya
+      // akan membuat pengguna menutup tawaran yang sama dua kali.
+      UpdateStage.available => const SizedBox.shrink(),
       UpdateStage.downloading => _UpdateCard(
         icon: Icons.downloading_outlined,
         title: l10n.updateDownloadingTitle,

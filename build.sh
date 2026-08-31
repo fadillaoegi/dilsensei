@@ -49,6 +49,25 @@ echo ""
 # Tulis versi baru ke pubspec.yaml
 sed -i '' "s/^version: .*/version: $NEW_VERSION/" "$PUBSPEC"
 
+# ---- Konfigurasi build ----
+#
+# Tanpa baris ini, dart_defines.json diabaikan sepenuhnya dan build memakai
+# nilai bawaan di kode — termasuk LEGAL_BASE_URL `example.invalid`, yang membuat
+# tautan Privacy Policy dan Terms pada paywall menunjuk ke domain mati. Itu
+# pernah benar-benar terjadi dan ikut ke AAB rilis: string `example.invalid`
+# terbukti ada dua kali di dalam libapp.so.
+DEFINES_FILE="dart_defines.json"
+DEFINES_ARG=()
+
+if [ -f "$DEFINES_FILE" ]; then
+  DEFINES_ARG=(--dart-define-from-file="$DEFINES_FILE")
+  echo "🔧 Memakai $DEFINES_FILE"
+else
+  echo "⚠️  $DEFINES_FILE tidak ada. Build memakai nilai bawaan di kode;"
+  echo "    tautan legal akan menunjuk ke example.invalid dan Play menolaknya."
+fi
+echo ""
+
 # ---- Mode Build ----
 
 if [ "$1" = "--no-build" ]; then
@@ -58,7 +77,7 @@ if [ "$1" = "--no-build" ]; then
 elif [ "$1" = "apk" ]; then
   echo "🔨 Membangun APK..."
   echo ""
-  flutter build apk --release
+  flutter build apk --release "${DEFINES_ARG[@]}"
   echo ""
   echo "✅ APK selesai! (versi $NEW_VERSION)"
   echo "📂 Lokasi: build/app/outputs/flutter-apk/app-release.apk"
@@ -66,7 +85,7 @@ elif [ "$1" = "apk" ]; then
 else
   echo "🔨 Membangun App Bundle..."
   echo ""
-  flutter build appbundle --release
+  flutter build appbundle --release "${DEFINES_ARG[@]}"
   echo ""
   echo "✅ App Bundle selesai! (versi $NEW_VERSION)"
   echo "📂 Lokasi: build/app/outputs/bundle/release/app-release.aab"

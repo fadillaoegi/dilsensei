@@ -718,7 +718,7 @@ class AppL10nId extends AppL10n {
       'Versi DilSensei yang lebih baru sudah ada di Google Play.';
 
   @override
-  String get updateAction => 'Perbarui';
+  String get updateDialogAction => 'Perbarui sekarang';
 
   @override
   String get updateDismiss => 'Nanti';

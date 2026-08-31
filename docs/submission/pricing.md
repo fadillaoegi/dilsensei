@@ -14,7 +14,16 @@ mengubahnya menjadi mata uang lokal setiap negara.
 | Tahunan | $24.99 | `$rc_annual` | Base plan pada subscription |
 | Lifetime (sekali beli) | $49.99 | `$rc_lifetime` | In-app product |
 
-Ketiganya dilampirkan ke **satu** entitlement: `pro`.
+Dashboard memakai **dua** entitlement, dan app menerima keduanya:
+
+| Store | Entitlement |
+| --- | --- |
+| Google Play (rilis) | `premium` |
+| Test Store (debug) | `dilsensei_pro` |
+
+Kode memilih yang utama menurut mode build lewat `MonetizationConfig.entitlementId`,
+tapi `acceptedEntitlementIds` menerima keduanya — supaya menguji APK rilis dengan
+akun yang punya entitlement Test Store tidak berakhir dengan premium terkunci.
 
 ### Yang harus cocok, dan yang tidak
 
@@ -121,7 +130,7 @@ Baris PRODUKSI harus berubah dari "BELUM SIAP" menjadi "SIAP" dengan 3 paket.
 Skrip itu tidak bisa memeriksa dua hal, jadi keduanya harus dilihat manual di
 dashboard:
 
-- Ketiga produk sudah dilampirkan ke entitlement `pro`. Gejala bila belum:
-  pembelian berhasil tapi app menampilkan "langganan belum aktif".
+- Ketiga produk sudah dilampirkan ke entitlement `dilsensei_pro`. Gejala bila
+  belum: pembelian berhasil tapi app menampilkan "langganan belum aktif".
 - Free trial sudah aktif pada langganan bulanan dan tahunan. Rules lomba
   mewajibkan free trial **atau** promo code untuk juri.

@@ -175,4 +175,61 @@ void main() {
     );
     expect(cta.onPressed, isNull, reason: 'tidak boleh membeli tanpa paket');
   });
+
+  testWidgets('galat tak terduga saat membeli tidak mematikan tombol', (
+    tester,
+  ) async {
+    // Ini bug yang benar-benar terjadi. Service melempar galat yang bukan
+    // PlatformException — di web, SDK RevenueCat melempar
+    // UnsupportedPlatformException — sehingga penanda "sedang diproses" tidak
+    // pernah turun. Sejak itu tombol Mulai Langganan tampak disabled dan
+    // Restore Purchases tidak bereaksi sama sekali, tanpa pesan apa pun.
+    await _openPaywall(
+      tester,
+      service: FakeSubscriptionService(purchaseThrows: true),
+    );
+
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Mulai Langganan'));
+    await tester.pumpAndSettle();
+
+    final cta = tester.widget<ElevatedButton>(
+      find.widgetWithText(ElevatedButton, 'Mulai Langganan'),
+    );
+    expect(cta.onPressed, isNotNull, reason: 'tombol harus hidup kembali');
+
+    final restore = tester.widget<TextButton>(
+      find.widgetWithText(TextButton, 'Restore Purchases'),
+    );
+    expect(restore.onPressed, isNotNull);
+
+    // Pengguna diberi tahu, bukan dibiarkan menebak.
+    expect(find.byType(SnackBar), findsOneWidget);
+    expect(
+      find.text('Store tidak bisa menyelesaikan pembelian.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('galat tak terduga saat restore tidak mematikan tombol', (
+    tester,
+  ) async {
+    await _openPaywall(
+      tester,
+      service: FakeSubscriptionService(restoreThrows: true),
+    );
+
+    await tester.tap(find.text('Restore Purchases'));
+    await tester.pumpAndSettle();
+
+    final restore = tester.widget<TextButton>(
+      find.widgetWithText(TextButton, 'Restore Purchases'),
+    );
+    expect(restore.onPressed, isNotNull);
+
+    final cta = tester.widget<ElevatedButton>(
+      find.widgetWithText(ElevatedButton, 'Mulai Langganan'),
+    );
+    expect(cta.onPressed, isNotNull);
+    expect(find.byType(SnackBar), findsOneWidget);
+  });
 }

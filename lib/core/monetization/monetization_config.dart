@@ -21,7 +21,43 @@ import 'package:flutter/foundation.dart';
 /// ```
 abstract final class MonetizationConfig {
   /// Nama entitlement di dashboard RevenueCat yang membuka fitur premium.
-  static const entitlementId = 'pro';
+  ///
+  /// Nilainya **harus** sama persis dengan identifier di dashboard. Ini pernah
+  /// salah: kode mencari `pro` sementara dashboard memakai `dilsensei_pro`,
+  /// sehingga pembelian berhasil ditagih tapi app tetap melaporkan "langganan
+  /// belum aktif" dan Restore selalu berkata tidak ada yang bisa dipulihkan.
+  /// Gejalanya tidak terlihat di test karena test tidak memakai dashboard.
+  ///
+  /// Dapat ditimpa lewat dart-define bila identifier di dashboard berubah.
+  static const releaseEntitlementId = String.fromEnvironment(
+    'REVENUECAT_ENTITLEMENT',
+    defaultValue: 'premium',
+  );
+
+  /// Entitlement untuk Test Store, dipakai pada build debug.
+  ///
+  /// Dashboard DilSensei sengaja memisahkannya: produk Test Store menempel ke
+  /// `dilsensei_pro`, produk Google Play ke `premium`. Karena itu app tidak bisa
+  /// memakai satu nama saja — lihat [acceptedEntitlementIds].
+  static const testStoreEntitlementId = String.fromEnvironment(
+    'REVENUECAT_TEST_ENTITLEMENT',
+    defaultValue: 'dilsensei_pro',
+  );
+
+  /// Entitlement utama menurut mode build, sejalan dengan [resolveApiKey]:
+  /// rilis memakai store sungguhan, debug memakai Test Store.
+  static String get entitlementId =>
+      kReleaseMode ? releaseEntitlementId : testStoreEntitlementId;
+
+  /// Seluruh entitlement yang dianggap membuka premium.
+  ///
+  /// Keduanya diterima di kedua mode build. Alasannya praktis: menguji APK rilis
+  /// dengan akun yang sudah punya entitlement Test Store tidak boleh berakhir
+  /// dengan konten premium yang terkunci, dan sebaliknya.
+  static Set<String> get acceptedEntitlementIds => <String>{
+    releaseEntitlementId,
+    testStoreEntitlementId,
+  };
 
   /// Key publik RevenueCat untuk Google Play.
   ///

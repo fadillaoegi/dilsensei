@@ -159,6 +159,8 @@ class FakeSubscriptionService implements SubscriptionService {
     this.purchaseResult = const PurchaseResult.success(),
     this.restoreResult = const PurchaseResult.success(),
     this.plansThrow = false,
+    this.purchaseThrows = false,
+    this.restoreThrows = false,
   });
 
   final List<SubscriptionPlan> plans;
@@ -166,6 +168,13 @@ class FakeSubscriptionService implements SubscriptionService {
   final PurchaseResult purchaseResult;
   final PurchaseResult restoreResult;
   final bool plansThrow;
+
+  /// Menirukan galat yang tidak diubah menjadi hasil, misalnya
+  /// `UnsupportedPlatformException` dari SDK RevenueCat di platform yang tidak
+  /// mendukung pembelian. Galat semacam ini pernah membuat tombol paywall mati
+  /// permanen karena penanda "sedang diproses" tidak pernah turun.
+  final bool purchaseThrows;
+  final bool restoreThrows;
 
   final StreamController<PremiumStatus> _controller =
       StreamController<PremiumStatus>.broadcast();
@@ -193,6 +202,7 @@ class FakeSubscriptionService implements SubscriptionService {
   @override
   Future<PurchaseResult> purchase(String planId) async {
     lastPurchasedPlanId = planId;
+    if (purchaseThrows) throw Exception('platform tidak mendukung pembelian');
     if (purchaseResult.isSuccess) {
       _controller.add(const PremiumStatus(isPremium: true));
     }
@@ -202,6 +212,7 @@ class FakeSubscriptionService implements SubscriptionService {
   @override
   Future<PurchaseResult> restorePurchases() async {
     restoreCallCount++;
+    if (restoreThrows) throw Exception('platform tidak mendukung restore');
     if (restoreResult.isSuccess) {
       _controller.add(const PremiumStatus(isPremium: true));
     }
